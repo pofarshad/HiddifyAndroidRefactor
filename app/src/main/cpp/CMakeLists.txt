@@ -1,20 +1,28 @@
-cmake_minimum_required(VERSION 3.4.1)
+cmake_minimum_required(VERSION 3.18.1)
 
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+project("hiddifyng")
 
-# Add project
-project(xray-core)
+# Create a simple placeholder native library for now
+# In the actual implementation, this would be replaced with the xray-core code
+add_library(
+    xray-core-jni
+    SHARED
+    xray-core-jni.cpp
+)
 
-# Find the Android log library
-find_library(log-lib log)
+# Include directories for header files
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
 
-# Add Xray core library
-add_library(xray-core SHARED
-            xray-core-jni.cpp
-            # In a real implementation, you would add other source files here
-            )
+# Find and link against required libraries
+find_library(
+    log-lib
+    log
+)
 
-# Link to required libraries
-target_link_libraries(xray-core ${log-lib})
+# Link the target library with the log library
+target_link_libraries(
+    xray-core-jni
+    ${log-lib}
+)
