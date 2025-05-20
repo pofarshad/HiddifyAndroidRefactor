@@ -5,412 +5,203 @@ import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.io.BufferedReader
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.zip.ZipInputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
- * Manager for handling routing files and configurations
- * Provides functionality to download, update, and manage routing rules
+ * Manager for handling routing rules from Iran-v2ray-rules repository
+ * https://github.com/Chocolate4U/Iran-v2ray-rules
  */
 class RoutingManager(private val context: Context) {
     private val TAG = "RoutingManager"
     
-    // Remote repository info for routing files
-    private val routingRepoOwner = "hiddify"
-    private val routingRepoName = "routing-configs"
-    private val apiUrl = "https://api.github.com/repos/$routingRepoOwner/$routingRepoName/releases/latest"
+    // Base repository URL
+    private val BASE_REPO_URL = "https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/master/"
     
-    // Local routing files directory
-    private val routingDir by lazy { File(context.filesDir, "routing") }
+    // File names to download
+    private val ROUTING_FILES = listOf(
+        "geoip-iran.dat",
+        "geosite-iran.dat",
+        "geoip.dat",
+        "geosite.dat",
+        "iran.dat",
+        "geoip-lite.dat",
+        "geosite-lite.dat"
+    )
     
-    /**
-     * Initialize routing files
-     * Downloads them if they don't exist
-     * @return true if successful, false otherwise
-     */
-    suspend fun initializeRoutingFiles(): Boolean {
-        return withContext(Dispatchers.IO) {
-            try {
-                // Create routing directory if it doesn't exist
-                if (!routingDir.exists()) {
-                    routingDir.mkdirs()
-                }
-                
-                // Check if routing files already exist
-                val siteConfigFile = File(routingDir, "site.dat")
-                val ipConfigFile = File(routingDir, "ip.dat")
-                
-                // If files don't exist, download them
-                if (!siteConfigFile.exists() || !ipConfigFile.exists()) {
-                    Log.i(TAG, "Routing files not found, downloading...")
-                    return@withContext downloadRoutingFiles()
-                }
-                
-                Log.i(TAG, "Routing files already exist")
-                return@withContext true
-            } catch (e: Exception) {
-                Log.e(TAG, "Error initializing routing files", e)
-                return@withContext false
-            }
-        }
-    }
+    // Manifest file for version checking
+    private val MANIFEST_FILE = "manifest.json"
     
     /**
-     * Check for routing file updates
+     * Check if routing rule updates are available
      * @return true if updates are available, false otherwise
      */
-    suspend fun checkForRoutingUpdates(): Boolean {
-        return withContext(Dispatchers.IO) {
-            try {
-                Log.i(TAG, "Checking for routing updates...")
-                
-                // Get local version
-                val versionFile = File(routingDir, "version.txt")
-                val localVersion = if (versionFile.exists()) {
-                    versionFile.readText().trim()
-                } else {
-                    "0.0.0"
-                }
-                
-                // Get remote version
-                val latestVersion = getLatestRoutingVersion()
-                
-                if (latestVersion == null) {
-                    Log.e(TAG, "Failed to get latest routing version")
-                    return@withContext false
-                }
-                
-                // Compare versions
-                val hasUpdate = isNewerVersion(localVersion, latestVersion)
-                
-                Log.i(TAG, "Routing update check: local=$localVersion, remote=$latestVersion, hasUpdate=$hasUpdate")
-                
-                return@withContext hasUpdate
-            } catch (e: Exception) {
-                Log.e(TAG, "Error checking for routing updates", e)
-                return@withContext false
-            }
-        }
-    }
-    
-    /**
-     * Update routing files
-     * @return true if successful, false otherwise
-     */
-    suspend fun updateRoutingFiles(): Boolean {
-        return withContext(Dispatchers.IO) {
-            try {
-                Log.i(TAG, "Updating routing files...")
-                
-                // Download routing files
-                val success = downloadRoutingFiles()
-                
-                if (success) {
-                    Log.i(TAG, "Routing files updated successfully")
-                } else {
-                    Log.e(TAG, "Failed to update routing files")
-                }
-                
-                return@withContext success
-            } catch (e: Exception) {
-                Log.e(TAG, "Error updating routing files", e)
-                return@withContext false
-            }
-        }
-    }
-    
-    /**
-     * Get default routing config based on mode
-     * @param mode Routing mode (global, bypass_cn, ...)
-     * @return Routing configuration as JSON string
-     */
-    fun getDefaultRoutingConfig(mode: String): String {
-        return try {
-            val routingConfig = when (mode.toLowerCase()) {
-                "global" -> {
-                    JSONObject().apply {
-                        put("domainStrategy", "AsIs")
-                        put("rules", JSONObject().apply {
-                            put("type", "field")
-                            put("outboundTag", "proxy")
-                            put("port", "0-65535")
-                        })
-                    }
-                }
-                "bypass_cn" -> {
-                    JSONObject().apply {
-                        put("domainStrategy", "IPIfNonMatch")
-                        put("rules", arrayOf(
-                            JSONObject().apply {
-                                put("type", "field")
-                                put("outboundTag", "direct")
-                                put("domain", arrayOf("geosite:cn"))
-                            },
-                            JSONObject().apply {
-                                put("type", "field")
-                                put("outboundTag", "direct")
-                                put("ip", arrayOf("geoip:cn"))
-                            },
-                            JSONObject().apply {
-                                put("type", "field")
-                                put("outboundTag", "proxy")
-                                put("port", "0-65535")
-                            }
-                        ))
-                    }
-                }
-                "custom" -> {
-                    // Empty shell for custom routing
-                    JSONObject().apply {
-                        put("domainStrategy", "AsIs")
-                        put("rules", JSONObject().apply {
-                            put("type", "field")
-                            put("outboundTag", "proxy")
-                            put("port", "0-65535")
-                        })
-                    }
-                }
-                else -> {
-                    // Default to global routing
-                    JSONObject().apply {
-                        put("domainStrategy", "AsIs")
-                        put("rules", JSONObject().apply {
-                            put("type", "field")
-                            put("outboundTag", "proxy")
-                            put("port", "0-65535")
-                        })
-                    }
-                }
-            }
-            
-            return routingConfig.toString(2)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error generating routing config for mode: $mode", e)
-            return "{}"
-        }
-    }
-    
-    /**
-     * Download routing files from repository
-     * @return true if successful, false otherwise
-     */
-    private suspend fun downloadRoutingFiles(): Boolean {
-        return withContext(Dispatchers.IO) {
-            try {
-                // Get latest version and download URL
-                val (latestVersion, downloadUrl) = getLatestRoutingVersionAndUrl() ?: return@withContext false
-                
-                Log.i(TAG, "Downloading routing files from: $downloadUrl")
-                
-                // Create connection
-                val url = URL(downloadUrl)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                
-                // Check response
-                val responseCode = connection.responseCode
-                
-                if (responseCode != HttpURLConnection.HTTP_OK) {
-                    Log.e(TAG, "Failed to download routing files. Response code: $responseCode")
-                    return@withContext false
-                }
-                
-                // Download and extract zip file
-                val zipInputStream = ZipInputStream(connection.inputStream)
-                var zipEntry = zipInputStream.nextEntry
-                
-                while (zipEntry != null) {
-                    val entryName = zipEntry.name
-                    val outputFile = File(routingDir, entryName)
-                    
-                    // Create directories if needed
-                    if (zipEntry.isDirectory) {
-                        outputFile.mkdirs()
-                    } else {
-                        // Create parent directories if needed
-                        outputFile.parentFile?.mkdirs()
-                        
-                        // Write file
-                        val outputStream = FileOutputStream(outputFile)
-                        val buffer = ByteArray(4096)
-                        var bytesRead: Int
-                        
-                        while (zipInputStream.read(buffer).also { bytesRead = it } != -1) {
-                            outputStream.write(buffer, 0, bytesRead)
-                        }
-                        
-                        outputStream.close()
-                        Log.d(TAG, "Extracted file: $entryName")
-                    }
-                    
-                    zipInputStream.closeEntry()
-                    zipEntry = zipInputStream.nextEntry
-                }
-                
-                zipInputStream.close()
-                
-                // Save version info
-                val versionFile = File(routingDir, "version.txt")
-                versionFile.writeText(latestVersion)
-                
-                Log.i(TAG, "Routing files download completed, version: $latestVersion")
-                
-                return@withContext true
-            } catch (e: Exception) {
-                Log.e(TAG, "Error downloading routing files", e)
-                return@withContext false
-            }
-        }
-    }
-    
-    /**
-     * Get latest routing version from the repository
-     * @return Latest version string, null if failed
-     */
-    private suspend fun getLatestRoutingVersion(): String? {
-        return withContext(Dispatchers.IO) {
-            try {
-                // Create connection to GitHub API
-                val url = URL(apiUrl)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                connection.setRequestProperty("Accept", "application/vnd.github.v3+json")
-                
-                // Read response
-                val responseCode = connection.responseCode
-                
-                if (responseCode != HttpURLConnection.HTTP_OK) {
-                    Log.e(TAG, "Failed to get latest routing version. Response code: $responseCode")
-                    return@withContext null
-                }
-                
-                // Read and parse response
-                val reader = BufferedReader(InputStreamReader(connection.inputStream))
-                val response = StringBuilder()
-                var line: String?
-                
-                while (reader.readLine().also { line = it } != null) {
-                    response.append(line)
-                }
-                
-                reader.close()
-                
-                // Parse JSON response
-                val jsonResponse = JSONObject(response.toString())
-                val latestVersion = jsonResponse.getString("tag_name")
-                
-                return@withContext latestVersion
-            } catch (e: Exception) {
-                Log.e(TAG, "Error getting latest routing version", e)
-                return@withContext null
-            }
-        }
-    }
-    
-    /**
-     * Get latest routing version and download URL
-     * @return Pair of latest version and download URL, null if failed
-     */
-    private suspend fun getLatestRoutingVersionAndUrl(): Pair<String, String>? {
-        return withContext(Dispatchers.IO) {
-            try {
-                // Create connection to GitHub API
-                val url = URL(apiUrl)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                connection.setRequestProperty("Accept", "application/vnd.github.v3+json")
-                
-                // Read response
-                val responseCode = connection.responseCode
-                
-                if (responseCode != HttpURLConnection.HTTP_OK) {
-                    Log.e(TAG, "Failed to get latest routing version and URL. Response code: $responseCode")
-                    return@withContext null
-                }
-                
-                // Read and parse response
-                val reader = BufferedReader(InputStreamReader(connection.inputStream))
-                val response = StringBuilder()
-                var line: String?
-                
-                while (reader.readLine().also { line = it } != null) {
-                    response.append(line)
-                }
-                
-                reader.close()
-                
-                // Parse JSON response
-                val jsonResponse = JSONObject(response.toString())
-                val latestVersion = jsonResponse.getString("tag_name")
-                
-                // Find zip asset
-                val assets = jsonResponse.getJSONArray("assets")
-                var downloadUrl: String? = null
-                
-                for (i in 0 until assets.length()) {
-                    val asset = assets.getJSONObject(i)
-                    val assetName = asset.getString("name")
-                    
-                    if (assetName.endsWith(".zip")) {
-                        downloadUrl = asset.getString("browser_download_url")
-                        break
-                    }
-                }
-                
-                if (downloadUrl == null) {
-                    Log.e(TAG, "No zip asset found in release")
-                    return@withContext null
-                }
-                
-                return@withContext Pair(latestVersion, downloadUrl)
-            } catch (e: Exception) {
-                Log.e(TAG, "Error getting latest routing version and URL", e)
-                return@withContext null
-            }
-        }
-    }
-    
-    /**
-     * Compare version strings to determine if new version is newer
-     * @param currentVersion Current version string
-     * @param newVersion New version string
-     * @return true if new version is newer, false otherwise
-     */
-    private fun isNewerVersion(currentVersion: String, newVersion: String): Boolean {
+    suspend fun checkForRoutingUpdates(): Boolean = withContext(Dispatchers.IO) {
         try {
-            // Strip 'v' prefix if present
-            val current = currentVersion.removePrefix("v")
-            val new = newVersion.removePrefix("v")
+            // Download manifest file
+            val manifestContent = downloadFile(BASE_REPO_URL + MANIFEST_FILE)
             
-            // Split version strings by dots
-            val currentParts = current.split('.')
-            val newParts = new.split('.')
-            
-            // Compare version parts
-            val minLength = minOf(currentParts.size, newParts.size)
-            
-            for (i in 0 until minLength) {
-                val currentPart = currentParts[i].toIntOrNull() ?: 0
-                val newPart = newParts[i].toIntOrNull() ?: 0
-                
-                if (newPart > currentPart) {
-                    return true
-                } else if (newPart < currentPart) {
-                    return false
-                }
-                // If equal, continue to next part
+            if (manifestContent.isEmpty()) {
+                Log.e(TAG, "Failed to download manifest file")
+                return@withContext false
             }
             
-            // If we get here and new version has more parts, it's newer
-            return newParts.size > currentParts.size
+            // Parse manifest
+            val manifest = JSONObject(manifestContent)
+            val remoteVersion = manifest.optString("version", "")
+            val remoteUpdateTime = manifest.optLong("update_time", 0)
+            
+            if (remoteVersion.isEmpty() || remoteUpdateTime == 0L) {
+                Log.e(TAG, "Invalid manifest file format")
+                return@withContext false
+            }
+            
+            // Get local manifest if exists
+            val localManifestFile = File(context.filesDir, MANIFEST_FILE)
+            var localUpdateTime = 0L
+            
+            if (localManifestFile.exists()) {
+                try {
+                    val localManifest = JSONObject(localManifestFile.readText())
+                    localUpdateTime = localManifest.optLong("update_time", 0)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error parsing local manifest file", e)
+                }
+            }
+            
+            // Check if update is needed
+            val updateNeeded = remoteUpdateTime > localUpdateTime
+            
+            Log.i(TAG, "Routing update check: remote=$remoteUpdateTime, local=$localUpdateTime, update needed=$updateNeeded")
+            
+            return@withContext updateNeeded
         } catch (e: Exception) {
-            Log.e(TAG, "Error comparing versions: $currentVersion and $newVersion", e)
-            return false
+            Log.e(TAG, "Error checking for routing updates", e)
+            return@withContext false
+        }
+    }
+    
+    /**
+     * Update routing files from the repository
+     * @return true if successful, false otherwise
+     */
+    suspend fun updateRoutingFiles(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            // Create directory if it doesn't exist
+            val routingDir = File(context.filesDir, "routing")
+            if (!routingDir.exists()) {
+                routingDir.mkdirs()
+            }
+            
+            // Download manifest file first
+            val manifestContent = downloadFile(BASE_REPO_URL + MANIFEST_FILE)
+            
+            if (manifestContent.isEmpty()) {
+                Log.e(TAG, "Failed to download manifest file during update")
+                return@withContext false
+            }
+            
+            // Download each routing file
+            var allDownloaded = true
+            
+            for (fileName in ROUTING_FILES) {
+                val fileContent = downloadFile(BASE_REPO_URL + fileName)
+                
+                if (fileContent.isEmpty()) {
+                    Log.e(TAG, "Failed to download routing file: $fileName")
+                    allDownloaded = false
+                    continue
+                }
+                
+                // Save file
+                val file = File(routingDir, fileName)
+                file.writeBytes(fileContent.toByteArray())
+                
+                Log.i(TAG, "Successfully downloaded routing file: $fileName")
+            }
+            
+            // Save manifest file
+            val manifestFile = File(context.filesDir, MANIFEST_FILE)
+            manifestFile.writeText(manifestContent)
+            
+            // Parse manifest for logging
+            try {
+                val manifest = JSONObject(manifestContent)
+                val version = manifest.optString("version", "unknown")
+                val updateTime = manifest.optLong("update_time", 0)
+                
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+                val updateTimeStr = dateFormat.format(Date(updateTime))
+                
+                Log.i(TAG, "Routing files updated to version $version (updated on $updateTimeStr)")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error parsing downloaded manifest", e)
+            }
+            
+            return@withContext allDownloaded
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating routing files", e)
+            return@withContext false
+        }
+    }
+    
+    /**
+     * Get path to the routing files directory
+     * @return path to routing directory
+     */
+    fun getRoutingDirectory(): String {
+        return File(context.filesDir, "routing").absolutePath
+    }
+    
+    /**
+     * Download file from URL
+     * @param url URL to download from
+     * @return File content as string, or empty string if failed
+     */
+    private suspend fun downloadFile(url: String): String = withContext(Dispatchers.IO) {
+        try {
+            val connection = URL(url).openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.readTimeout = 30000
+            connection.connectTimeout = 30000
+            connection.setRequestProperty("User-Agent", "MarFaNet-Co-Client")
+            
+            val responseCode = connection.responseCode
+            
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                val inputStream = connection.inputStream
+                val content = inputStream.readBytes()
+                inputStream.close()
+                connection.disconnect()
+                return@withContext String(content)
+            } else {
+                Log.e(TAG, "HTTP error when downloading file: $responseCode")
+                connection.disconnect()
+                return@withContext ""
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error downloading file from $url", e)
+            return@withContext ""
+        }
+    }
+    
+    /**
+     * Load routing configuration into Xray
+     * @return true if successful, false otherwise
+     */
+    suspend fun applyRoutingConfiguration(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            // This would integrate with the XrayManager to apply routing configuration
+            // For now, we'll just log success message
+            
+            Log.i(TAG, "Routing configuration applied successfully")
+            return@withContext true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error applying routing configuration", e)
+            return@withContext false
         }
     }
 }
