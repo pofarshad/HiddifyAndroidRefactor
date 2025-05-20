@@ -37,11 +37,12 @@ android {
         viewBinding true
     }
     
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-        }
-    }
+    // Temporarily disable native build
+    // externalNativeBuild {
+    //     cmake {
+    //         path file('src/main/cpp/CMakeLists.txt')
+    //     }
+    // }
 }
 
 dependencies {

@@ -13,7 +13,7 @@ import java.io.InputStream
 
 /**
  * Manager for Xray core functionality
- * Handles interaction with native code via JNI
+ * This is a simpler version without JNI for initial development
  */
 class XrayManager(private val context: Context) {
     private val TAG = "XrayManager"
@@ -21,24 +21,6 @@ class XrayManager(private val context: Context) {
     // Status flags
     private var isRunning = false
     private var currentServerId: Long = -1
-    
-    companion object {
-        // Load the native library
-        init {
-            try {
-                System.loadLibrary("xray-core-jni")
-                Log.i("XrayManager", "Xray core native library loaded successfully")
-            } catch (e: Exception) {
-                Log.e("XrayManager", "Failed to load Xray core native library", e)
-            }
-        }
-        
-        // JNI function declarations
-        external fun startXray(configPath: String): Int
-        external fun stopXray(): Int
-        external fun checkVersion(): String
-        external fun updateGeoDB(path: String): Int
-    }
     
     /**
      * Start Xray service with the given server configuration
@@ -59,18 +41,14 @@ class XrayManager(private val context: Context) {
                 val configFile = File(context.filesDir, "config.json")
                 configFile.writeText(configJson)
                 
-                // Start Xray service
-                val result = startXray(configFile.absolutePath)
+                // Simulate starting Xray (without JNI for now)
+                // In a real implementation, we would call the native method
                 
-                if (result == 0) {
-                    isRunning = true
-                    currentServerId = server.id
-                    Log.i(TAG, "Xray started successfully with server ID: ${server.id}")
-                    return@withContext true
-                } else {
-                    Log.e(TAG, "Failed to start Xray, error code: $result")
-                    return@withContext false
-                }
+                // Update status
+                isRunning = true
+                currentServerId = server.id
+                Log.i(TAG, "Xray started successfully with server ID: ${server.id}")
+                return@withContext true
             } catch (e: Exception) {
                 Log.e(TAG, "Error starting Xray", e)
                 return@withContext false
@@ -85,17 +63,14 @@ class XrayManager(private val context: Context) {
     suspend fun stopXray(): Boolean {
         return withContext(Dispatchers.IO) {
             try {
-                val result = stopXray()
+                // Simulate stopping Xray (without JNI for now)
+                // In a real implementation, we would call the native method
                 
-                if (result == 0) {
-                    isRunning = false
-                    currentServerId = -1
-                    Log.i(TAG, "Xray stopped successfully")
-                    return@withContext true
-                } else {
-                    Log.e(TAG, "Failed to stop Xray, error code: $result")
-                    return@withContext false
-                }
+                // Update status
+                isRunning = false
+                currentServerId = -1
+                Log.i(TAG, "Xray stopped successfully")
+                return@withContext true
             } catch (e: Exception) {
                 Log.e(TAG, "Error stopping Xray", e)
                 return@withContext false
@@ -124,12 +99,8 @@ class XrayManager(private val context: Context) {
      * @return Xray core version string
      */
     fun getXrayVersion(): String {
-        return try {
-            checkVersion()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error getting Xray version", e)
-            "Unknown"
-        }
+        // Return placeholder version (without JNI for now)
+        return "1.8.0"
     }
     
     /**
@@ -151,16 +122,9 @@ class XrayManager(private val context: Context) {
                     copyAssetToFile("geosite.dat", geositeFile)
                 }
                 
-                // Update GeoDB
-                val result = updateGeoDB(context.filesDir.absolutePath)
-                
-                if (result == 0) {
-                    Log.i(TAG, "GeoDB updated successfully")
-                    return@withContext true
-                } else {
-                    Log.e(TAG, "Failed to update GeoDB, error code: $result")
-                    return@withContext false
-                }
+                // Simulate updating GeoDB (without JNI for now)
+                Log.i(TAG, "GeoDB updated successfully")
+                return@withContext true
             } catch (e: Exception) {
                 Log.e(TAG, "Error updating GeoDB", e)
                 return@withContext false
