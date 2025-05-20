@@ -103,6 +103,7 @@ data class Server(
             "trojan" -> generateTrojanLink()
             "shadowsocks" -> generateShadowsocksLink()
             "hysteria" -> generateHysteriaLink()
+            "xhttp" -> generateXhttpLink()
             else -> ""
         }
     }
@@ -148,6 +149,14 @@ data class Server(
      */
     private fun generateHysteriaLink(): String {
         // This would implement Hysteria protocol URL generation
+        return ""
+    }
+    
+    /**
+     * Generate xhttp:// link 
+     */
+    private fun generateXhttpLink(): String {
+        // This would implement XHTTP protocol URL generation
         return ""
     }
     
