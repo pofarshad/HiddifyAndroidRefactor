@@ -11,97 +11,111 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Worker that performs periodic ping tests on servers
- * and optionally switches to the best server based on user settings
+ * Background worker for pinging servers and auto-switching to best server
  */
 class PingWorker(
-    context: Context,
-    params: WorkerParameters
-) : CoroutineWorker(context, params) {
+    private val context: Context,
+    workerParams: WorkerParameters
+) : CoroutineWorker(context, workerParams) {
     private val TAG = "PingWorker"
     
-    private val database = AppDatabase.getInstance(context)
-    private val pingUtils = PingUtils(context)
-    
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        Log.i(TAG, "Starting ping testing")
-        
-        try {
-            // Get app settings
-            val settings = database.appSettingsDao().getSettings() ?: return@withContext Result.success()
-            
-            // Get all servers
-            val servers = database.serverDao().getAllServers()
-            if (servers.isEmpty()) {
-                Log.i(TAG, "No servers to ping")
-                return@withContext Result.success()
-            }
-            
-            // Track current connection state
-            val isRunning = isVpnRunning()
-            var currentServerId: Long? = null
-            
-            // Find current server if VPN is running
-            if (isRunning) {
-                currentServerId = withContext(Dispatchers.Main) {
-                    // This should be done with a better way to query service state
-                    // For now, we'll assume if we can find a running service, we'll get the current server ID
-                    // In a real implementation, you'd have a way to query the service for its state
-                    -1L // Placeholder
+    override suspend fun doWork(): Result {
+        return withContext(Dispatchers.IO) {
+            try {
+                Log.i(TAG, "Starting ping test for servers")
+                
+                // Get app settings
+                val database = AppDatabase.getInstance(context)
+                val settings = database.appSettingsDao().getSettings()
+                
+                if (settings == null) {
+                    Log.e(TAG, "App settings not found")
+                    return@withContext Result.failure()
                 }
-            }
-            
-            // Ping all servers and update database
-            var bestServerId: Long? = null
-            var bestPing = Int.MAX_VALUE
-            
-            for (server in servers) {
-                val ping = pingUtils.measurePing(server.address)
-                Log.d(TAG, "Server ${server.name} ping: $ping ms")
                 
-                // Update server ping in database
-                server.ping = ping
-                database.serverDao().updateServer(server)
-                
-                // Track best server
-                if (ping > 0 && ping < bestPing) {
-                    bestPing = ping
-                    bestServerId = server.id
+                // Check if auto-switch is enabled
+                if (!settings.autoSwitchToBestServer) {
+                    Log.i(TAG, "Auto-switch to best server is disabled, skipping ping test")
+                    return@withContext Result.success()
                 }
-            }
-            
-            // If auto-switch is enabled and we're connected, check if we should switch servers
-            if (isRunning && settings.autoSwitchToBestServer && bestServerId != null && 
-                currentServerId != null && currentServerId != bestServerId) {
                 
-                // Get current server ping
-                val currentServer = database.serverDao().getServerById(currentServerId)
-                val currentPing = currentServer?.ping ?: Int.MAX_VALUE
+                // Get all servers
+                val serverDao = database.serverDao()
+                val servers = serverDao.getAllServers().value ?: emptyList()
                 
-                // Check if the best server's ping is significantly better
-                if (bestPing < currentPing - settings.minPingThreshold) {
-                    Log.i(TAG, "Switching to better server, current: $currentPing ms, best: $bestPing ms")
+                if (servers.isEmpty()) {
+                    Log.i(TAG, "No servers found, skipping ping test")
+                    return@withContext Result.success()
+                }
+                
+                Log.i(TAG, "Pinging ${servers.size} servers")
+                
+                // Ping each server and update database
+                for (server in servers) {
+                    try {
+                        val pingTime = PingUtils.pingServer(server)
+                        if (pingTime > 0) {
+                            Log.d(TAG, "Server ${server.name} ping: $pingTime ms")
+                            serverDao.updatePing(server.id, pingTime)
+                        } else {
+                            Log.d(TAG, "Server ${server.name} ping failed")
+                            serverDao.updatePing(server.id, Int.MAX_VALUE)
+                        }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error pinging server ${server.name}", e)
+                    }
+                }
+                
+                // Get current server ID from Xray Manager
+                // For now, we'll use the preferred server ID from settings
+                val currentServerId = settings.preferredServerId
+                
+                // Get server with lowest ping
+                val bestServer = serverDao.getServerWithLowestPing()
+                
+                if (bestServer == null) {
+                    Log.i(TAG, "No server with valid ping found")
+                    return@withContext Result.success()
+                }
+                
+                Log.i(TAG, "Best server: ${bestServer.name} (${bestServer.ping} ms)")
+                
+                // Check if we should switch to the best server
+                if (currentServerId != null && currentServerId != bestServer.id) {
+                    // Get current server
+                    val currentServer = serverDao.getServerByIdSync(currentServerId)
                     
-                    // Restart VPN with best server
-                    V2RayServiceManager.stopService(applicationContext)
-                    V2RayServiceManager.startService(applicationContext, bestServerId)
+                    if (currentServer != null) {
+                        val pingDifference = currentServer.ping - bestServer.ping
+                        
+                        // Switch only if ping difference is above threshold
+                        if (pingDifference > settings.minPingThreshold) {
+                            Log.i(TAG, "Switching to better server: ${bestServer.name} (${bestServer.ping} ms vs ${currentServer.ping} ms)")
+                            
+                            // Switch to best server
+                            V2RayServiceManager.restartService(context, bestServer.id)
+                        } else {
+                            Log.i(TAG, "Not switching servers, ping difference below threshold: $pingDifference < ${settings.minPingThreshold}")
+                        }
+                    } else {
+                        // Current server not found, switch to best server
+                        Log.i(TAG, "Current server not found, switching to best server: ${bestServer.name}")
+                        V2RayServiceManager.restartService(context, bestServer.id)
+                    }
+                } else if (currentServerId == null) {
+                    // No current server, switch to best server
+                    Log.i(TAG, "No current server, switching to best server: ${bestServer.name}")
+                    V2RayServiceManager.startService(context, bestServer.id)
+                } else {
+                    // Already using best server
+                    Log.i(TAG, "Already using best server: ${bestServer.name}")
                 }
+                
+                return@withContext Result.success()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error during ping worker execution", e)
+                return@withContext Result.failure()
             }
-            
-            return@withContext Result.success()
-            
-        } catch (e: Exception) {
-            Log.e(TAG, "Error during ping testing", e)
-            return@withContext Result.retry()
         }
-    }
-    
-    /**
-     * Check if VPN service is running
-     * This is a placeholder - in a real app you'd query the service state
-     */
-    private fun isVpnRunning(): Boolean {
-        // This would be implemented with a proper service query mechanism
-        return false
     }
 }

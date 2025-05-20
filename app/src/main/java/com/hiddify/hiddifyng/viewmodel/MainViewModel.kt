@@ -1,7 +1,7 @@
 package com.hiddify.hiddifyng.viewmodel
 
 import android.app.Application
-import android.content.Intent
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,388 +15,341 @@ import com.hiddify.hiddifyng.utils.AutoUpdateManager
 import com.hiddify.hiddifyng.utils.PingUtils
 import com.hiddify.hiddifyng.utils.RoutingManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * ViewModel for MainActivity
+ * Handles connection state, server management, and settings
+ */
 class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val TAG = "MainViewModel"
+    
+    // Database references
     private val database = AppDatabase.getInstance(application)
+    private val serverDao = database.serverDao()
+    private val settingsDao = database.appSettingsDao()
+    
+    // Manager instances
     private val xrayManager = XrayManager(application)
+    private val updateManager = AutoUpdateManager(application)
     private val routingManager = RoutingManager(application)
-    private val pingUtils = PingUtils(application)
-    private val autoUpdateManager = AutoUpdateManager(application)
     
-    // Service state
-    private val _isRunning = MutableLiveData<Boolean>(false)
-    val isRunning: LiveData<Boolean> = _isRunning
+    // LiveData for UI
+    private val _connectionState = MutableLiveData<ConnectionState>()
+    val connectionState: LiveData<ConnectionState> = _connectionState
     
-    // Current connected server
-    private val _currentServer = MutableLiveData<Server?>(null)
+    private val _connectionStats = MutableLiveData<ConnectionStats>()
+    val connectionStats: LiveData<ConnectionStats> = _connectionStats
+    
+    private val _currentServer = MutableLiveData<Server?>()
     val currentServer: LiveData<Server?> = _currentServer
     
-    // Server list
-    val allServers = database.serverDao().getAllServersLive()
+    // Get all servers from database
+    val allServers = serverDao.getAllServers()
     
-    // App settings
-    val appSettings = MutableStateFlow<AppSettings?>(null)
+    // Get app settings from database
+    val appSettings = settingsDao.getSettingsLive()
     
-    // Connection statistics
-    private val _uploadSpeed = MutableLiveData<Long>(0)
-    val uploadSpeed: LiveData<Long> = _uploadSpeed
-    
-    private val _downloadSpeed = MutableLiveData<Long>(0)
-    val downloadSpeed: LiveData<Long> = _downloadSpeed
-    
-    // Update info
-    private val _updateAvailable = MutableLiveData<Boolean>(false)
-    val updateAvailable: LiveData<Boolean> = _updateAvailable
-    
-    private val _updateInfo = MutableStateFlow<AutoUpdateManager.UpdateInfo?>(null)
-    val updateInfo: StateFlow<AutoUpdateManager.UpdateInfo?> = _updateInfo
-    
-    // Action status
-    private val _actionStatus = MutableLiveData<ActionStatus>()
-    val actionStatus: LiveData<ActionStatus> = _actionStatus
-    
+    // Initial state
     init {
-        // Load app settings
-        viewModelScope.launch(Dispatchers.IO) {
-            appSettings.value = database.appSettingsDao().getSettings()
-            
-            // Initialize routing files if needed
-            routingManager.initializeRoutingFiles()
-            
-            // Check for app updates
-            checkForAppUpdates()
+        _connectionState.value = ConnectionState.DISCONNECTED
+        _connectionStats.value = ConnectionStats(0, 0, 0)
+        
+        // Check current connection state
+        checkConnectionState()
+        
+        // Initialize routing files
+        initializeRoutingFiles()
+    }
+    
+    /**
+     * Initialize routing files if needed
+     */
+    private fun initializeRoutingFiles() {
+        viewModelScope.launch {
+            try {
+                val initialized = routingManager.initializeRoutingFiles()
+                if (initialized) {
+                    Log.i(TAG, "Routing files initialized successfully")
+                } else {
+                    Log.e(TAG, "Failed to initialize routing files")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error initializing routing files", e)
+            }
         }
     }
     
     /**
-     * Start the VPN service with the selected server
+     * Check current connection state
      */
-    fun startVpn(serverId: Long? = null) {
+    private fun checkConnectionState() {
         viewModelScope.launch {
             try {
-                val serverToUse = if (serverId != null) {
-                    // Use specified server
-                    database.serverDao().getServerById(serverId)
-                } else {
-                    // Use preferred server from settings, or best by ping, or first in list
-                    val settings = database.appSettingsDao().getSettings()
-                    if (settings?.preferredServerId != null) {
-                        database.serverDao().getServerById(settings.preferredServerId!!)
-                    } else {
-                        val bestServer = database.serverDao().getBestServerByPing()
-                        bestServer ?: database.serverDao().getAllServers().firstOrNull()
+                if (xrayManager.isRunning()) {
+                    _connectionState.value = ConnectionState.CONNECTED
+                    
+                    // Get current server
+                    val serverId = xrayManager.getCurrentServerId()
+                    if (serverId != -1L) {
+                        val server = serverDao.getServerByIdSync(serverId)
+                        _currentServer.value = server
                     }
-                }
-                
-                if (serverToUse != null) {
-                    val ctx = getApplication<Application>()
-                    V2RayServiceManager.startService(ctx, serverToUse.id)
-                    _isRunning.postValue(true)
-                    _currentServer.postValue(serverToUse)
-                    _actionStatus.postValue(ActionStatus.SUCCESS)
                 } else {
-                    _actionStatus.postValue(ActionStatus.ERROR("No server available"))
+                    _connectionState.value = ConnectionState.DISCONNECTED
+                    _currentServer.value = null
                 }
             } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Unknown error"))
+                Log.e(TAG, "Error checking connection state", e)
+                _connectionState.value = ConnectionState.DISCONNECTED
+                _currentServer.value = null
             }
         }
     }
     
     /**
-     * Stop the VPN service
+     * Connect to a server
+     * @param server Server to connect to
      */
-    fun stopVpn() {
+    fun connectToServer(server: Server) {
         viewModelScope.launch {
             try {
-                val ctx = getApplication<Application>()
-                V2RayServiceManager.stopService(ctx)
-                _isRunning.postValue(false)
-                _currentServer.postValue(null)
-                _actionStatus.postValue(ActionStatus.SUCCESS)
+                _connectionState.value = ConnectionState.CONNECTING
+                
+                // Start VPN service
+                V2RayServiceManager.startService(getApplication(), server.id)
+                
+                // Update current server and state
+                _currentServer.value = server
+                _connectionState.value = ConnectionState.CONNECTED
+                
+                // Update preferred server ID in settings
+                settingsDao.setPreferredServerId(server.id)
+                
+                Log.i(TAG, "Connected to server: ${server.name}")
             } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Unknown error"))
+                Log.e(TAG, "Error connecting to server", e)
+                _connectionState.value = ConnectionState.DISCONNECTED
             }
         }
     }
     
     /**
-     * Run ping test on all servers
+     * Disconnect from current server
+     */
+    fun disconnect() {
+        viewModelScope.launch {
+            try {
+                _connectionState.value = ConnectionState.DISCONNECTING
+                
+                // Stop VPN service
+                V2RayServiceManager.stopService(getApplication())
+                
+                // Update state
+                _currentServer.value = null
+                _connectionState.value = ConnectionState.DISCONNECTED
+                
+                Log.i(TAG, "Disconnected from server")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error disconnecting", e)
+            }
+        }
+    }
+    
+    /**
+     * Ping all servers to find the best one
      */
     fun pingAllServers() {
         viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Pinging servers..."))
-            
             try {
-                val servers = database.serverDao().getAllServers()
+                val servers = serverDao.getAllServers().value ?: return@launch
                 
                 for (server in servers) {
-                    val ping = pingUtils.measurePing(server.address)
-                    server.ping = ping
-                    database.serverDao().updateServer(server)
+                    try {
+                        val ping = PingUtils.pingServer(server)
+                        
+                        if (ping > 0) {
+                            serverDao.updatePing(server.id, ping)
+                        } else {
+                            serverDao.updatePing(server.id, Int.MAX_VALUE)
+                        }
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error pinging server: ${server.name}", e)
+                    }
                 }
                 
-                _actionStatus.postValue(ActionStatus.SUCCESS)
+                Log.i(TAG, "Finished pinging all servers")
             } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error pinging servers"))
+                Log.e(TAG, "Error during ping test", e)
+            }
+        }
+    }
+    
+    /**
+     * Connect to the server with lowest ping
+     */
+    fun connectToBestServer() {
+        viewModelScope.launch {
+            try {
+                val bestServer = serverDao.getServerWithLowestPing()
+                
+                if (bestServer != null) {
+                    Log.i(TAG, "Connecting to best server: ${bestServer.name} (${bestServer.ping} ms)")
+                    connectToServer(bestServer)
+                } else {
+                    Log.e(TAG, "No server with valid ping found")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error connecting to best server", e)
             }
         }
     }
     
     /**
      * Add a new server
+     * @param server Server to add
      */
     fun addServer(server: Server) {
         viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Adding server..."))
-            
             try {
-                val newId = database.serverDao().insert(server)
-                _actionStatus.postValue(ActionStatus.SUCCESS)
+                val id = serverDao.insert(server)
+                Log.i(TAG, "Added new server: ${server.name} with ID: $id")
             } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error adding server"))
+                Log.e(TAG, "Error adding server", e)
             }
         }
     }
     
     /**
-     * Update an existing server
+     * Update a server
+     * @param server Server to update
      */
     fun updateServer(server: Server) {
         viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Updating server..."))
-            
             try {
-                database.serverDao().updateServer(server)
-                _actionStatus.postValue(ActionStatus.SUCCESS)
+                serverDao.update(server)
+                Log.i(TAG, "Updated server: ${server.name}")
+                
+                // If this is the current server, update the current server LiveData
+                if (_currentServer.value?.id == server.id) {
+                    _currentServer.value = server
+                }
             } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error updating server"))
+                Log.e(TAG, "Error updating server", e)
             }
         }
     }
     
     /**
      * Delete a server
+     * @param server Server to delete
      */
     fun deleteServer(server: Server) {
         viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Deleting server..."))
-            
             try {
-                database.serverDao().deleteServer(server)
-                _actionStatus.postValue(ActionStatus.SUCCESS)
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error deleting server"))
-            }
-        }
-    }
-    
-    /**
-     * Import servers from subscription URL
-     */
-    fun importFromUrl(url: String, groupId: Long?) {
-        viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Importing servers..."))
-            
-            try {
-                val group = groupId ?: withContext(Dispatchers.IO) {
-                    // Create default group if none specified
-                    val defaultGroupName = "Imported ${System.currentTimeMillis()}"
-                    val newGroup = ServerGroup(name = defaultGroupName)
-                    database.serverGroupDao().insert(newGroup)
+                // If we're connected to this server, disconnect first
+                if (_currentServer.value?.id == server.id) {
+                    disconnect()
                 }
                 
-                val count = database.serverDao().importFromUrl(url, group)
-                _actionStatus.postValue(ActionStatus.SUCCESS_WITH_DATA("Imported $count servers", count))
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error importing servers"))
-            }
-        }
-    }
-    
-    /**
-     * Parse and import server from URL
-     */
-    fun importFromServerUrl(url: String) {
-        viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Importing server..."))
-            
-            try {
-                val server = database.serverDao().parseServerFromUrl(url)
+                // Delete the server
+                serverDao.delete(server)
+                Log.i(TAG, "Deleted server: ${server.name}")
                 
-                if (server != null) {
-                    val newId = database.serverDao().insert(server)
-                    _actionStatus.postValue(ActionStatus.SUCCESS)
-                } else {
-                    _actionStatus.postValue(ActionStatus.ERROR("Invalid server URL"))
+                // If this was the preferred server, clear the preference
+                val settings = settingsDao.getSettings()
+                if (settings?.preferredServerId == server.id) {
+                    settingsDao.setPreferredServerId(null)
                 }
             } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error importing server"))
-            }
-        }
-    }
-    
-    /**
-     * Connect to the best server based on ping
-     */
-    fun connectToBestServer() {
-        viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Finding best server..."))
-            
-            try {
-                val bestServer = database.serverDao().getBestServerByPing()
-                
-                if (bestServer != null) {
-                    startVpn(bestServer.id)
-                } else {
-                    _actionStatus.postValue(ActionStatus.ERROR("No server available"))
-                }
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error connecting to best server"))
+                Log.e(TAG, "Error deleting server", e)
             }
         }
     }
     
     /**
      * Update app settings
+     * @param settings Updated settings
      */
-    fun updateAppSettings(settings: AppSettings) {
+    fun updateSettings(settings: AppSettings) {
         viewModelScope.launch {
             try {
-                database.appSettingsDao().update(settings)
-                appSettings.value = settings
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error updating settings"))
-            }
-        }
-    }
-    
-    /**
-     * Check for app updates
-     */
-    fun checkForAppUpdates() {
-        viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Checking for updates..."))
-            
-            try {
-                val updateInfo = autoUpdateManager.checkForAppUpdates()
-                _updateInfo.value = updateInfo
-                _updateAvailable.postValue(updateInfo.hasUpdate)
+                settingsDao.update(settings)
+                Log.i(TAG, "Updated app settings")
                 
-                if (updateInfo.hasUpdate) {
-                    _actionStatus.postValue(ActionStatus.SUCCESS_WITH_DATA("Update available", updateInfo))
+                // Update auto-update schedule if changed
+                if (settings.autoUpdateEnabled) {
+                    updateManager.setAutoUpdateEnabled(true)
+                    updateManager.scheduleUpdateChecks(settings.updateFrequencyHours)
                 } else {
-                    _actionStatus.postValue(ActionStatus.SUCCESS)
+                    updateManager.setAutoUpdateEnabled(false)
                 }
             } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error checking for updates"))
+                Log.e(TAG, "Error updating settings", e)
             }
         }
     }
     
     /**
-     * Download and install app update
+     * Check for updates manually
+     * @return true if updates are available, false otherwise
      */
-    fun downloadAndInstallUpdate() {
-        viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Downloading update..."))
+    suspend fun checkForUpdates(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            // Check for app updates
+            val updateInfo = updateManager.checkForUpdates()
             
-            try {
-                val updateInfo = _updateInfo.value
-                
-                if (updateInfo != null && updateInfo.hasUpdate && updateInfo.downloadUrl != null) {
-                    val success = autoUpdateManager.downloadAndInstallUpdate(updateInfo.downloadUrl)
-                    
-                    if (success) {
-                        _actionStatus.postValue(ActionStatus.SUCCESS)
-                    } else {
-                        _actionStatus.postValue(ActionStatus.ERROR("Failed to download update"))
-                    }
-                } else {
-                    _actionStatus.postValue(ActionStatus.ERROR("No update available"))
-                }
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error downloading update"))
+            if (updateInfo != null) {
+                Log.i(TAG, "New app update available: ${updateInfo.latestVersion}")
+                return@withContext true
             }
-        }
-    }
-    
-    /**
-     * Update Xray core
-     */
-    fun updateXrayCore() {
-        viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Updating Xray core..."))
             
-            try {
-                val success = autoUpdateManager.checkForXrayCoreUpdates(xrayManager)
-                
-                if (success) {
-                    _actionStatus.postValue(ActionStatus.SUCCESS)
-                } else {
-                    _actionStatus.postValue(ActionStatus.ERROR("Failed to update Xray core"))
-                }
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error updating Xray core"))
-            }
-        }
-    }
-    
-    /**
-     * Update routing files
-     */
-    fun updateRoutingFiles() {
-        viewModelScope.launch {
-            _actionStatus.postValue(ActionStatus.LOADING("Updating routing files..."))
+            // Check for routing updates
+            val routingUpdates = routingManager.checkForRoutingUpdates()
             
-            try {
-                val success = routingManager.updateRoutingFiles(true)
-                
-                if (success) {
-                    _actionStatus.postValue(ActionStatus.SUCCESS)
-                } else {
-                    _actionStatus.postValue(ActionStatus.ERROR("Failed to update routing files"))
-                }
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error updating routing files"))
+            if (routingUpdates) {
+                Log.i(TAG, "New routing updates available")
+                return@withContext true
             }
+            
+            Log.i(TAG, "No updates available")
+            return@withContext false
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking for updates", e)
+            return@withContext false
         }
     }
     
     /**
-     * Set automatic update preferences
+     * Get Xray version info
+     * @return Xray version string
      */
-    fun setAutoUpdatePreferences(enabled: Boolean, frequencyHours: Int) {
-        viewModelScope.launch {
-            try {
-                autoUpdateManager.setAutoUpdateEnabled(enabled)
-                autoUpdateManager.scheduleUpdateChecks(frequencyHours)
-                
-                // Update settings in database
-                val settings = database.appSettingsDao().getSettings() ?: AppSettings(id = 1)
-                settings.autoUpdateEnabled = enabled
-                settings.updateFrequencyHours = frequencyHours
-                database.appSettingsDao().update(settings)
-                
-                appSettings.value = settings
-                _actionStatus.postValue(ActionStatus.SUCCESS)
-            } catch (e: Exception) {
-                _actionStatus.postValue(ActionStatus.ERROR(e.message ?: "Error setting auto-update preferences"))
-            }
+    fun getXrayVersion(): String {
+        return try {
+            xrayManager.getXrayVersion()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting Xray version", e)
+            "Unknown"
         }
     }
     
     /**
-     * Action status sealed class for UI state handling
+     * Enum class for connection states
      */
-    sealed class ActionStatus {
-        object SUCCESS : ActionStatus()
-        data class SUCCESS_WITH_DATA(val message: String, val data: Any) : ActionStatus()
-        data class LOADING(val message: String) : ActionStatus()
-        data class ERROR(val message: String) : ActionStatus()
+    enum class ConnectionState {
+        DISCONNECTED,
+        CONNECTING,
+        CONNECTED,
+        DISCONNECTING
     }
+    
+    /**
+     * Data class for connection statistics
+     */
+    data class ConnectionStats(
+        val upSpeed: Long, // in bytes per second
+        val downSpeed: Long, // in bytes per second
+        val upTotal: Long // in bytes
+    )
 }

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,58 +15,75 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/server_name"
+            android:id="@+id/tv_server_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            app:layout_constraintEnd_toStartOf="@+id/edit_button"
+            android:layout_marginEnd="8dp"
+            android:text="Server Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/iv_connected"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Server Name" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/server_address"
+            android:id="@+id/tv_server_details"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintEnd_toStartOf="@+id/edit_button"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="vmess | example.com:443"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/tv_server_ping"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/server_name"
-            tools:text="vmess://example.com:443" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_server_name" />
 
         <TextView
-            android:id="@+id/server_ping"
+            android:id="@+id/tv_server_ping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textAppearance="?attr/textAppearanceCaption"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/server_address"
-            tools:text="120 ms" />
+            android:text="200 ms"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_server_details"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_server_details" />
+
+        <ImageView
+            android:id="@+id/iv_connected"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@android:drawable/presence_online"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_server_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_server_name" />
 
         <ImageButton
-            android:id="@+id/edit_button"
+            android:id="@+id/btn_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Edit server"
             android:padding="8dp"
             android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintEnd_toStartOf="@+id/delete_button"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_server_details" />
 
         <ImageButton
-            android:id="@+id/delete_button"
+            android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="Delete server"
             android:padding="8dp"
             android:src="@android:drawable/ic_menu_delete"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_edit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/btn_edit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

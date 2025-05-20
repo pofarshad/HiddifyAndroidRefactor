@@ -4,97 +4,112 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.hiddify.hiddifyng.core.XrayManager
 import com.hiddify.hiddifyng.database.AppDatabase
 import com.hiddify.hiddifyng.utils.AutoUpdateManager
+import com.hiddify.hiddifyng.utils.RoutingManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * Worker that handles periodic app and core updates
+ * Background worker for checking and installing updates
+ * Handles both app updates and routing rules updates
  */
 class UpdateWorker(
-    context: Context,
-    params: WorkerParameters
-) : CoroutineWorker(context, params) {
+    private val context: Context,
+    workerParams: WorkerParameters
+) : CoroutineWorker(context, workerParams) {
     private val TAG = "UpdateWorker"
     
-    private val autoUpdateManager = AutoUpdateManager(context)
-    private val xrayManager = XrayManager(context)
-    private val database = AppDatabase.getInstance(context)
-    
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
-        Log.i(TAG, "Starting update check")
-        
-        try {
-            // Get app settings
-            val settings = database.appSettingsDao().getSettings()
-            
-            // Check if auto-update is enabled
-            if (settings?.autoUpdateEnabled != true) {
-                Log.i(TAG, "Auto-update is disabled, skipping")
-                return@withContext Result.success()
-            }
-            
-            // Check for app updates
-            var hasUpdates = false
-            var updateInfo: AutoUpdateManager.UpdateInfo? = null
-            
+    override suspend fun doWork(): Result {
+        return withContext(Dispatchers.IO) {
             try {
-                updateInfo = autoUpdateManager.checkForAppUpdates()
-                hasUpdates = updateInfo.hasUpdate
+                Log.i(TAG, "Starting update check")
                 
-                if (hasUpdates) {
-                    Log.i(TAG, "App update available: ${updateInfo.currentVersion} -> ${updateInfo.latestVersion}")
-                    // We don't automatically install updates, just notify the user
-                    // The update notification will be shown based on the updateAvailable LiveData in MainViewModel
-                } else {
-                    Log.i(TAG, "No app update available")
+                // Get app settings
+                val database = AppDatabase.getInstance(context)
+                val settings = database.appSettingsDao().getSettings()
+                
+                if (settings == null) {
+                    Log.e(TAG, "App settings not found")
+                    return@withContext Result.failure()
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "Error checking for app updates", e)
-            }
-            
-            // Check if Xray core auto-update is enabled
-            if (settings.autoUpdateXrayCore == true) {
-                try {
-                    val updated = autoUpdateManager.checkForXrayCoreUpdates(xrayManager)
-                    hasUpdates = hasUpdates || updated
+                
+                // Check for routing updates
+                checkRoutingUpdates()
+                
+                // Check if auto-update is enabled
+                if (!settings.autoUpdateEnabled) {
+                    Log.i(TAG, "Auto-update is disabled, skipping app update check")
+                    return@withContext Result.success()
+                }
+                
+                // Check for app updates
+                val updateManager = AutoUpdateManager(context)
+                val updateInfo = updateManager.checkForUpdates()
+                
+                if (updateInfo != null) {
+                    Log.i(TAG, "New app update available: ${updateInfo.latestVersion}")
                     
-                    if (updated) {
+                    // Download and install update
+                    val success = updateManager.downloadAndInstallUpdate(updateInfo)
+                    
+                    if (success) {
+                        Log.i(TAG, "App update downloaded and installation initiated")
+                    } else {
+                        Log.e(TAG, "Failed to download and install app update")
+                    }
+                } else {
+                    Log.i(TAG, "No app updates available")
+                }
+                
+                // Check for Xray core updates if enabled
+                if (settings.autoUpdateXrayCore) {
+                    Log.i(TAG, "Checking for Xray core updates")
+                    
+                    val xrayCoreUpdated = updateManager.updateXrayCore()
+                    
+                    if (xrayCoreUpdated) {
                         Log.i(TAG, "Xray core updated successfully")
                     } else {
-                        Log.i(TAG, "No Xray core update available")
+                        Log.i(TAG, "No Xray core updates available or update failed")
                     }
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error updating Xray core", e)
+                } else {
+                    Log.i(TAG, "Xray core auto-update is disabled")
                 }
-            }
-            
-            // Update routing files if needed
-            try {
-                val routingManager = com.hiddify.hiddifyng.utils.RoutingManager(applicationContext)
-                val routingUpdated = routingManager.updateRoutingFiles(false)
                 
-                if (routingUpdated) {
-                    Log.i(TAG, "Routing files updated successfully")
-                    hasUpdates = true
-                }
+                return@withContext Result.success()
             } catch (e: Exception) {
-                Log.e(TAG, "Error updating routing files", e)
+                Log.e(TAG, "Error during update worker execution", e)
+                return@withContext Result.failure()
             }
+        }
+    }
+    
+    /**
+     * Check for routing rule updates
+     */
+    private suspend fun checkRoutingUpdates() {
+        try {
+            Log.i(TAG, "Checking for routing updates")
+            
+            val routingManager = RoutingManager(context)
+            val hasUpdates = routingManager.checkForRoutingUpdates()
             
             if (hasUpdates) {
-                Log.i(TAG, "Updates completed successfully")
+                Log.i(TAG, "Routing updates available, downloading...")
+                
+                val success = routingManager.updateRoutingFiles()
+                
+                if (success) {
+                    Log.i(TAG, "Routing files updated successfully")
+                } else {
+                    Log.e(TAG, "Failed to update routing files")
+                }
             } else {
-                Log.i(TAG, "No updates available")
+                Log.i(TAG, "No routing updates available")
             }
-            
-            return@withContext Result.success()
-            
         } catch (e: Exception) {
-            Log.e(TAG, "Error during update check", e)
-            return@withContext Result.retry()
+            Log.e(TAG, "Error checking for routing updates", e)
         }
     }
 }
