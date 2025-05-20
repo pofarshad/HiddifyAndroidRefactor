@@ -1,7 +1,7 @@
 package com.hiddify.hiddifyng.utils
 
-import android.content.Context
 import android.util.Log
+import com.hiddify.hiddifyng.database.entity.Server
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -9,112 +9,143 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.util.concurrent.TimeUnit
+import kotlin.math.max
+import kotlin.math.min
 
-class PingUtils(private val context: Context) {
+/**
+ * Utility class for testing server ping and connectivity
+ */
+class PingUtils {
     private val TAG = "PingUtils"
     
-    /**
-     * Measures the ping time to a server in milliseconds
-     * 
-     * @param address The server address to ping
-     * @param port Optional port to check (default: 80)
-     * @param timeout Timeout in milliseconds
-     * @return Ping time in milliseconds, or Int.MAX_VALUE if failed
-     */
-    suspend fun measurePing(
-        address: String,
-        port: Int = 80,
-        timeout: Int = 5000
-    ): Int = withContext(Dispatchers.IO) {
-        try {
-            // First try ICMP ping if available (requires root)
-            val icmpPing = tryIcmpPing(address)
-            if (icmpPing > 0 && icmpPing < Int.MAX_VALUE) {
-                return@withContext icmpPing
-            }
-            
-            // Fall back to TCP ping if ICMP failed
-            return@withContext tryTcpPing(address, port, timeout)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error measuring ping to $address", e)
-            return@withContext Int.MAX_VALUE
-        }
-    }
-    
-    /**
-     * Tries to perform an ICMP ping using Runtime.exec
-     * Note: This might require root access on some devices
-     */
-    private fun tryIcmpPing(address: String): Int {
-        try {
-            val runtime = Runtime.getRuntime()
-            val pingCommand = "/system/bin/ping -c 1 -W 3 $address"
-            val process = runtime.exec(pingCommand)
-            
-            val exitValue = process.waitFor()
-            if (exitValue != 0) {
-                return Int.MAX_VALUE
-            }
-            
-            // Parse the ping time from output
-            val output = process.inputStream.bufferedReader().use { it.readText() }
-            val timeRegex = Regex("time=(\\d+(\\.\\d+)?) ms")
-            val match = timeRegex.find(output)
-            
-            return match?.groupValues?.get(1)?.toFloatOrNull()?.toInt() ?: Int.MAX_VALUE
-        } catch (e: Exception) {
-            Log.d(TAG, "ICMP ping failed: ${e.message}")
-            return Int.MAX_VALUE
-        }
-    }
-    
-    /**
-     * Tries to perform a TCP ping by measuring socket connection time
-     */
-    private fun tryTcpPing(address: String, port: Int, timeout: Int): Int {
-        val socket = Socket()
-        val start = System.nanoTime()
+    companion object {
+        private const val PING_COUNT = 3  // Number of ping attempts
+        private const val PING_TIMEOUT = 2000  // Timeout in milliseconds
+        private const val TCP_CONNECT_TIMEOUT = 3000  // Timeout for TCP connection test
         
-        try {
-            socket.connect(InetSocketAddress(address, port), timeout)
-            val pingTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start).toInt()
-            return if (pingTime == 0) 1 else pingTime // Minimum 1ms to avoid confusion with failed pings
-        } catch (e: IOException) {
-            Log.d(TAG, "TCP ping failed: ${e.message}")
-            return Int.MAX_VALUE
-        } finally {
-            try {
-                socket.close()
-            } catch (e: IOException) {
-                // Ignore
+        /**
+         * Test ping to a server
+         * @param server Server to ping
+         * @return Ping time in milliseconds, -1 if failed
+         */
+        suspend fun pingServer(server: Server): Int {
+            return withContext(Dispatchers.IO) {
+                try {
+                    Log.d("PingUtils", "Pinging server ${server.name} at ${server.address}:${server.port}")
+                    
+                    // Try both ICMP ping and TCP connection test
+                    val icmpPing = pingICMP(server.address)
+                    val tcpPing = pingTCP(server.address, server.port)
+                    
+                    // Use the better method that succeeded
+                    val pingTime = when {
+                        icmpPing > 0 && tcpPing > 0 -> min(icmpPing, tcpPing)
+                        icmpPing > 0 -> icmpPing
+                        tcpPing > 0 -> tcpPing
+                        else -> -1
+                    }
+                    
+                    Log.d("PingUtils", "Ping result for ${server.name}: $pingTime ms")
+                    return@withContext pingTime
+                } catch (e: Exception) {
+                    Log.e("PingUtils", "Error pinging server ${server.name}", e)
+                    return@withContext -1
+                }
             }
         }
-    }
-    
-    /**
-     * Pings multiple servers and returns them sorted by ping time
-     */
-    suspend fun pingAllAndSortBySpeed(servers: List<String>): List<Pair<String, Int>> = withContext(Dispatchers.IO) {
-        val results = mutableListOf<Pair<String, Int>>()
         
-        for (server in servers) {
-            val ping = measurePing(server)
-            results.add(Pair(server, ping))
+        /**
+         * Ping a server using ICMP protocol
+         * @param address Server address
+         * @return Ping time in milliseconds, -1 if failed
+         */
+        private suspend fun pingICMP(address: String): Int {
+            return withContext(Dispatchers.IO) {
+                try {
+                    val pingCommand = "ping -c $PING_COUNT -W ${PING_TIMEOUT / 1000} $address"
+                    val process = Runtime.getRuntime().exec(pingCommand)
+                    
+                    // Wait for ping to complete with timeout
+                    val completed = process.waitFor(PING_TIMEOUT.toLong() * PING_COUNT, TimeUnit.MILLISECONDS)
+                    
+                    if (!completed) {
+                        process.destroy()
+                        return@withContext -1
+                    }
+                    
+                    // Parse ping output
+                    val output = process.inputStream.bufferedReader().use { it.readText() }
+                    
+                    // Extract average ping time
+                    val timeRegex = """time=(\d+(\.\d+)?) ms""".toRegex()
+                    val matches = timeRegex.findAll(output)
+                    val pingTimes = matches.map { it.groupValues[1].toFloatOrNull() ?: 0f }.toList()
+                    
+                    if (pingTimes.isEmpty()) {
+                        return@withContext -1
+                    }
+                    
+                    // Calculate average ping time
+                    val averagePing = pingTimes.sum() / pingTimes.size
+                    return@withContext averagePing.toInt()
+                } catch (e: Exception) {
+                    Log.e("PingUtils", "Error during ICMP ping to $address", e)
+                    return@withContext -1
+                }
+            }
         }
         
-        // Sort by ping time (lowest first)
-        return@withContext results.sortedBy { it.second }
-    }
-    
-    /**
-     * Determines if a host is reachable
-     */
-    suspend fun isHostReachable(host: String, timeout: Int = 5000): Boolean = withContext(Dispatchers.IO) {
-        try {
-            return@withContext InetAddress.getByName(host).isReachable(timeout)
-        } catch (e: Exception) {
-            Log.e(TAG, "Error checking if host is reachable: $host", e)
-            return@withContext false
+        /**
+         * Test TCP connection to a server
+         * @param address Server address
+         * @param port Server port
+         * @return Connection time in milliseconds, -1 if failed
+         */
+        private suspend fun pingTCP(address: String, port: Int): Int {
+            return withContext(Dispatchers.IO) {
+                var socket: Socket? = null
+                
+                try {
+                    val startTime = System.currentTimeMillis()
+                    
+                    socket = Socket()
+                    socket.connect(InetSocketAddress(address, port), TCP_CONNECT_TIMEOUT)
+                    
+                    val endTime = System.currentTimeMillis()
+                    val connectionTime = (endTime - startTime).toInt()
+                    
+                    // Validate the connection time (avoid unrealistic values)
+                    val validatedTime = max(1, min(connectionTime, TCP_CONNECT_TIMEOUT))
+                    
+                    return@withContext validatedTime
+                } catch (e: IOException) {
+                    Log.e("PingUtils", "TCP connection failed to $address:$port", e)
+                    return@withContext -1
+                } finally {
+                    try {
+                        socket?.close()
+                    } catch (e: IOException) {
+                        Log.e("PingUtils", "Error closing socket", e)
+                    }
+                }
+            }
+        }
+        
+        /**
+         * Check if a host is reachable
+         * @param host Host address
+         * @return true if reachable, false otherwise
+         */
+        suspend fun isHostReachable(host: String): Boolean {
+            return withContext(Dispatchers.IO) {
+                try {
+                    val address = InetAddress.getByName(host)
+                    return@withContext address.isReachable(PING_TIMEOUT)
+                } catch (e: Exception) {
+                    Log.e("PingUtils", "Error checking if host is reachable: $host", e)
+                    return@withContext false
+                }
+            }
         }
     }
 }

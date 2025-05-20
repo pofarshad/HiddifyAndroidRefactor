@@ -4,209 +4,288 @@ import android.content.Context
 import android.util.Log
 import com.hiddify.hiddifyng.database.entity.Server
 import com.hiddify.hiddifyng.protocols.ProtocolHandler
-import com.hiddify.hiddifyng.protocols.HysteriaProtocol
-import com.hiddify.hiddifyng.protocols.XhttpProtocol
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
-import java.io.FileDescriptor
 import java.io.FileOutputStream
+import java.io.InputStream
 
+/**
+ * Manager for Xray core functionality
+ * Handles interaction with native code via JNI
+ */
 class XrayManager(private val context: Context) {
     private val TAG = "XrayManager"
     
-    // JNI Interface for communicating with Xray-core
-    external fun startXrayWithConfig(configFile: String, fd: Int): Boolean
-    external fun stopXray(): Boolean
-    external fun getXrayVersion(): String
+    // Status flags
+    private var isRunning = false
+    private var currentServerId: Long = -1
     
-    // Protocol handlers
-    private val protocolHandlers = mapOf(
-        "vmess" to ProtocolHandler(),
-        "vless" to ProtocolHandler(),
-        "trojan" to ProtocolHandler(),
-        "shadowsocks" to ProtocolHandler(),
-        "hysteria" to HysteriaProtocol(),
-        "xhttp" to XhttpProtocol()
-    )
-    
-    init {
-        // Load native library for Xray core
-        System.loadLibrary("xray-core")
-        Log.i(TAG, "Loaded Xray-core native library, version: ${getXrayVersion()}")
-    }
-    
-    fun startXray(server: Server, vpnFileDescriptor: FileDescriptor): Boolean {
-        try {
-            // Create config file
-            val configFile = generateConfigFile(server)
-            
-            // Get file descriptor int
-            val fdField = FileDescriptor::class.java.getDeclaredField("descriptor")
-            fdField.isAccessible = true
-            val fd = fdField.getInt(vpnFileDescriptor)
-            
-            // Start Xray with config
-            return startXrayWithConfig(configFile.absolutePath, fd)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to start Xray", e)
-            return false
-        }
-    }
-    
-    private fun generateConfigFile(server: Server): File {
-        val configDir = File(context.getExternalFilesDir(null), "configs")
-        if (!configDir.exists()) {
-            configDir.mkdirs()
-        }
-        
-        val configFile = File(configDir, "config_${server.id}.json")
-        
-        // Create Xray config JSON
-        val config = createXrayConfig(server)
-        
-        // Write config to file
-        FileOutputStream(configFile).use { output ->
-            output.write(config.toString(2).toByteArray())
-        }
-        
-        return configFile
-    }
-    
-    private fun createXrayConfig(server: Server): JSONObject {
-        val config = JSONObject()
-        
-        // Log level
-        config.put("log", JSONObject().apply {
-            put("loglevel", "warning")
-        })
-        
-        // Inbounds (VPN service)
-        config.put("inbounds", JSONArray().apply {
-            put(JSONObject().apply {
-                put("tag", "tun2socks")
-                put("protocol", "dokodemo-door")
-                put("settings", JSONObject().apply {
-                    put("network", "tcp,udp")
-                    put("followRedirect", true)
-                })
-                put("sniffing", JSONObject().apply {
-                    put("enabled", true)
-                    put("destOverride", JSONArray().apply {
-                        put("http")
-                        put("tls")
-                    })
-                })
-            })
-        })
-        
-        // Outbounds (server connections)
-        config.put("outbounds", JSONArray().apply {
-            // Main outbound based on protocol
-            put(createOutbound(server))
-            
-            // Direct outbound
-            put(JSONObject().apply {
-                put("tag", "direct")
-                put("protocol", "freedom")
-                put("settings", JSONObject())
-            })
-            
-            // Block outbound
-            put(JSONObject().apply {
-                put("tag", "block")
-                put("protocol", "blackhole")
-                put("settings", JSONObject())
-            })
-        })
-        
-        // Routing rules
-        config.put("routing", createRoutingRules(server))
-        
-        // DNS settings
-        config.put("dns", createDnsSettings(server))
-        
-        return config
-    }
-    
-    private fun createOutbound(server: Server): JSONObject {
-        val protocol = server.protocol.toLowerCase()
-        val handler = protocolHandlers[protocol] ?: protocolHandlers["vmess"]!!
-        
-        return handler.createOutboundConfig(server)
-    }
-    
-    private fun createRoutingRules(server: Server): JSONObject {
-        val routing = JSONObject()
-        val rules = JSONArray()
-        
-        // Add bypass rules
-        server.bypassDomains?.split(",")?.takeIf { it.isNotEmpty() }?.let { domains ->
-            rules.put(JSONObject().apply {
-                put("type", "field")
-                put("domain", JSONArray().apply {
-                    domains.forEach { domain -> put(domain.trim()) }
-                })
-                put("outboundTag", "direct")
-            })
-        }
-        
-        // Add block rules
-        server.blockDomains?.split(",")?.takeIf { it.isNotEmpty() }?.let { domains ->
-            rules.put(JSONObject().apply {
-                put("type", "field")
-                put("domain", JSONArray().apply {
-                    domains.forEach { domain -> put(domain.trim()) }
-                })
-                put("outboundTag", "block")
-            })
-        }
-        
-        // Default routing rule
-        rules.put(JSONObject().apply {
-            put("type", "field")
-            put("network", "tcp,udp")
-            put("outboundTag", "proxy")
-        })
-        
-        routing.put("rules", rules)
-        return routing
-    }
-    
-    private fun createDnsSettings(server: Server): JSONObject {
-        val dns = JSONObject()
-        val servers = JSONArray()
-        
-        // Add DNS servers from config
-        server.dnsServers?.split(",")?.forEach { 
-            if (it.trim().isNotEmpty()) {
-                servers.put(it.trim()) 
+    companion object {
+        // Load the native library
+        init {
+            try {
+                System.loadLibrary("xray-core-jni")
+                Log.i("XrayManager", "Xray core native library loaded successfully")
+            } catch (e: Exception) {
+                Log.e("XrayManager", "Failed to load Xray core native library", e)
             }
         }
         
-        // Add fallback DNS servers
-        if (servers.length() == 0) {
-            servers.put("8.8.8.8")
-            servers.put("1.1.1.1")
-        }
-        
-        dns.put("servers", servers)
-        return dns
+        // JNI function declarations
+        external fun startXray(configPath: String): Int
+        external fun stopXray(): Int
+        external fun checkVersion(): String
+        external fun updateGeoDB(path: String): Int
     }
     
-    suspend fun updateXrayCore() = withContext(Dispatchers.IO) {
-        // Implementation for updating Xray core binary
-        // This would download the latest version and replace the existing one
-        try {
-            // Download latest version logic would go here
-            // After download, update the native library
-            Log.i(TAG, "Xray core updated to version: ${getXrayVersion()}")
-            true
+    /**
+     * Start Xray service with the given server configuration
+     * @param server Server configuration
+     * @return true if started successfully, false otherwise
+     */
+    suspend fun startXray(server: Server): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                if (isRunning) {
+                    stopXray()
+                }
+                
+                // Generate configuration
+                val configJson = generateConfig(server)
+                
+                // Write configuration to file
+                val configFile = File(context.filesDir, "config.json")
+                configFile.writeText(configJson)
+                
+                // Start Xray service
+                val result = startXray(configFile.absolutePath)
+                
+                if (result == 0) {
+                    isRunning = true
+                    currentServerId = server.id
+                    Log.i(TAG, "Xray started successfully with server ID: ${server.id}")
+                    return@withContext true
+                } else {
+                    Log.e(TAG, "Failed to start Xray, error code: $result")
+                    return@withContext false
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error starting Xray", e)
+                return@withContext false
+            }
+        }
+    }
+    
+    /**
+     * Stop Xray service
+     * @return true if stopped successfully, false otherwise
+     */
+    suspend fun stopXray(): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val result = stopXray()
+                
+                if (result == 0) {
+                    isRunning = false
+                    currentServerId = -1
+                    Log.i(TAG, "Xray stopped successfully")
+                    return@withContext true
+                } else {
+                    Log.e(TAG, "Failed to stop Xray, error code: $result")
+                    return@withContext false
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error stopping Xray", e)
+                return@withContext false
+            }
+        }
+    }
+    
+    /**
+     * Check if Xray service is running
+     * @return true if running, false otherwise
+     */
+    fun isRunning(): Boolean {
+        return isRunning
+    }
+    
+    /**
+     * Get current server ID
+     * @return current server ID, -1 if not running
+     */
+    fun getCurrentServerId(): Long {
+        return currentServerId
+    }
+    
+    /**
+     * Get Xray core version
+     * @return Xray core version string
+     */
+    fun getXrayVersion(): String {
+        return try {
+            checkVersion()
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to update Xray core", e)
-            false
+            Log.e(TAG, "Error getting Xray version", e)
+            "Unknown"
+        }
+    }
+    
+    /**
+     * Update GeoIP and GeoSite databases
+     * @return true if updated successfully, false otherwise
+     */
+    suspend fun updateGeoDatabases(): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                // Copy GeoIP database from assets
+                val geoipFile = File(context.filesDir, "geoip.dat")
+                if (!geoipFile.exists()) {
+                    copyAssetToFile("geoip.dat", geoipFile)
+                }
+                
+                // Copy GeoSite database from assets
+                val geositeFile = File(context.filesDir, "geosite.dat")
+                if (!geositeFile.exists()) {
+                    copyAssetToFile("geosite.dat", geositeFile)
+                }
+                
+                // Update GeoDB
+                val result = updateGeoDB(context.filesDir.absolutePath)
+                
+                if (result == 0) {
+                    Log.i(TAG, "GeoDB updated successfully")
+                    return@withContext true
+                } else {
+                    Log.e(TAG, "Failed to update GeoDB, error code: $result")
+                    return@withContext false
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error updating GeoDB", e)
+                return@withContext false
+            }
+        }
+    }
+    
+    /**
+     * Generate Xray configuration
+     * @param server Server configuration
+     * @return Xray configuration JSON string
+     */
+    private fun generateConfig(server: Server): String {
+        try {
+            // Use appropriate protocol handler to generate configuration
+            val handler = ProtocolHandler.getHandler(server.protocol)
+            val baseConfig = handler.generateConfig(server)
+            
+            // Parse the base config to a JSON object
+            val baseConfigJson = JSONObject(baseConfig)
+            
+            // Create the complete configuration
+            val config = JSONObject()
+            
+            // Merge outbounds from base config
+            config.put("outbounds", baseConfigJson.optJSONArray("outbounds") ?: JSONObject())
+            
+            // Add logs configuration
+            val log = JSONObject()
+            log.put("loglevel", "warning")
+            config.put("log", log)
+            
+            // Add inbounds configuration (SOCKS proxy)
+            val inbounds = JSONObject()
+            inbounds.put("port", 10808)
+            inbounds.put("listen", "127.0.0.1")
+            inbounds.put("protocol", "socks")
+            val socksSettings = JSONObject()
+            socksSettings.put("udp", true)
+            inbounds.put("settings", socksSettings)
+            config.put("inbounds", inbounds)
+            
+            // Add routing configuration
+            val routing = JSONObject()
+            val rules = JSONObject()
+            
+            // Parse bypass domains
+            if (!server.bypassDomains.isNullOrEmpty()) {
+                val bypassDomains = server.bypassDomains?.split(",")?.map { it.trim() }
+                if (!bypassDomains.isNullOrEmpty()) {
+                    val directRule = JSONObject()
+                    directRule.put("type", "field")
+                    directRule.put("domain", bypassDomains)
+                    directRule.put("outboundTag", "direct")
+                    rules.put("rules", directRule)
+                }
+            }
+            
+            // Parse block domains
+            if (!server.blockDomains.isNullOrEmpty()) {
+                val blockDomains = server.blockDomains?.split(",")?.map { it.trim() }
+                if (!blockDomains.isNullOrEmpty()) {
+                    val blockRule = JSONObject()
+                    blockRule.put("type", "field")
+                    blockRule.put("domain", blockDomains)
+                    blockRule.put("outboundTag", "block")
+                    rules.put("rules", blockRule)
+                }
+            }
+            
+            routing.put("rules", rules)
+            config.put("routing", routing)
+            
+            // Add DNS configuration
+            val dns = JSONObject()
+            val servers = JSONObject()
+            
+            // Parse DNS servers
+            if (!server.dnsServers.isNullOrEmpty()) {
+                val dnsServers = server.dnsServers?.split(",")?.map { it.trim() }
+                if (!dnsServers.isNullOrEmpty()) {
+                    servers.put("servers", dnsServers)
+                }
+            } else {
+                // Default DNS servers
+                val defaultDns = JSONObject()
+                defaultDns.put("address", "1.1.1.1")
+                defaultDns.put("port", 53)
+                servers.put("servers", defaultDns)
+            }
+            
+            dns.put("servers", servers)
+            config.put("dns", dns)
+            
+            return config.toString(2)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error generating Xray configuration", e)
+            return "{}"
+        }
+    }
+    
+    /**
+     * Copy asset file to internal storage
+     * @param assetName Asset name
+     * @param outputFile Output file
+     */
+    private fun copyAssetToFile(assetName: String, outputFile: File) {
+        try {
+            val input: InputStream = context.assets.open(assetName)
+            val output = FileOutputStream(outputFile)
+            
+            val buffer = ByteArray(1024)
+            var read: Int
+            
+            while (input.read(buffer).also { read = it } != -1) {
+                output.write(buffer, 0, read)
+            }
+            
+            input.close()
+            output.flush()
+            output.close()
+            
+            Log.i(TAG, "Asset $assetName copied to $outputFile")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error copying asset $assetName to $outputFile", e)
         }
     }
 }
