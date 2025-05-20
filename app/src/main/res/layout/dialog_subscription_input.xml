@@ -5,17 +5,18 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:hint="Subscription URL">
+        android:text="Enter subscription URL:"
+        android:textSize="16sp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/subscription_url_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textUri" />
+    <EditText
+        android:id="@+id/et_subscription_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="https://example.com/subscription"
+        android:inputType="textUri" />
 
-    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>
