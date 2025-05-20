@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Auto-start section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto-start on boot"
+            android:textAppearance="?attr/textAppearanceBody1"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_auto_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Auto-connect section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto-connect to best server"
+            android:textAppearance="?attr/textAppearanceBody1"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_auto_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Auto-update section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto-update app"
+            android:textAppearance="?attr/textAppearanceBody1"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_auto_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Auto-update Xray core section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Auto-update Xray core"
+            android:textAppearance="?attr/textAppearanceBody1"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_auto_update_core"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- Update frequency slider -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update check frequency"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:layout_marginTop="16dp"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_update_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="1"
+        android:valueTo="168"
+        android:stepSize="1"/>
+
+    <TextView
+        android:id="@+id/text_update_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check every 24 hours"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Ping frequency slider -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ping check frequency"
+        android:textAppearance="?attr/textAppearanceBody1"
+        android:layout_marginTop="8dp"/>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_ping_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:valueFrom="5"
+        android:valueTo="120"
+        android:stepSize="5"/>
+
+    <TextView
+        android:id="@+id/text_ping_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check every 30 minutes"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Save button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_save_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Settings"
+        android:layout_marginTop="16dp"/>
+
+</LinearLayout>
