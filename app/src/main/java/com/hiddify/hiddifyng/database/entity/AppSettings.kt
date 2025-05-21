@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "app_settings")
 data class AppSettings(
     @PrimaryKey
-    val id: Int = 1,  // Single row for app settings
+    var id: Int = 1,  // Changed from val to var to fix Room compatibility
     
     // Theme and appearance
     var theme: String = "system",  // "system", "light", "dark"
