@@ -1,0 +1,441 @@
+root@root:~/projects/HiddifyAndroidRefactor-main# ./gradlew kaptReleaseKotlin --stacktrace --no-daemon
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Configuration on demand is an incubating feature.
+
+> Configure project :app
+WARNING: The option setting 'android.defaults.buildfeatures.buildconfig=true' is deprecated.
+The current default is 'false'.
+It will be removed in version 9.0 of the Android Gradle plugin.
+To keep using this feature, add the following to your module-level build.gradle files:
+    android.buildFeatures.buildConfig = true
+or from Android Studio, click: `Refactor` > `Migrate BuildConfig to Gradle Build Files`.
+Observed package id 'platforms;android-Baklava' in inconsistent location '/root/Android/sdk/platforms/android-35' (Expected '/root/Android/sdk/platforms/android-Baklava')
+Observed package id 'platforms;android-35' in inconsistent location '/root/Android/sdk/platforms/android-35-2' (Expected '/root/Android/sdk/platforms/android-35')
+
+> Task :app:kaptReleaseKotlin FAILED
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/entity/AppSettings.java:8: warning: There are multiple good constructors and Room will pick the no-arg constructor. You can use the @Ignore annotation to eliminate unwanted constructors.
+public final class AppSettings {
+             ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:20: warning: The query returns some columns [id, name, protocol, address, port, groupId, uuid, password, alterId, security, encryption, flow, method, network, headerType, host, path, tls, sni, alpn, fingerprint, quicSecurity, quicKey, grpcMultiMode, allowInsecure, requestTimeout, allowHttp2, enableMux, muxConcurrency, bypassDomains, blockDomains, bypassIps, dnsServers, routingMode, customRules, bypassPackages, headers, ping, hysteriaProtocol, hysteriaUpMbps, hysteriaDownMbps, hysteriaObfs, hysteriaAuthString, hysteriaRecvWindowConn, hysteriaRecvWindow, hysteriaDisableMtuDiscovery] which are not used by java.lang.Object. You can use @ColumnInfo annotation on the fields to specify the mapping. You can annotate the method with @RewriteQueriesToDropUnusedColumns to direct Room to rewrite your query to avoid fetching unused columns.  You can suppress this warning by annotating the method with @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH). Columns returned by the query: id, name, protocol, address, port, groupId, uuid, password, alterId, security, encryption, flow, method, network, headerType, host, path, tls, sni, alpn, fingerprint, quicSecurity, quicKey, grpcMultiMode, allowInsecure, requestTimeout, allowHttp2, enableMux, muxConcurrency, bypassDomains, blockDomains, bypassIps, dnsServers, routingMode, customRules, bypassPackages, headers, ping, hysteriaProtocol, hysteriaUpMbps, hysteriaDownMbps, hysteriaObfs, hysteriaAuthString, hysteriaRecvWindowConn, hysteriaRecvWindow, hysteriaDisableMtuDiscovery.
+    public abstract java.lang.Object getServerByIdSync(long serverId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:29: warning: The query returns some columns [id, name, protocol, address, port, groupId, uuid, password, alterId, security, encryption, flow, method, network, headerType, host, path, tls, sni, alpn, fingerprint, quicSecurity, quicKey, grpcMultiMode, allowInsecure, requestTimeout, allowHttp2, enableMux, muxConcurrency, bypassDomains, blockDomains, bypassIps, dnsServers, routingMode, customRules, bypassPackages, headers, ping, hysteriaProtocol, hysteriaUpMbps, hysteriaDownMbps, hysteriaObfs, hysteriaAuthString, hysteriaRecvWindowConn, hysteriaRecvWindow, hysteriaDisableMtuDiscovery] which are not used by java.lang.Object. You can use @ColumnInfo annotation on the fields to specify the mapping. You can annotate the method with @RewriteQueriesToDropUnusedColumns to direct Room to rewrite your query to avoid fetching unused columns.  You can suppress this warning by annotating the method with @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH). Columns returned by the query: id, name, protocol, address, port, groupId, uuid, password, alterId, security, encryption, flow, method, network, headerType, host, path, tls, sni, alpn, fingerprint, quicSecurity, quicKey, grpcMultiMode, allowInsecure, requestTimeout, allowHttp2, enableMux, muxConcurrency, bypassDomains, blockDomains, bypassIps, dnsServers, routingMode, customRules, bypassPackages, headers, ping, hysteriaProtocol, hysteriaUpMbps, hysteriaDownMbps, hysteriaObfs, hysteriaAuthString, hysteriaRecvWindowConn, hysteriaRecvWindow, hysteriaDisableMtuDiscovery.
+    public abstract java.lang.Object getServerWithLowestPing(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:20: warning: The query returns some columns [id, name, url, isSubscription, lastUpdated, updateInterval, autoUpdate, userAgent] which are not used by java.lang.Object. You can use @ColumnInfo annotation on the fields to specify the mapping. You can annotate the method with @RewriteQueriesToDropUnusedColumns to direct Room to rewrite your query to avoid fetching unused columns.  You can suppress this warning by annotating the method with @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH). Columns returned by the query: id, name, url, isSubscription, lastUpdated, updateInterval, autoUpdate, userAgent.
+    public abstract java.lang.Object getGroupByIdSync(long groupId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:52: warning: The query returns some columns [id, name, url, isSubscription, lastUpdated, updateInterval, autoUpdate, userAgent] which are not used by java.lang.Object. You can use @ColumnInfo annotation on the fields to specify the mapping. You can annotate the method with @RewriteQueriesToDropUnusedColumns to direct Room to rewrite your query to avoid fetching unused columns.  You can suppress this warning by annotating the method with @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH). Columns returned by the query: id, name, url, isSubscription, lastUpdated, updateInterval, autoUpdate, userAgent.
+    public abstract java.lang.Object getAutoUpdateSubscriptions(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/entity/AppSettings.java:8: warning: There are multiple good constructors and Room will pick the no-arg constructor. You can use the @Ignore annotation to eliminate unwanted constructors.
+public final class AppSettings {
+             ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:16: warning: The query returns some columns [id, theme, language, autoStart, autoConnect, preferredServerId, autoSwitchToBestServer, minPingThreshold, pingFrequencyMinutes, updateFrequencyHours, autoUpdateEnabled, autoUpdateXrayCore] which are not used by java.lang.Object. You can use @ColumnInfo annotation on the fields to specify the mapping. You can annotate the method with @RewriteQueriesToDropUnusedColumns to direct Room to rewrite your query to avoid fetching unused columns.  You can suppress this warning by annotating the method with @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH). Columns returned by the query: id, theme, language, autoStart, autoConnect, preferredServerId, autoSwitchToBestServer, minPingThreshold, pingFrequencyMinutes, updateFrequencyHours, autoUpdateEnabled, autoUpdateXrayCore.
+    public abstract java.lang.Object getSettings(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/entity/AppSettings.java:10: error: Cannot find setter for field.
+    private final int id = 0;
+                      ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:20: error: Not sure how to convert a Cursor to this method's return type (java.lang.Object).
+    public abstract java.lang.Object getServerByIdSync(long serverId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:21: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super com.hiddify.hiddifyng.database.entity.Server> $completion);
+                                                                                         ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:20: error: Unused parameter: $completion
+    public abstract java.lang.Object getServerByIdSync(long serverId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:29: error: Not sure how to convert a Cursor to this method's return type (java.lang.Object).
+    public abstract java.lang.Object getServerWithLowestPing(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:30: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super com.hiddify.hiddifyng.database.entity.Server> $completion);
+                                                                                         ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:29: error: Unused parameter: $completion
+    public abstract java.lang.Object getServerWithLowestPing(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:35: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super java.lang.Integer> $completion);
+                                                              ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:34: error: Unused parameter: $completion
+    public abstract java.lang.Object getServerCount(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:63: error: Not sure how to handle query method's return type (java.lang.Object). DELETE query methods must either return void or int (the number of deleted rows).
+    public abstract java.lang.Object deleteByGroup(long groupId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:64: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:63: error: Unused parameter: $completion
+    public abstract java.lang.Object deleteByGroup(long groupId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:68: error: Not sure how to handle query method's return type (java.lang.Object). UPDATE query methods must either return void or int (the number of updated rows).
+    public abstract java.lang.Object updatePing(long serverId, int ping, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:69: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:68: error: Unused parameter: $completion
+    public abstract java.lang.Object updatePing(long serverId, int ping, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:41: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super java.lang.Long> $completion);
+                                                           ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:39: error: Not sure how to handle insert method's return type.
+    public abstract java.lang.Object insert(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:47: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super java.util.List<java.lang.Long>> $completion);
+                                                                           ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:45: error: Not sure how to handle insert method's return type.
+    public abstract java.lang.Object insertAll(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:57: error: Not sure how to handle delete method's return type. Currently the supported return types are void, int or Int.
+    public abstract java.lang.Object delete(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:59: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:53: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerDao.java:51: error: Not sure how to handle update method's return type. Currently the supported return types are void, int or Int.
+    public abstract java.lang.Object update(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:20: error: Not sure how to convert a Cursor to this method's return type (java.lang.Object).
+    public abstract java.lang.Object getGroupByIdSync(long groupId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:21: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super com.hiddify.hiddifyng.database.entity.ServerGroup> $completion);
+                                                                                              ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:20: error: Unused parameter: $completion
+    public abstract java.lang.Object getGroupByIdSync(long groupId, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:47: error: Not sure how to handle query method's return type (java.lang.Object). UPDATE query methods must either return void or int (the number of updated rows).
+    public abstract java.lang.Object updateLastUpdatedTime(long groupId, long timestamp, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:48: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:47: error: Unused parameter: $completion
+    public abstract java.lang.Object updateLastUpdatedTime(long groupId, long timestamp, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:52: error: Not sure how to convert a Cursor to this method's return type (java.lang.Object).
+    public abstract java.lang.Object getAutoUpdateSubscriptions(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:53: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super java.util.List<com.hiddify.hiddifyng.database.entity.ServerGroup>> $completion);
+                                                                                                              ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:52: error: Unused parameter: $completion
+    public abstract java.lang.Object getAutoUpdateSubscriptions(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:31: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super java.lang.Long> $completion);
+                                                           ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:29: error: Not sure how to handle insert method's return type.
+    public abstract java.lang.Object insert(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:41: error: Not sure how to handle delete method's return type. Currently the supported return types are void, int or Int.
+    public abstract java.lang.Object delete(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:43: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:37: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/ServerGroupDao.java:35: error: Not sure how to handle update method's return type. Currently the supported return types are void, int or Int.
+    public abstract java.lang.Object update(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/entity/AppSettings.java:10: error: Cannot find setter for field.
+    private final int id = 0;
+                      ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:16: error: Not sure how to convert a Cursor to this method's return type (java.lang.Object).
+    public abstract java.lang.Object getSettings(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:17: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super com.hiddify.hiddifyng.database.entity.AppSettings> $completion);
+                                                                                              ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:16: error: Unused parameter: $completion
+    public abstract java.lang.Object getSettings(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:33: error: Not sure how to handle query method's return type (java.lang.Object). UPDATE query methods must either return void or int (the number of updated rows).
+    public abstract java.lang.Object setAutoSwitchToBestServer(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:34: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:33: error: Unused parameter: $completion
+    public abstract java.lang.Object setAutoSwitchToBestServer(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:38: error: Not sure how to handle query method's return type (java.lang.Object). UPDATE query methods must either return void or int (the number of updated rows).
+    public abstract java.lang.Object setAutoUpdateEnabled(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:39: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:38: error: Unused parameter: $completion
+    public abstract java.lang.Object setAutoUpdateEnabled(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:43: error: Not sure how to handle query method's return type (java.lang.Object). UPDATE query methods must either return void or int (the number of updated rows).
+    public abstract java.lang.Object setAutoStart(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:44: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:43: error: Unused parameter: $completion
+    public abstract java.lang.Object setAutoStart(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:48: error: Not sure how to handle query method's return type (java.lang.Object). UPDATE query methods must either return void or int (the number of updated rows).
+    public abstract java.lang.Object setAutoConnect(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:49: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:48: error: Unused parameter: $completion
+    public abstract java.lang.Object setAutoConnect(boolean enabled, @org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:53: error: Not sure how to handle query method's return type (java.lang.Object). UPDATE query methods must either return void or int (the number of updated rows).
+    public abstract java.lang.Object setPreferredServerId(@org.jetbrains.annotations.Nullable                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:55: error: Query method parameters should either be a type that can be converted into a database column or a List / Array that contains such type. You can consider adding a Type Adapter for this.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:53: error: Unused parameter: $completion
+    public abstract java.lang.Object setPreferredServerId(@org.jetbrains.annotations.Nullable                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:23: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:21: error: Not sure how to handle insert method's return type.
+    public abstract java.lang.Object insert(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:29: error: Type of the parameter must be a class annotated with @Entity or a collection/array of it.
+    kotlin.coroutines.Continuation<? super kotlin.Unit> $completion);
+                                                        ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/dao/AppSettingsDao.java:27: error: Not sure how to handle update method's return type. Currently the supported return types are void, int or Int.
+    public abstract java.lang.Object update(@org.jetbrains.annotations.NotNull
+                                     ^
+/root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kapt3/stubs/release/com/hiddify/hiddifyng/database/AppDatabase.java:8: warning: Schema export directory is not provided to the annotation processor so we cannot export the schema. You can either provide `room.schemaLocation` annotation processor argument OR set exportSchema to false.
+public abstract class AppDatabase extends androidx.room.RoomDatabase {
+                ^
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:kaptReleaseKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask$KaptExecutionWorkAction
+
+* Try:
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+* Exception is:
+org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:kaptReleaseKotlin'.
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:130)
+        at org.gradle.internal.Try$Failure.ifSuccessfulOrElse(Try.java:293)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:128)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+        at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+        at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+        at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+        at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+        at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+        at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:331)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:318)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+        at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+        at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionException: A failure occurred while executing org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask$KaptExecutionWorkAction
+        at org.gradle.workers.internal.DefaultWorkerExecutor$WorkItemExecution.waitForCompletion(DefaultWorkerExecutor.java:287)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.lambda$waitForItemsAndGatherFailures$2(DefaultAsyncWorkTracker.java:130)
+        at org.gradle.internal.Factories$1.create(Factories.java:31)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withoutLocks(DefaultWorkerLeaseService.java:339)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withoutLocks(DefaultWorkerLeaseService.java:322)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withoutLock(DefaultWorkerLeaseService.java:327)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForItemsAndGatherFailures(DefaultAsyncWorkTracker.java:126)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForItemsAndGatherFailures(DefaultAsyncWorkTracker.java:92)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForAll(DefaultAsyncWorkTracker.java:78)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForCompletion(DefaultAsyncWorkTracker.java:66)
+        at org.gradle.api.internal.tasks.execution.TaskExecution$3.run(TaskExecution.java:252)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.executeAction(TaskExecution.java:229)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.executeActions(TaskExecution.java:212)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.executeWithPreviousOutputFiles(TaskExecution.java:195)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.execute(TaskExecution.java:162)
+        at org.gradle.internal.execution.steps.ExecuteStep.executeInternal(ExecuteStep.java:105)
+        at org.gradle.internal.execution.steps.ExecuteStep.access$000(ExecuteStep.java:44)
+        at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:59)
+        at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:56)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
+        at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:44)
+        at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
+        at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
+        at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
+        at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:50)
+        at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:28)
+        at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:67)
+        at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:37)
+        at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:61)
+        at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:26)
+        at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:69)
+        at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:46)
+        at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:40)
+        at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:29)
+        at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
+        at org.gradle.internal.execution.steps.BuildCacheStep.executeAndStoreInCache(BuildCacheStep.java:145)
+        at org.gradle.internal.execution.steps.BuildCacheStep.lambda$executeWithCache$4(BuildCacheStep.java:101)
+        at org.gradle.internal.execution.steps.BuildCacheStep.lambda$executeWithCache$5(BuildCacheStep.java:101)
+        at org.gradle.internal.Try$Success.map(Try.java:175)
+        at org.gradle.internal.execution.steps.BuildCacheStep.executeWithCache(BuildCacheStep.java:85)
+        at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$0(BuildCacheStep.java:74)
+        at org.gradle.internal.Either$Left.fold(Either.java:115)
+        at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
+        at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:73)        at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:48)        at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:46)
+        at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
+        at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
+        at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:27)
+        at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:49)
+        at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:27)
+        at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:71)
+        at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:39)
+        at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:65)
+        at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:36)
+        at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:105)
+        at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:54)
+        at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:64)
+        at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:43)
+        at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkStep.java:125)
+        at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:56)
+        at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:36)
+        at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStartedStep.java:38)
+        at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36)
+        at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23)
+        at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
+        at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
+        at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:35)
+        at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:289)
+        at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
+        at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
+        at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
+        at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
+        at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
+        at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
+        at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
+        at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
+        at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
+        at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:48)
+        at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:35)
+        at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:61)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:127)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+        at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+        at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+        at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+        at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+        at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+        at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:331)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:318)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+        at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+        at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+Caused by: java.lang.reflect.InvocationTargetException
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at org.jetbrains.kotlin.gradle.internal.KaptExecution.run(KaptWithoutKotlincTask.kt:311)
+        at org.jetbrains.kotlin.gradle.internal.KaptWithoutKotlincTask$KaptExecutionWorkAction.execute(KaptWithoutKotlincTask.kt:257)
+        at org.gradle.workers.internal.DefaultWorkerServer.execute(DefaultWorkerServer.java:63)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:66)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:62)
+        at org.gradle.internal.classloader.ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:100)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1.lambda$execute$0(NoIsolationWorkerFactory.java:62)
+        at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:44)
+        at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:41)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.workers.internal.AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:59)
+        at org.gradle.workers.internal.DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:174)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:195)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:128)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:170)
+        at org.gradle.internal.Factories$1.create(Factories.java:31)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:267)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:131)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:136)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:165)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:134)
+        ... 2 more
+Caused by: org.jetbrains.kotlin.kapt3.base.util.KaptBaseError: Error while annotation processing
+        at org.jetbrains.kotlin.kapt3.base.AnnotationProcessingKt.doAnnotationProcessing(annotationProcessing.kt:132)
+        at org.jetbrains.kotlin.kapt3.base.AnnotationProcessingKt.doAnnotationProcessing$default(annotationProcessing.kt:31)
+        at org.jetbrains.kotlin.kapt3.base.Kapt.kapt(Kapt.kt:47)
+        ... 33 more
+
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 11s
+18 actionable tasks: 1 executed, 17 up-to-date

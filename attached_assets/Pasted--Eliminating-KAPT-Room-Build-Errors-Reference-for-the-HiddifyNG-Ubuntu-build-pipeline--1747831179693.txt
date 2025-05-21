@@ -1,0 +1,95 @@
+\# Eliminating KAPT / Room Build Errors
+*(Reference for the HiddifyNG Ubuntu build pipeline)*
+
+---
+
+## 1  Why `kaptReleaseKotlin` blew up
+
+* **Room 2.5.2 + Kotlin 1.9.10** is **incompatible** – kapt generates Java stubs that Room 2.5.2 cannot parse, so every DAO method shows `java.lang.Object` and fails.
+* Entity `AppSettings` has a **`final int id`** field without a setter → Room cannot auto‑generate a column mapping.
+* SDK manager log shows **platforms;android‑Baklava / android‑35** installed twice – harmless but clean it up.
+
+---
+
+## 2  Two working version matrices (pick ONE)
+
+| Matrix                   | Kotlin plugin | Room runtime/compiler     | Notes                                |
+| ------------------------ | ------------- | ------------------------- | ------------------------------------ |
+| **A – upgrade Room**     | **1.9.10**    | **2.6.1** (latest stable) | Requires AGP ≥ 8.1; fixes kapt stubs |
+| **B – downgrade Kotlin** | **1.8.22**    | **2.5.2**                 | Quickest; no code changes            |
+
+---
+
+### 2.1  Implement Matrix A (recommended – stay on Kotlin 1.9)
+
+1. **Module `app/build.gradle`**
+
+   ```groovy
+   plugins {
+       id "org.jetbrains.kotlin.android" version "1.9.10" apply false
+   }
+
+   dependencies {
+       implementation "androidx.room:room-runtime:2.6.1"
+       implementation "androidx.room:room-ktx:2.6.1"
+       kapt          "androidx.room:room-compiler:2.6.1"
+   }
+   ```
+2. **Add Java 17 compile arg for kapt (optional but wise)**
+
+   ```groovy
+   kapt {
+       jvmTarget = "17"
+   }
+   ```
+3. **Entity fix**: In `AppSettings.kt` mark the primary‑key field *non‑final* or give Room a setter:
+
+   ```kotlin
+   @Entity
+   data class AppSettings(
+       @PrimaryKey(autoGenerate = true) val id: Int = 0,
+       // … other fields …
+   )
+   ```
+
+   *If you must keep a Java class*, remove `final` and add a public setter, or annotate with `@Ignore`.
+4. **Clean & rebuild**:
+
+   ```bash
+   ./gradlew clean kaptReleaseKotlin
+   ./gradlew assembleRelease
+   ```
+
+### 2.2  Implement Matrix B (fallback – keep Room 2.5.2)
+
+1. **Root `build.gradle`**
+
+   ```groovy
+   plugins {
+       id "org.jetbrains.kotlin.android" version "1.8.22" apply false
+   }
+   ```
+2. **Delete** all `1.9.10` references (`grep -R "1\.9\.10" .` → replace with `1.8.22`).
+3. **Sync & build** – KAPT will succeed with Room 2.5.2.
+
+---
+
+## 3  Clean up duplicate platform folders
+
+```bash
+rm -rf $ANDROID_SDK_ROOT/platforms/android-35-2
+mv $ANDROID_SDK_ROOT/platforms/android-35 $ANDROID_SDK_ROOT/platforms/android-Baklava  # or vice‑versa; keep one
+```
+
+Re‑run `sdkmanager --licenses` to let the SDK tool fix the registry.
+
+---
+
+## 4  Recap checklist
+
+* [ ] Kotlin = 1.9.10 **and** Room = 2.6.1 **OR** Kotlin = 1.8.22 **and** Room = 2.5.2
+* [ ] `AppSettings` entity no longer has a `final` primary‑key field without setter
+* [ ] `kapt.jvmTarget = 17` (optional but avoids JDK mismatch)
+* [ ] Gradle wrapper 8.9, AGP 8.6.0 remain unchanged
+
+*Hit me with any new stack‑trace lines once these fixes are in place.*
