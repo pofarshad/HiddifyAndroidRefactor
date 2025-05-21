@@ -1,7 +1,6 @@
 package com.hiddify.hiddifyng.protocols
 
 import com.hiddify.hiddifyng.database.entity.Server
-import java.util.Locale
 
 /**
  * Interface for handling different protocols
@@ -42,55 +41,21 @@ interface ProtocolHandler {
     fun generateUrl(server: Server): String
     
     companion object {
-        // Cache for protocol handlers to improve performance
-        private val handlers = mutableMapOf<String, ProtocolHandler>()
-        
         /**
          * Get appropriate protocol handler for the given protocol
          * @param protocol Protocol identifier
          * @return ProtocolHandler implementation
-         * @throws IllegalArgumentException if protocol is not supported
          */
-        @Throws(IllegalArgumentException::class)
         fun getHandler(protocol: String): ProtocolHandler {
-            val normalizedProtocol = protocol.lowercase(Locale.getDefault())
-            
-            // Return cached handler if available
-            handlers[normalizedProtocol]?.let { return it }
-            
-            // Create new handler
-            val handler = when (normalizedProtocol) {
+            return when (protocol.toLowerCase()) {
                 "vmess" -> VmessProtocolHandler()
                 "vless" -> VlessProtocolHandler()
                 "trojan" -> TrojanProtocolHandler()
                 "shadowsocks" -> ShadowsocksProtocolHandler()
                 "hysteria" -> HysteriaProtocolHandler()
                 "xhttp" -> XhttpProtocolHandler()
-                "reality" -> RealityProtocolHandler()
                 else -> throw IllegalArgumentException("Unsupported protocol: $protocol")
             }
-            
-            // Cache the handler
-            handlers[normalizedProtocol] = handler
-            return handler
-        }
-        
-        /**
-         * Check if protocol is supported
-         * @param protocol Protocol identifier to check
-         * @return true if supported, false otherwise
-         */
-        fun isProtocolSupported(protocol: String): Boolean {
-            val normalizedProtocol = protocol.lowercase(Locale.getDefault())
-            return normalizedProtocol in getSupportedProtocols().map { it.lowercase(Locale.getDefault()) }
-        }
-        
-        /**
-         * Get list of all supported protocols
-         * @return List of supported protocol names
-         */
-        fun getSupportedProtocols(): List<String> {
-            return listOf("vmess", "vless", "trojan", "shadowsocks", "hysteria", "xhttp", "reality")
         }
     }
 }

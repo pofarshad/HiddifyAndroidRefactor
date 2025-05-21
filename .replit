@@ -2,7 +2,7 @@ modules = ["kotlin", "openjdk-17"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["zip"]
+packages = ["zip", "unzip"]
 
 [workflows]
 runButton = "Project"

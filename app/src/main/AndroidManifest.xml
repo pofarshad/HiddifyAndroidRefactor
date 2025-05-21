@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
-    <!-- Minimum SDK is specified in build.gradle -->
+    <!-- SDK versions are defined in build.gradle, removing redundant declaration -->
 
     <application
         android:name=".HiddifyNGApplication"

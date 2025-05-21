@@ -4,14 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.hiddify.hiddifyng.protocols.ProtocolHandler
-import java.util.Date
-import java.util.Locale
 
-/**
- * Entity class for VPN servers with optimized structure
- * Enhanced with protocol-specific validation and generation
- */
 @Entity(
     tableName = "server",
     foreignKeys = [
@@ -19,20 +12,16 @@ import java.util.Locale
             entity = ServerGroup::class,
             parentColumns = ["id"],
             childColumns = ["groupId"],
-            onDelete = ForeignKey.CASCADE  // Delete servers when group is deleted
+            onDelete = ForeignKey.SET_NULL
         )
     ],
-    indices = [
-        Index("groupId"),  // For faster queries based on group
-        Index("protocol"), // For faster protocol filtering
-        Index("ping")      // For best server queries
-    ]
+    indices = [Index("groupId")]
 )
 data class Server(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     
-    // Basic info - required fields
+    // Basic info
     var name: String,
     var protocol: String,
     var address: String,
@@ -86,14 +75,6 @@ data class Server(
     
     // Performance and stats
     var ping: Int = 0,  // Ping time in milliseconds, 0 means not tested
-    var lastPingTime: Date? = null, // When this server was last pinged
-    var lastSuccessfulConnection: Date? = null, // Last time we connected successfully
-    var pingCount: Int = 0, // Number of times pinged (for averaging)
-    var totalUpload: Long = 0, // Total bytes uploaded through this server
-    var totalDownload: Long = 0, // Total bytes downloaded through this server
-    var connectionCount: Int = 0, // Number of times connected to this server
-    var isFavorite: Boolean = false, // User favorite status
-    var userNote: String? = null, // User notes for this server
     
     // Hysteria protocol settings
     var hysteriaProtocol: String? = null,  // udp, wechat-video, faketcp
@@ -103,212 +84,92 @@ data class Server(
     var hysteriaAuthString: String? = null,
     var hysteriaRecvWindowConn: Int? = null,
     var hysteriaRecvWindow: Int? = null,
-    var hysteriaDisableMtuDiscovery: Boolean? = null,
-    
-    // REALITY protocol settings
-    var publicKey: String? = null,    // Server's public key for encryption
-    var shortId: String? = null,      // REALITY short ID
-    var spiderX: String? = null,      // Spider X for additional verification
-    var privateKey: String? = null,   // Client's private key (rarely used)
-    var serverNames: String? = null,  // Comma-separated destination server names for uTLS
-    var spiderY: String? = null,      // Spider Y parameter (advanced verification)
-    var showNetwork: Boolean? = null, // Show network during uTLS handshake
-    var utlsVersion: String? = null,  // uTLS version
-    var utlsFingerprints: String? = null, // Alternative fingerprints separated by commas
+    var hysteriaDisableMtuDiscovery: Boolean? = null
 ) {
     /**
-     * Generate a human-readable summary of the server with connection info
-     * @return Formatted string with protocol, address and port
+     * Generate a human-readable summary of the server
      */
     fun getSummary(): String {
-        val pingStatus = if (ping > 0) " ($ping ms)" else ""
-        return "$protocol | $address:$port$pingStatus"
+        return "$protocol | $address:$port"
     }
     
     /**
-     * Get display name with fallback to address if name is empty
-     * @return Name to display in UI
-     */
-    fun getDisplayName(): String {
-        return if (name.isNotEmpty()) name else "$address:$port"
-    }
-    
-    /**
-     * Get the appropriate protocol handler for this server
-     * @return ProtocolHandler implementation for this server's protocol
-     */
-    fun getProtocolHandler(): ProtocolHandler {
-        return ProtocolHandler.getHandler(protocol)
-    }
-    
-    /**
-     * Generate a sharing link for this server using the appropriate protocol handler
-     * @return URL string for sharing this server configuration
+     * Generate a sharing link for this server
      */
     fun toShareLink(): String {
-        return try {
-            // Use protocol handler instead of internal implementation
-            val handler = getProtocolHandler()
-            handler.generateUrl(this)
-        } catch (e: Exception) {
-            // Fallback to empty string if handler fails
-            ""
+        return when (protocol.toLowerCase()) {
+            "vmess" -> generateVmessLink()
+            "vless" -> generateVlessLink()
+            "trojan" -> generateTrojanLink()
+            "shadowsocks" -> generateShadowsocksLink()
+            "hysteria" -> generateHysteriaLink()
+            "xhttp" -> generateXhttpLink()
+            else -> ""
         }
     }
     
     /**
-     * Check if this server has valid configuration for its protocol
-     * @return true if valid, false otherwise
+     * Generate vmess:// link
      */
-    fun isValid(): Boolean {
-        return try {
-            if (address.isBlank() || port <= 0 || port > 65535) {
-                return false
-            }
-            
-            // Use protocol handler to validate
-            val handler = getProtocolHandler()
-            handler.validateServer(this)
-        } catch (e: Exception) {
-            false
-        }
+    private fun generateVmessLink(): String {
+        // This would implement VMess protocol URL generation
+        // Example: vmess://base64({...})
+        return ""
     }
     
     /**
-     * Mark this server as favorite with timestamp
+     * Generate vless:// link
      */
-    fun markAsFavorite() {
-        isFavorite = true
+    private fun generateVlessLink(): String {
+        // This would implement VLESS protocol URL generation
+        // Example: vless://uuid@host:port?params
+        return ""
     }
     
     /**
-     * Register a successful connection for statistics
+     * Generate trojan:// link
      */
-    fun registerConnection() {
-        connectionCount++
-        lastSuccessfulConnection = Date()
+    private fun generateTrojanLink(): String {
+        // This would implement Trojan protocol URL generation
+        // Example: trojan://password@host:port?params
+        return ""
     }
     
     /**
-     * Register traffic for statistics
-     * @param uploadBytes Bytes uploaded
-     * @param downloadBytes Bytes downloaded
+     * Generate ss:// link
      */
-    fun registerTraffic(uploadBytes: Long, downloadBytes: Long) {
-        totalUpload += uploadBytes
-        totalDownload += downloadBytes
+    private fun generateShadowsocksLink(): String {
+        // This would implement Shadowsocks protocol URL generation
+        // Example: ss://base64(method:password@host:port)
+        return ""
     }
     
     /**
-     * Update ping for this server, keeping history for consistency
-     * @param newPing New ping value in milliseconds
+     * Generate hysteria:// link
      */
-    fun updatePing(newPing: Int) {
-        // Update ping with a weighted average to avoid single outliers
-        if (pingCount == 0) {
-            ping = newPing
-        } else {
-            // Weight recent pings more heavily (70% new, 30% old)
-            ping = ((newPing * 0.7) + (ping * 0.3)).toInt()
-        }
-        pingCount++
-        lastPingTime = Date()
+    private fun generateHysteriaLink(): String {
+        // This would implement Hysteria protocol URL generation
+        return ""
+    }
+    
+    /**
+     * Generate xhttp:// link 
+     */
+    private fun generateXhttpLink(): String {
+        // This would implement XHTTP protocol URL generation
+        return ""
     }
     
     companion object {
         /**
-         * Parse server from URL string using appropriate protocol handler
+         * Parse server from URL string
          * @param url URL string in protocol format
          * @return Server object if parsing successful, null otherwise
          */
         fun fromUrl(url: String): Server? {
-            return when {
-                url.startsWith("vmess://") -> ProtocolHandler.getHandler("vmess").parseUrl(url)
-                url.startsWith("vless://") -> ProtocolHandler.getHandler("vless").parseUrl(url)
-                url.startsWith("trojan://") -> ProtocolHandler.getHandler("trojan").parseUrl(url)
-                url.startsWith("ss://") -> ProtocolHandler.getHandler("shadowsocks").parseUrl(url)
-                url.startsWith("hysteria://") -> ProtocolHandler.getHandler("hysteria").parseUrl(url)
-                url.startsWith("xhttp://") -> ProtocolHandler.getHandler("xhttp").parseUrl(url)
-                else -> null
-            }
-        }
-        
-        /**
-         * Create a skeleton server for a specific protocol
-         * @param protocol Protocol identifier
-         * @return Basic server with default settings for the protocol
-         */
-        fun createForProtocol(protocol: String): Server {
-            val protocolLower = protocol.lowercase(Locale.getDefault())
-            
-            return when (protocolLower) {
-                "vmess" -> Server(
-                    name = "New VMess Server",
-                    protocol = "vmess",
-                    address = "",
-                    port = 443,
-                    network = "tcp",
-                    security = "auto"
-                )
-                "vless" -> Server(
-                    name = "New VLESS Server",
-                    protocol = "vless",
-                    address = "",
-                    port = 443,
-                    network = "tcp",
-                    security = "tls"
-                )
-                "trojan" -> Server(
-                    name = "New Trojan Server",
-                    protocol = "trojan",
-                    address = "",
-                    port = 443,
-                    security = "tls"
-                )
-                "shadowsocks" -> Server(
-                    name = "New Shadowsocks Server",
-                    protocol = "shadowsocks",
-                    address = "",
-                    port = 8388,
-                    method = "chacha20-ietf-poly1305"
-                )
-                "hysteria" -> Server(
-                    name = "New Hysteria Server",
-                    protocol = "hysteria",
-                    address = "",
-                    port = 443,
-                    hysteriaProtocol = "udp",
-                    hysteriaUpMbps = 10,
-                    hysteriaDownMbps = 50
-                )
-                "xhttp" -> Server(
-                    name = "New XHTTP Server",
-                    protocol = "xhttp",
-                    address = "",
-                    port = 443,
-                    security = "tls",
-                    path = "/"
-                )
-                "reality" -> Server(
-                    name = "New REALITY Server",
-                    protocol = "reality",
-                    address = "",
-                    port = 443,
-                    network = "tcp",
-                    security = "reality",
-                    encryption = "none",
-                    flow = "xtls-rprx-vision",
-                    fingerprint = "chrome",
-                    sni = "",  // Needs to be filled by user
-                    publicKey = ""  // Needs to be filled by user
-                )
-                else -> Server(
-                    name = "New Server",
-                    protocol = "vmess", // Default to VMess
-                    address = "",
-                    port = 443
-                )
-            }
+            // This would implement parsing logic for different protocol URLs
+            // Example: vmess://, vless://, trojan://, ss://, hysteria://
+            return null
         }
     }
 }

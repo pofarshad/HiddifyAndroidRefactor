@@ -1,17 +1,2 @@
-rootProject.name = "MarFaNet"
+rootProject.name = "HiddifyNG"
 include ':app'
-
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url "https://jitpack.io" }
-    }
-}
