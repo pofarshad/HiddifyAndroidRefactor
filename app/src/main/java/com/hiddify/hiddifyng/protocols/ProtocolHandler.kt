@@ -66,6 +66,7 @@ interface ProtocolHandler {
                 "shadowsocks" -> ShadowsocksProtocolHandler()
                 "hysteria" -> HysteriaProtocolHandler()
                 "xhttp" -> XhttpProtocolHandler()
+                "reality" -> RealityProtocolHandler()
                 else -> throw IllegalArgumentException("Unsupported protocol: $protocol")
             }
             
@@ -81,7 +82,7 @@ interface ProtocolHandler {
          */
         fun isProtocolSupported(protocol: String): Boolean {
             val normalizedProtocol = protocol.lowercase(Locale.getDefault())
-            return normalizedProtocol in listOf("vmess", "vless", "trojan", "shadowsocks", "hysteria", "xhttp")
+            return normalizedProtocol in getSupportedProtocols().map { it.lowercase(Locale.getDefault()) }
         }
         
         /**
@@ -89,7 +90,7 @@ interface ProtocolHandler {
          * @return List of supported protocol names
          */
         fun getSupportedProtocols(): List<String> {
-            return listOf("vmess", "vless", "trojan", "shadowsocks", "hysteria", "xhttp")
+            return listOf("vmess", "vless", "trojan", "shadowsocks", "hysteria", "xhttp", "reality")
         }
     }
 }

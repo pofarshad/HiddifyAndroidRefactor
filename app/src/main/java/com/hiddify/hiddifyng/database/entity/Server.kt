@@ -103,7 +103,13 @@ data class Server(
     var hysteriaAuthString: String? = null,
     var hysteriaRecvWindowConn: Int? = null,
     var hysteriaRecvWindow: Int? = null,
-    var hysteriaDisableMtuDiscovery: Boolean? = null
+    var hysteriaDisableMtuDiscovery: Boolean? = null,
+    
+    // REALITY protocol settings
+    var publicKey: String? = null,    // Server's public key for encryption
+    var shortId: String? = null,      // REALITY short ID
+    var spiderX: String? = null,      // Spider X for additional verification
+    var privateKey: String? = null    // Client's private key (rarely used)
 ) {
     /**
      * Generate a human-readable summary of the server with connection info
