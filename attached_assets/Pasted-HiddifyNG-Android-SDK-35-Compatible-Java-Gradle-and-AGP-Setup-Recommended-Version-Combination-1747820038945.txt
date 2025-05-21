@@ -1,0 +1,163 @@
+HiddifyNG Android (SDK 35) – Compatible Java, Gradle, and AGP Setup
+
+Recommended Version Combination: To build an Android SDK 35 project on Windows, use Java 17 (LTS) with a recent Gradle 8.x and Android Gradle Plugin (AGP) 8.x. For example, a stable combo is Java JDK 17, Gradle 8.9, and AGP 8.7.0, which fully supports API level 35
+developer.android.com
+developer.android.com
+. This setup ensures compatibility and avoids the Java 21 issues (AGP 8+ requires Java 17, and older AGP won’t recognize API 35). Below are step-by-step instructions to configure your environment:
+Step 1: Install Java 17 (Correct JDK Version)
+
+    Download JDK 17: Visit Oracle or AdoptOpenJDK (Eclipse Temurin) and download the Java SE 17 (64-bit) installer for Windows. Java 17 is a Long-Term Support version and is required by new Android build tools
+    developer.android.com
+    . Avoid Java 21 for now due to plugin compatibility issues.
+
+    Run the Installer: Install Java 17 using default settings. Note the install path (e.g. C:\Program Files\Java\jdk-17.xxx). This is the JDK home directory.
+
+    Verify Installation: Open a Command Prompt and run java -version. It should show Java 17. If not, you may need to add the JDK’s bin folder to your PATH.
+
+Step 2: Set JAVA_HOME and Gradle JDK in Android Studio
+
+    Set JAVA_HOME Environment Variable: On Windows, open System Properties → Advanced → Environment Variables. Under System variables, create a new variable JAVA_HOME and set its value to your JDK 17 installation path (e.g. C:\Program Files\Java\jdk-17.xxx). This lets tools find your Java install.
+
+    Configure Android Studio’s JDK: In Android Studio, go to File → Settings (or Preferences on macOS) → Build, Execution, Deployment → Build Tools → Gradle. Find the Gradle JDK setting. Select the JDK 17 you installed (Android Studio may list it automatically, or use “Add JDK” to browse to the JAVA_HOME path). This ensures Gradle uses Java 17 for builds
+    developer.android.com
+    . Using the same JDK for JAVA_HOME and Android Studio’s Gradle settings prevents version mismatches
+    developer.android.com
+    .
+
+    Apply and Restart: Click OK and Sync Project (or restart Android Studio) to apply the JDK change. Gradle will now run with Java 17.
+
+Step 3: Update Gradle Wrapper and Android Gradle Plugin (AGP)
+
+    Gradle Wrapper (gradle-wrapper.properties): In your project’s gradle/wrapper/gradle-wrapper.properties file, set the Gradle distribution URL to a compatible Gradle 8.x version. For example:
+
+distributionUrl = https\://services.gradle.org/distributions/gradle-8.9-all.zip
+
+This uses Gradle v8.9 which works with AGP 8.7+. (The -all.zip is recommended for full Gradle features, but -bin.zip also works.)
+
+Android Gradle Plugin Version: Open the project-level Gradle build file. This is usually the top-level build.gradle (or settings.gradle/build.gradle.kts if using the Kotlin DSL). Update the Android Gradle Plugin to a version that supports SDK 35:
+
+    If using buildscript: find the buildscript { dependencies { ... } } section and change the classpath for com.android.tools.build:gradle. For example:
+
+        buildscript {
+            repositories {
+                google()
+                mavenCentral()
+            }
+            dependencies {
+                classpath "com.android.tools.build:gradle:8.7.0"
+                // ... other classpaths
+            }
+        }
+
+        Ensure the version (here 8.7.0) is updated. AGP 8.6.0+ is required for API level 35
+        developer.android.com
+        , and AGP 8.7.0 officially supports up to API 35
+        developer.android.com
+        .
+
+        If using the Plugins DSL: in your module’s build.gradle, you might see a plugins { id "com.android.application" version "x.y.z" }. Update the version to 8.7.0 (or a latest 8.x release). Do the same for other plugins if needed (e.g. Kotlin plugin).
+
+    Install SDK 35: In Android Studio SDK Manager, make sure Android API Level 35 (SDK Platform 35) is installed. The compileSdk and targetSdk in your module’s build.gradle should be set to 35. Using an older AGP with a higher compileSdk can cause warnings or errors (e.g. AGP 7.x only supported up to certain API levels
+    stackoverflow.com
+    ). By using Gradle 8.9 + AGP 8.7.0, you meet the requirements for API 35 builds
+    developer.android.com
+    .
+
+    Sync Gradle: After making these changes, click Sync Project with Gradle Files in Android Studio. This will download the specified Gradle and plugin versions.
+
+Step 4: Enable BuildConfig Generation (Resolve BuildConfig Issues)
+
+If you encounter errors about BuildConfig (e.g. “BuildConfig fields are disabled” or references to BuildConfig not found), it’s because AGP 8+ by default may skip generating the BuildConfig class when not explicitly needed. HiddifyNG (or your custom modifications) likely defines custom fields in BuildConfig, which requires re-enabling this feature.
+
+    Symptom: Gradle sync/build fails with a message like “defaultConfig contains custom BuildConfig fields, but the feature is disabled... To enable it, add android.buildFeatures.buildConfig true”
+    github.com
+    .
+
+    Solution: Open your app module’s Gradle file (e.g. app/build.gradle). Inside the android { ... } block, add the buildFeatures setting to turn BuildConfig back on:
+
+    android {
+        compileSdk 35
+        …  
+        buildFeatures {
+            buildConfig = true
+        }
+        …
+    }
+
+    This explicitly enables generating the BuildConfig.java class for that module. Now any BuildConfig constants or custom fields can be accessed without error. (In AGP 8+, if you have custom buildConfigField entries in your Gradle config, you must enable buildConfig generation manually
+    github.com
+    .)
+
+    Alternative (not preferred): Older guidance suggested adding android.defaults.buildfeatures.buildconfig=true in gradle.properties
+    stackoverflow.com
+    . While this workaround works (and may be added automatically by the AGP upgrade assistant), it’s marked deprecated in AGP 8.0+
+    stackoverflow.com
+    . The recommended approach is to use the per-module buildFeatures { buildConfig = true } as shown above.
+
+    Re-run Sync: After adding this, sync the project again. The BuildConfig generation issue should be resolved.
+
+Step 5: Configure Repositories for Gradle and Plugins
+
+Gradle needs to know where to download the Android Gradle Plugin and other dependencies. Ensuring the proper Maven repositories are configured will fix plugin resolution errors (e.g. “Could not find com.android.tools.build:gradle:XYZ” or plugin not found issues).
+
+    Google Maven Repository: The Android Gradle Plugin and Android SDK components are provided via Google’s Maven repository. You must include google() in your repositories. Likewise, many Android libraries are on Maven Central, so include mavenCentral() as well.
+
+    Check settings.gradle or build.gradle: Open your top-level settings.gradle (for newer Android projects) or the project-level build.gradle (for older Gradle setups). Make sure the repositories are declared, for example:
+
+// For newer Gradle versions (settings.gradle)
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        // enable jcenter() only if needed; it's read-only now
+    }
+}
+
+This tells Gradle where to find plugins (like AGP) and libraries. The gradlePluginPortal() is optional but can help find community plugins; google() should be listed before mavenCentral() to prioritize Google’s repo for Android artifacts
+developer.android.com
+. For older projects using buildscript syntax, ensure you have:
+
+    buildscript {
+        repositories {
+            google()
+            mavenCentral()
+        }
+        dependencies {
+            classpath "com.android.tools.build:gradle:8.7.0"
+            // ...other classpaths
+        }
+    }
+    allprojects {
+        repositories {
+            google()
+            mavenCentral()
+        }
+    }
+
+    Remove JCenter if present: If you see jcenter() in the repositories, know that JCenter is deprecated (went read-only in 2021)
+    developer.android.com
+    . Replace it or supplement it with mavenCentral(). This ensures Gradle can fetch all dependencies from maintained sources.
+
+    Gradle Sync: After updating repositories, sync the project. Gradle should now be able to download the Android Gradle Plugin and any other required libraries from the specified repositories
+    developer.android.com
+    . This fixes errors related to missing plugin artifacts.
+
+By following these steps, you will have a stable configuration using Java 17, Gradle 8, and AGP 8 that supports Android SDK 35. This setup resolves the Java version incompatibility (by using JDK 17)
+developer.android.com
+, fixes plugin resolution by pointing to the correct repositories, and addresses the BuildConfig generation issue by enabling it in Gradle. You should now be able to Gradle sync and build the HiddifyNG Android project successfully in Android Studio.
+
+Sources: The above recommendations are based on Android’s official documentation and community issue trackers. Notably, AGP 8.x requires JDK 17 and newer AGP versions (8.6+, like 8.7.0) are needed for API Level 35 support
+developer.android.com
+developer.android.com
+. We also applied known fixes for BuildConfig in AGP 8
+github.com
+and ensured proper repository configuration as per Android developer guides
+developer.android.com
+. Each step aligns with official guidance to maintain compatibility and stability in your Android build environment.
