@@ -28,4 +28,12 @@
     <!-- Status colors -->
     <color name="status_connected">#4CAF50</color>
     <color name="status_disconnected">#F44336</color>
+    
+    <!-- Connection state colors -->
+    <color name="connected">#4CAF50</color>
+    <color name="disconnected">#F44336</color>
+    
+    <!-- Card / widget visuals -->
+    <color name="card_border">#33FFFFFF</color>
+    <color name="text_disabled">#61FFFFFF</color>
 </resources>
