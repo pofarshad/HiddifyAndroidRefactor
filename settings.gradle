@@ -1,10 +1,5 @@
 rootProject.name = "MarFaNet"
 include ':app'
 
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-    }
-}
+// Removed dependencyResolutionManagement block as it's only supported in Gradle 6.8+
+// Repository declarations are handled in build.gradle
