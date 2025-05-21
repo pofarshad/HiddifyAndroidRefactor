@@ -1,0 +1,81 @@
+2025-05-21T15:59:33.177+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [report metric STATISTICS_COLLECT_METRICS_OVERHEAD]
+2025-05-21T15:59:33.177+0330 [INFO] [com.android.build.gradle.internal.services.Aapt2DaemonBuildService$Inject] AAPT2 aapt2-8.7.0-12006047-linux Daemon #0: shutdown
+2025-05-21T15:59:33.180+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.KotlinGradleBuildServices$Inject] [KOTLIN] Disposed KotlinGradleBuildServices
+2025-05-21T15:59:33.181+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Finish root build tree'
+2025-05-21T15:59:33.181+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Finish root build tree' completed
+2025-05-21T15:59:33.182+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T15:59:33.182+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] FAILURE: Build failed with an exception.
+2025-05-21T15:59:33.182+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T15:59:33.182+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * What went wrong:
+2025-05-21T15:59:33.182+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] Execution failed for task ':app:processReleaseResources'.
+2025-05-21T15:59:33.182+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > A failure occurred while executing com.android.build.gradle.internal.res.LinkApplicationAndroidResourcesTask$TaskAction
+2025-05-21T15:59:33.182+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter]    > Android resource linking failed
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter]      ERROR: /root/projects/HiddifyAndroidRefactor-main/app/src/main/AndroidManifest.xml:10:5-68:19: AAPT: error: resource mipmap/ic_launcher (aka com.hiddify.hiddifyng:mipmap/ic_launcher) not found.
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter]          
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter]      ERROR: /root/projects/HiddifyAndroidRefactor-main/app/src/main/AndroidManifest.xml:10:5-68:19: AAPT: error: resource mipmap/ic_launcher_round (aka com.hiddify.hiddifyng:mipmap/ic_launcher_round) not found.
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter]          
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * Try:
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Run with --stacktrace option to get the stack trace.
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Run with --scan to get full insights.
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Get more help at https://help.gradle.org.
+2025-05-21T15:59:33.183+0330 [WARN] [org.gradle.internal.featurelifecycle.LoggingDeprecatedFeatureHandler] 
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] 
+2025-05-21T15:59:33.183+0330 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] BUILD FAILED in 5s
+2025-05-21T15:59:33.183+0330 [LIFECYCLE] [org.gradle.internal.buildevents.TaskExecutionStatisticsReporter] 24 actionable tasks: 10 executed, 12 from cache, 2 up-to-date
+2025-05-21T15:59:33.183+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Build finished for file system watching' started
+2025-05-21T15:59:33.190+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Build finished for file system watching'
+2025-05-21T15:59:33.190+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Build finished for file system watching' completed
+2025-05-21T15:59:33.190+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for cache directory md-supplier (/root/.gradle/caches/8.9/md-supplier)
+2025-05-21T15:59:33.190+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on cache directory md-supplier (/root/.gradle/caches/8.9/md-supplier).
+2025-05-21T15:59:33.191+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for Build Output Cleanup Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/buildOutputCleanup)
+2025-05-21T15:59:33.191+0330 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache outputFiles.bin (/root/projects/HiddifyAndroidRefactor-main/.gradle/buildOutputCleanup/outputFiles.bin)
+2025-05-21T15:59:33.191+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on Build Output Cleanup Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/buildOutputCleanup).
+2025-05-21T15:59:33.192+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for execution history cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/executionHistory)
+2025-05-21T15:59:33.192+0330 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache executionHistory.bin (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/executionHistory/executionHistory.bin)
+2025-05-21T15:59:33.192+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on execution history cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/executionHistory).
+2025-05-21T15:59:33.192+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for Build cache (/root/.gradle/caches/build-cache-1)
+2025-05-21T15:59:33.192+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on Build cache (/root/.gradle/caches/build-cache-1).
+2025-05-21T15:59:33.192+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] Build cache (/root/.gradle/caches/build-cache-1) has last been fully cleaned up 0 hours ago
+2025-05-21T15:59:33.192+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] Skipping cleanup for Build cache (/root/.gradle/caches/build-cache-1) as it is not yet due
+2025-05-21T15:59:33.193+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for cache directory md-rule (/root/.gradle/caches/8.9/md-rule)
+2025-05-21T15:59:33.193+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on cache directory md-rule (/root/.gradle/caches/8.9/md-rule).
+2025-05-21T15:59:33.196+0330 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.CachedStoreFactory] Resolution result cache closed. Cache reads: 0, disk reads: 0 (avg: 0.0 secs, total: 0.0 secs)
+2025-05-21T15:59:33.196+0330 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.CachedStoreFactory] Resolution result cache closed. Cache reads: 4, disk reads: 2 (avg: 0.006 secs, total: 0.013 secs)
+2025-05-21T15:59:33.198+0330 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.ResolutionResultsStoreFactory] Deleted 8 resolution results binary files in 0.003 secs
+2025-05-21T15:59:33.199+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Run build'
+2025-05-21T15:59:33.199+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Run build' completed
+2025-05-21T15:59:33.199+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 2: released lock on worker lease
+2025-05-21T15:59:33.206+0330 [DEBUG] [org.gradle.deployment.internal.DefaultDeploymentRegistry] Stopping 0 deployment handles
+2025-05-21T15:59:33.207+0330 [DEBUG] [org.gradle.deployment.internal.DefaultDeploymentRegistry] Stopped deployment handles
+2025-05-21T15:59:33.207+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for file hash cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/fileHashes)
+2025-05-21T15:59:33.207+0330 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache fileHashes.bin (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/fileHashes/fileHashes.bin)
+2025-05-21T15:59:33.207+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on file hash cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/fileHashes).
+2025-05-21T15:59:33.208+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for checksums cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/checksums)
+2025-05-21T15:59:33.208+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on checksums cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/checksums).
+2025-05-21T15:59:33.208+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache VCS Checkout Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/vcs-1) was closed 0 times.
+2025-05-21T15:59:33.208+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache VCS metadata (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/vcsMetadata) was closed 0 times.
+2025-05-21T15:59:33.208+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache Compressed Files Expansion Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/expanded) was closed 0 times.
+2025-05-21T15:59:33.208+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache dependencies-accessors (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/dependencies-accessors) was closed 0 times.
+2025-05-21T15:59:33.208+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Deleting unused version-specific caches in /root/projects/HiddifyAndroidRefactor-main/.gradle' started
+2025-05-21T15:59:33.215+0330 [DEBUG] [org.gradle.cache.internal.VersionSpecificCacheCleanupAction] Processed version-specific caches at /root/projects/HiddifyAndroidRefactor-main/.gradle for cleanup in 0.007 secs
+2025-05-21T15:59:33.215+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Deleting unused version-specific caches in /root/projects/HiddifyAndroidRefactor-main/.gradle'
+2025-05-21T15:59:33.215+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Deleting unused version-specific caches in /root/projects/HiddifyAndroidRefactor-main/.gradle' completed
+2025-05-21T15:59:33.233+0330 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has finished executing the build.
+2025-05-21T15:59:33.299+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: dispatching class org.gradle.launcher.daemon.protocol.CloseInput
+2025-05-21T15:59:33.300+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClient] Received result Success[value=org.gradle.launcher.exec.BuildActionResult@736d6a5c] from daemon DaemonInfo{pid=2464, address=[2950a0e5-2e46-4de0-af87-4f3197cf0cff port:22067, addresses:[/127.0.0.1]], state=Idle, lastBusy=1747830357333, context=DefaultDaemonContext[uid=cf668b66-f4e1-4bba-85f1-aeae815bb572,javaHome=/usr/lib/jvm/java-17-openjdk-amd64,javaVersion=17,daemonRegistryDir=/root/.gradle/daemon,pid=2464,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=--add-opens=java.base/java.io=ALL-UNNAMED,--add-opens=java.base/java.util=ALL-UNNAMED,--add-opens=java.base/java.lang=ALL-UNNAMED,--add-opens=java.base/java.lang.reflect=ALL-UNNAMED,--add-opens=java.base/java.util.concurrent=ALL-UNNAMED,--add-opens=java.base/java.util=ALL-UNNAMED,--add-opens=java.base/java.lang=ALL-UNNAMED,--add-opens=java.base/java.lang.invoke=ALL-UNNAMED,--add-opens=java.prefs/java.util.prefs=ALL-UNNAMED,--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED,--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED,--add-opens=java.base/java.nio.charset=ALL-UNNAMED,--add-opens=java.base/java.net=ALL-UNNAMED,--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED,-Xmx2048m,-Dfile.encoding=UTF-8,-Duser.country,-Duser.language=en,-Duser.variant]} (build should be done).
+2025-05-21T15:59:33.300+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: dispatching class org.gradle.launcher.daemon.protocol.Finished
+2025-05-21T15:59:33.300+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: connection stop
+2025-05-21T15:59:33.301+0330 [LIFECYCLE] [org.gradle.launcher.cli.DebugLoggerWarningAction] 
+#############################################################################
+   WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+
+   Debug level logging will leak security sensitive information!
+
+   For more details, please refer to https://docs.gradle.org/8.9/userguide/logging.html#sec:debug_security in the Gradle documentation.
+#############################################################################

@@ -1,0 +1,67 @@
+What the log is really telling you
+
+Android resource linking failed
+ERROR: ...AndroidManifest.xml: AAPT: error: resource mipmap/ic_launcher         not found.
+ERROR: ...AndroidManifest.xml: AAPT: error: resource mipmap/ic_launcher_round  not found.
+
+AAPT2 stops the build because the launcher-icon files you declared in AndroidManifest.xml do not exist in app/src/main/res/mipmap-* (or in any res/drawable-* folder).
+
+Nothing else in the trace is fatal—the “AAPT2 8.7.0” line is just the version string baked into the aapt2 binary that ships with AGP 8.6.0.
+How to fix
+
+    Check your manifest line (usually line 10):
+
+<application
+    android:icon="@mipmap/ic_launcher"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    … >
+
+Those names must match real resource files.
+
+Look inside app/src/main/res/
+You should have at least one of these folders (created by Android Studio’s New ▸ Image Asset wizard):
+
+mipmap-hdpi/
+mipmap-mdpi/
+mipmap-xhdpi/
+mipmap-xxhdpi/
+mipmap-xxxhdpi/
+mipmap-anydpi-v26/
+
+Each must contain both
+
+ic_launcher.png
+ic_launcher_round.png   (or an adaptive XML in -anydpi)
+
+If the folders are missing or the files are named differently:
+
+Option A – rebuild icons quickly
+
+# In project root
+mkdir -p app/src/main/res/mipmap-xxxhdpi
+# Copy any square PNG (e.g. 512×512) into that folder and all the other mipmap-* folders
+cp /path/to/logo.png app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+cp /path/to/logo.png app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png
+# Repeat for xxhdpi, xhdpi, hdpi, mdpi (or symlink if you’re just testing)
+
+Option B – use Android Studio GUI
+
+    Build ▸ Generate Signed Bundle/APK … → (it will prompt if icons are missing) or
+
+    Right-click res ▸ New ▸ Image Asset, supply a foreground image, and it auto-creates every density folder plus mipmap-anydpi-v26/ic_launcher.xml.
+
+Re-run the build
+
+    ./gradlew clean assembleRelease
+
+    The processReleaseResources task should now pass.
+
+Why did the icons disappear?
+
+    If you started from a minimal GitHub repo, the author may have .gitignore-d the generated mipmap-* folders.
+
+    If you renamed the application ID, Studio sometimes deletes the default icons expecting you to provide new branding.
+
+    Unzipping on Linux with the wrong switches can drop empty directories—verify they actually contain PNG/XML files.
+
+Once icons exist, AAPT2 links resources successfully, and the APK/AAB will be produced in app/build/outputs/….
