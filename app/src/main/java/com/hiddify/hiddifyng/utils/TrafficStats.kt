@@ -1,157 +1,107 @@
 package com.hiddify.hiddifyng.utils
 
 import android.content.Context
-import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.File
+import java.text.DecimalFormat
 import java.util.concurrent.atomic.AtomicLong
 
 /**
- * Utility class for tracking network traffic statistics
+ * Class for tracking network traffic statistics
  */
 class TrafficStats(private val context: Context) {
-    companion object {
-        private const val TAG = "TrafficStats"
-        private const val STATS_PATH = "traffic_stats"
-    }
     
-    // Current session statistics
+    // Traffic counters
     private val uploadBytes = AtomicLong(0)
     private val downloadBytes = AtomicLong(0)
-    
-    // Total statistics (persisted)
-    private var totalUploadBytes = AtomicLong(0)
-    private var totalDownloadBytes = AtomicLong(0)
+    private val uploadSpeed = AtomicLong(0)
+    private val downloadSpeed = AtomicLong(0)
     
     // Last update timestamp
-    private var lastUpdated = System.currentTimeMillis()
-    
-    // Upload/download speeds in bytes per second
-    private var uploadSpeed = 0L
-    private var downloadSpeed = 0L
-    
-    init {
-        // Load persisted stats
-        loadStats()
-    }
+    private var lastUpdateTime = System.currentTimeMillis()
     
     /**
-     * Update traffic statistics with new values
+     * Update traffic statistics
+     * @param uploadDelta Upload bytes since last update
+     * @param downloadDelta Download bytes since last update
      */
-    fun updateStats(newUploadBytes: Long, newDownloadBytes: Long) {
-        val currentTime = System.currentTimeMillis()
-        val timeDiff = (currentTime - lastUpdated) / 1000.0 // time diff in seconds
+    fun updateStats(uploadDelta: Long, downloadDelta: Long) {
+        // Update counters
+        uploadBytes.addAndGet(uploadDelta)
+        downloadBytes.addAndGet(downloadDelta)
         
-        if (timeDiff > 0) {
-            // Calculate speed
-            val upDiff = newUploadBytes - uploadBytes.get()
-            val downDiff = newDownloadBytes - downloadBytes.get()
-            
-            uploadSpeed = (upDiff / timeDiff).toLong()
-            downloadSpeed = (downDiff / timeDiff).toLong()
-            
-            // Update total bytes
-            totalUploadBytes.addAndGet(upDiff)
-            totalDownloadBytes.addAndGet(downDiff)
-            
-            // Update current session bytes
-            uploadBytes.set(newUploadBytes)
-            downloadBytes.set(newDownloadBytes)
-            
-            // Update timestamp
-            lastUpdated = currentTime
-            
-            // Save updated stats
-            saveStats()
+        // Calculate speeds
+        val currentTime = System.currentTimeMillis()
+        val timeDelta = currentTime - lastUpdateTime
+        
+        if (timeDelta > 0) {
+            uploadSpeed.set((uploadDelta * 1000) / timeDelta)
+            downloadSpeed.set((downloadDelta * 1000) / timeDelta)
+            lastUpdateTime = currentTime
         }
     }
     
     /**
-     * Reset session statistics
+     * Get upload traffic in bytes
+     * @return Upload traffic in bytes
      */
-    fun resetSessionStats() {
-        uploadBytes.set(0)
-        downloadBytes.set(0)
-        uploadSpeed = 0
-        downloadSpeed = 0
-        lastUpdated = System.currentTimeMillis()
+    fun getUploadBytes(): Long {
+        return uploadBytes.get()
     }
     
     /**
-     * Get current upload speed in bytes per second
+     * Get download traffic in bytes
+     * @return Download traffic in bytes
      */
-    fun getUploadSpeed(): Long = uploadSpeed
+    fun getDownloadBytes(): Long {
+        return downloadBytes.get()
+    }
     
     /**
-     * Get current download speed in bytes per second
+     * Get upload speed in bytes per second
+     * @return Upload speed in bytes per second
      */
-    fun getDownloadSpeed(): Long = downloadSpeed
+    fun getUploadSpeed(): Long {
+        return uploadSpeed.get()
+    }
     
     /**
-     * Get session upload bytes
+     * Get download speed in bytes per second
+     * @return Download speed in bytes per second
      */
-    fun getSessionUploadBytes(): Long = uploadBytes.get()
+    fun getDownloadSpeed(): Long {
+        return downloadSpeed.get()
+    }
     
     /**
-     * Get session download bytes
+     * Reset all counters and speeds
      */
-    fun getSessionDownloadBytes(): Long = downloadBytes.get()
-    
-    /**
-     * Get total upload bytes
-     */
-    fun getTotalUploadBytes(): Long = totalUploadBytes.get()
-    
-    /**
-     * Get total download bytes
-     */
-    fun getTotalDownloadBytes(): Long = totalDownloadBytes.get()
+    fun reset() {
+        uploadBytes.set(0)
+        downloadBytes.set(0)
+        uploadSpeed.set(0)
+        downloadSpeed.set(0)
+        lastUpdateTime = System.currentTimeMillis()
+    }
     
     /**
      * Format bytes to human-readable string
+     * @param bytes Bytes to format
+     * @return Formatted string (e.g., "1.2 MB")
      */
     fun formatBytes(bytes: Long): String {
-        if (bytes < 1024) return "$bytes B"
+        if (bytes <= 0) return "0 B"
+        
         val units = arrayOf("B", "KB", "MB", "GB", "TB")
         val digitGroups = (Math.log10(bytes.toDouble()) / Math.log10(1024.0)).toInt()
-        return String.format("%.2f %s", bytes / Math.pow(1024.0, digitGroups.toDouble()), units[digitGroups])
+        
+        return DecimalFormat("#,##0.##").format(bytes / Math.pow(1024.0, digitGroups.toDouble())) + " " + units[digitGroups]
     }
     
     /**
      * Format speed to human-readable string
+     * @param bytesPerSecond Speed in bytes per second
+     * @return Formatted string (e.g., "1.2 MB/s")
      */
     fun formatSpeed(bytesPerSecond: Long): String {
-        return "${formatBytes(bytesPerSecond)}/s"
-    }
-    
-    /**
-     * Save stats to persistence
-     */
-    private fun saveStats() {
-        try {
-            val statsFile = File(context.filesDir, STATS_PATH)
-            statsFile.writeText("${totalUploadBytes.get()},${totalDownloadBytes.get()}")
-        } catch (e: Exception) {
-            Log.e(TAG, "Error saving traffic stats", e)
-        }
-    }
-    
-    /**
-     * Load stats from persistence
-     */
-    private fun loadStats() {
-        try {
-            val statsFile = File(context.filesDir, STATS_PATH)
-            if (statsFile.exists()) {
-                val stats = statsFile.readText().split(",")
-                if (stats.size == 2) {
-                    totalUploadBytes.set(stats[0].toLongOrNull() ?: 0)
-                    totalDownloadBytes.set(stats[1].toLongOrNull() ?: 0)
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error loading traffic stats", e)
-        }
+        return formatBytes(bytesPerSecond) + "/s"
     }
 }

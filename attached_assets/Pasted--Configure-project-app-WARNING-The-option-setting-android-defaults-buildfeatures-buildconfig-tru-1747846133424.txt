@@ -1,0 +1,55 @@
+> Configure project :app
+WARNING: The option setting 'android.defaults.buildfeatures.buildconfig=true' is deprecated.
+The current default is 'false'.
+It will be removed in version 9.0 of the Android Gradle plugin.
+To keep using this feature, add the following to your module-level build.gradle files:
+    android.buildFeatures.buildConfig = true
+or from Android Studio, click: `Refactor` > `Migrate BuildConfig to Gradle Build Files`.
+WARNING: The following problems were found when resolving the SDK location:
+Where: sdk.dir property in local.properties file. Problem: Directory does not exist
+
+
+> Task :app:processReleaseResources FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:processReleaseResources'.
+> A failure occurred while executing com.android.build.gradle.internal.res.LinkApplicationAndroidResourcesTask$TaskAction
+   > Android resource linking failed
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6185: error: resource color/black_700 (aka com.hiddify.hiddifyng:color/black_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6185: error: resource color/black_700 (aka com.hiddify.hiddifyng:color/black_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6211: error: resource color/text_gold (aka com.hiddify.hiddifyng:color/text_gold) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6211: error: resource color/text_gold (aka com.hiddify.hiddifyng:color/text_gold) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6221: error: resource color/text_gold (aka com.hiddify.hiddifyng:color/text_gold) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6221: error: resource color/text_gold (aka com.hiddify.hiddifyng:color/text_gold) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6425: error: resource color/gold_500 (aka com.hiddify.hiddifyng:color/gold_500) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6426: error: resource color/gold_700 (aka com.hiddify.hiddifyng:color/gold_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6427: error: resource color/black_700 (aka com.hiddify.hiddifyng:color/black_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6430: error: resource color/gold_accent (aka com.hiddify.hiddifyng:color/gold_accent) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6431: error: resource color/gold_200 (aka com.hiddify.hiddifyng:color/gold_200) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6432: error: resource color/black_500 (aka com.hiddify.hiddifyng:color/black_500) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6435: error: resource color/background_primary (aka com.hiddify.hiddifyng:color/background_primary) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6445: error: resource color/black_700 (aka com.hiddify.hiddifyng:color/black_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6446: error: resource color/black_700 (aka com.hiddify.hiddifyng:color/black_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6425: error: resource color/gold_500 (aka com.hiddify.hiddifyng:color/gold_500) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6426: error: resource color/gold_700 (aka com.hiddify.hiddifyng:color/gold_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6427: error: resource color/black_700 (aka com.hiddify.hiddifyng:color/black_700) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6430: error: resource color/gold_accent (aka com.hiddify.hiddifyng:color/gold_accent) not found.
+     com.hiddify.hiddifyng.app-mergeReleaseResources-40:/values/values.xml:6431: error: resource color/gold_200 (aka com.hiddify.hiddifyng:color/gold_200) not found.
+
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 13s
+49 actionable tasks: 36 executed, 11 from cache, 2 up-to-date

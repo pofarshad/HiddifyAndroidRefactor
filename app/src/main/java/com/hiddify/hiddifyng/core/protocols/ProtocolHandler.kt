@@ -1,79 +1,69 @@
 package com.hiddify.hiddifyng.core.protocols
 
-import android.util.Log
 import com.hiddify.hiddifyng.database.entity.Server
 import org.json.JSONObject
 
 /**
- * Abstract base class for all protocol handlers
- * Each supported protocol must extend this class and implement its methods
+ * Base class for all protocol handlers
  */
 abstract class ProtocolHandler {
     
-    companion object {
-        private const val TAG = "ProtocolHandler"
-        
-        /**
-         * Factory method to create the appropriate protocol handler based on server type
-         */
-        fun createHandler(server: Server): ProtocolHandler {
-            return when (server.protocol.lowercase()) {
-                "vmess" -> VmessProtocol(server)
-                "vless" -> VlessProtocol(server)
-                "trojan" -> TrojanProtocol(server)
-                "shadowsocks" -> ShadowsocksProtocol(server)
-                "hysteria" -> HysteriaProtocol(server)
-                "reality" -> RealityProtocol(server)
-                "xhttp" -> XHttpProtocol(server)
-                else -> {
-                    Log.e(TAG, "Unsupported protocol: ${server.protocol}")
-                    // Default to VLESS as fallback
-                    VlessProtocol(server)
-                }
-            }
-        }
-    }
-    
     /**
-     * Get the protocol name (lowercase)
+     * Get protocol name
+     * @return Protocol name (e.g., "vmess", "vless", "trojan", etc.)
      */
     abstract fun getProtocolName(): String
     
     /**
-     * Create the outbound configuration for this protocol
+     * Create outbound configuration for Xray
+     * @return JSON configuration for the protocol
      */
     abstract fun createOutboundConfig(): JSONObject
     
     /**
-     * Create the protocol-specific settings
+     * Parse server URI to extract protocol-specific parameters
+     * @param uri Server URI (e.g., "vless://...")
+     * @return Server object with extracted parameters, or null if parsing failed
      */
-    abstract fun createProtocolSettings(): JSONObject
+    open fun parseUri(uri: String): Server? {
+        // Base implementation, to be overridden by subclasses
+        return null
+    }
     
     /**
-     * Create the stream settings (transport, security, etc.)
+     * Generate URI for the server
+     * @param server Server object
+     * @return URI string, or null if generation failed
      */
-    abstract fun createStreamSettings(): JSONObject
+    open fun generateUri(server: Server): String? {
+        // Base implementation, to be overridden by subclasses
+        return null
+    }
     
     /**
-     * Check if this protocol requires TLS
+     * Create default settings for the protocol
+     * @return JSON configuration with default settings
      */
-    open fun requiresTls(): Boolean = true
+    protected fun createDefaultSettings(): JSONObject {
+        return JSONObject()
+    }
     
     /**
-     * Get the default port for this protocol
+     * Check if the URI is valid for this protocol
+     * @param uri Server URI
+     * @return true if the URI is valid for this protocol, false otherwise
      */
-    open fun getDefaultPort(): Int = 443
+    open fun isValidUri(uri: String): Boolean {
+        // Base implementation, to be overridden by subclasses
+        return false
+    }
     
     /**
-     * Create a basic outbound template
+     * Get protocol icon resource
+     * @return Resource ID for the protocol icon
      */
-    protected fun createBaseOutbound(): JSONObject {
-        val outbound = JSONObject()
-        outbound.put("tag", "proxy")
-        outbound.put("protocol", getProtocolName())
-        outbound.put("settings", createProtocolSettings())
-        outbound.put("streamSettings", createStreamSettings())
-        outbound.put("mux", JSONObject().put("enabled", false))
-        return outbound
+    open fun getProtocolIcon(): Int {
+        // Base implementation, to be overridden by subclasses
+        return android.R.drawable.ic_menu_manage
     }
 }

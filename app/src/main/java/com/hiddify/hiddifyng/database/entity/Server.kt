@@ -1,193 +1,67 @@
 package com.hiddify.hiddifyng.database.entity
 
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "server",
-    foreignKeys = [
-        ForeignKey(
-            entity = ServerGroup::class,
-            parentColumns = ["id"],
-            childColumns = ["groupId"],
-            onDelete = ForeignKey.SET_NULL
-        )
-    ],
-    indices = [Index("groupId")]
-)
+/**
+ * Entity for server configuration
+ */
+@Entity(tableName = "servers")
 data class Server(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    var id: Long = 0,
     
-    // Basic info
-    var name: String,
-    var protocol: String,
-    var address: String,
-    var port: Int,
+    // Basic information
+    var name: String = "",
+    var protocol: String = "",
+    var address: String = "",
+    var port: Int = 0,
     
-    // Group association
-    var groupId: Long? = null,
-    
-    // Authentication details
-    var uuid: String? = null,
+    // Authentication
+    var userId: String? = null,
     var password: String? = null,
-    var alterId: Int? = null,
-    var security: String? = null,
-    var encryption: String? = null,
-    var flow: String? = null,
-    var method: String? = null,
+    var securityType: String? = null,
     
-    // Stream settings
-    var network: String? = null,  // tcp, kcp, ws, http, quic, grpc
-    var headerType: String? = null,
-    var host: String? = null,
-    var path: String? = null,
-    var tls: String? = null,  // "", tls, xtls
-    var sni: String? = null,
-    var alpn: String? = null,
-    var fingerprint: String? = null,
-    var quicSecurity: String? = null,
-    var quicKey: String? = null,
-    var grpcMultiMode: Boolean? = null,
-    var allowInsecure: Boolean? = null,
-    var requestTimeout: Int? = null,
-    var allowHttp2: Boolean? = null,
+    // TLS settings
+    var tls: Boolean = false,
+    var tlsServerName: String? = null,
+    var tlsFingerprint: String? = null,
     
-    // Mux settings
-    var enableMux: Boolean? = null,
-    var muxConcurrency: Int? = null,
+    // Proxy settings
+    var network: String? = null,
+    var wsPath: String? = null,
+    var header: String? = null,
     
-    // Routing settings
-    var bypassDomains: String? = null,  // Comma-separated list of domains to bypass
-    var blockDomains: String? = null,  // Comma-separated list of domains to block
-    var bypassIps: String? = null,  // Comma-separated list of IPs to bypass
-    var dnsServers: String? = null,  // Comma-separated list of DNS servers
-    var routingMode: String? = null,  // global, bypass_cn, custom
-    var customRules: String? = null,  // JSON string of custom routing rules
+    // REALITY settings
+    var realityPublicKey: String? = null,
+    var realityShortId: String? = null,
+    var realitySpiderX: String? = null,
     
-    // App settings for this server
-    var bypassPackages: String? = null,  // Comma-separated list of package names to bypass
-    
-    // Additional headers
-    var headers: String? = null,  // Semicolon-separated key:value pairs
-    
-    // Performance and stats
-    var ping: Int = 0,  // Ping time in milliseconds, 0 means not tested
-    
-    // Hysteria protocol settings
-    var hysteriaProtocol: String? = null,  // udp, wechat-video, faketcp
+    // Hysteria settings
+    var hysteriaProtocol: String? = null,
+    var hysteriaObfs: String? = null,
     var hysteriaUpMbps: Int? = null,
     var hysteriaDownMbps: Int? = null,
-    var hysteriaObfs: String? = null,
-    var hysteriaAuthString: String? = null,
-    var hysteriaRecvWindowConn: Int? = null,
-    var hysteriaRecvWindow: Int? = null,
-    var hysteriaDisableMtuDiscovery: Boolean? = null,
     
-    // REALITY protocol specific settings
-    var publicKey: String? = null,
-    var shortId: String? = null,
-    var spiderX: String? = null,
+    // XHTTP settings
+    var xhttpHost: String? = null,
+    var xhttpPath: String? = null,
     
-    // XHTTP protocol settings
-    var useTls: Boolean? = null,
+    // Additional settings
+    var serverSubscriptionId: Long? = null,
+    var lastPing: Long? = null,
+    var avgPing: Int? = null,
+    var extraParams: String? = null,
     
-    // Service settings for protocols
-    var serviceName: String? = null,
-    var multiMode: Boolean? = null,
-    
-    // Tracking fields
-    var lastPingTime: Long = 0,
-    var isActive: Boolean = false,
-    var downloadMbps: Int? = null,
-    var uploadMbps: Int? = null
+    // Status flags
+    var favorite: Boolean = false,
+    var isSelected: Boolean = false,
+    var order: Int = 0
 ) {
     /**
-     * Generate a human-readable summary of the server
+     * Get a display name for the server
+     * Uses name if available, otherwise address
      */
-    fun getSummary(): String {
-        return "$protocol | $address:$port"
-    }
-    
-    /**
-     * Generate a sharing link for this server
-     */
-    fun toShareLink(): String {
-        return when (protocol.toLowerCase()) {
-            "vmess" -> generateVmessLink()
-            "vless" -> generateVlessLink()
-            "trojan" -> generateTrojanLink()
-            "shadowsocks" -> generateShadowsocksLink()
-            "hysteria" -> generateHysteriaLink()
-            "xhttp" -> generateXhttpLink()
-            else -> ""
-        }
-    }
-    
-    /**
-     * Generate vmess:// link
-     */
-    private fun generateVmessLink(): String {
-        // This would implement VMess protocol URL generation
-        // Example: vmess://base64({...})
-        return ""
-    }
-    
-    /**
-     * Generate vless:// link
-     */
-    private fun generateVlessLink(): String {
-        // This would implement VLESS protocol URL generation
-        // Example: vless://uuid@host:port?params
-        return ""
-    }
-    
-    /**
-     * Generate trojan:// link
-     */
-    private fun generateTrojanLink(): String {
-        // This would implement Trojan protocol URL generation
-        // Example: trojan://password@host:port?params
-        return ""
-    }
-    
-    /**
-     * Generate ss:// link
-     */
-    private fun generateShadowsocksLink(): String {
-        // This would implement Shadowsocks protocol URL generation
-        // Example: ss://base64(method:password@host:port)
-        return ""
-    }
-    
-    /**
-     * Generate hysteria:// link
-     */
-    private fun generateHysteriaLink(): String {
-        // This would implement Hysteria protocol URL generation
-        return ""
-    }
-    
-    /**
-     * Generate xhttp:// link 
-     */
-    private fun generateXhttpLink(): String {
-        // This would implement XHTTP protocol URL generation
-        return ""
-    }
-    
-    companion object {
-        /**
-         * Parse server from URL string
-         * @param url URL string in protocol format
-         * @return Server object if parsing successful, null otherwise
-         */
-        fun fromUrl(url: String): Server? {
-            // This would implement parsing logic for different protocol URLs
-            // Example: vmess://, vless://, trojan://, ss://, hysteria://
-            return null
-        }
-    }
+    val displayName: String
+        get() = if (name.isNotEmpty()) name else address
 }

@@ -2,89 +2,98 @@ package com.hiddify.hiddifyng.utils
 
 import android.content.Context
 import android.util.Log
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.hiddify.hiddifyng.worker.UpdateWorker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.io.File
+import java.net.URL
 import java.util.concurrent.TimeUnit
 
 /**
- * Manages application updates and automatic update scheduling
+ * Manager for handling application and routing rule updates
  */
 class UpdateManager(private val context: Context) {
     companion object {
         private const val TAG = "UpdateManager"
-        private const val UPDATE_WORK_NAME = "app_update_work"
+        private const val PREFS_NAME = "update_prefs"
+        private const val PREF_AUTO_UPDATE_APP = "auto_update_app"
+        private const val PREF_AUTO_UPDATE_SUBSCRIPTIONS = "auto_update_subscriptions"
+        private const val PREF_AUTO_UPDATE_ROUTING = "auto_update_routing"
+        private const val PREF_LAST_ROUTING_UPDATE = "last_routing_update"
+        private const val PREF_ROUTING_VERSION = "routing_version"
+        
+        // GitHub repository for routing rules
+        private const val ROUTING_RULES_REPO = "Chocolate4U/Iran-v2ray-rules"
+        private const val ROUTING_RULES_API = "https://api.github.com/repos/$ROUTING_RULES_REPO/releases/latest"
+        private const val ROUTING_RULES_DIR = "routing_rules"
     }
     
-    private val workManager = WorkManager.getInstance(context)
-    
-    // Update settings
-    var autoUpdateEnabled: Boolean = false
-        private set
-    
-    var autoUpdateSubscriptions: Boolean = true
-        private set
+    // Shared preferences
+    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     
     /**
-     * Enable or disable automatic app updates
+     * Check if auto-update app is enabled
      */
-    fun setAutoUpdateEnabled(enabled: Boolean) {
-        autoUpdateEnabled = enabled
-        
-        if (!enabled) {
-            // Cancel any scheduled updates
-            workManager.cancelUniqueWork(UPDATE_WORK_NAME)
+    var autoUpdateApp: Boolean
+        get() = prefs.getBoolean(PREF_AUTO_UPDATE_APP, true)
+        set(value) {
+            prefs.edit().putBoolean(PREF_AUTO_UPDATE_APP, value).apply()
         }
-    }
     
     /**
-     * Enable or disable automatic subscription updates
+     * Check if auto-update subscriptions is enabled
      */
-    fun setAutoUpdateSubscriptions(enabled: Boolean) {
-        autoUpdateSubscriptions = enabled
-    }
-    
-    /**
-     * Schedule automatic update checks
-     */
-    fun scheduleUpdateChecks(intervalHours: Int) {
-        if (!autoUpdateEnabled) {
-            return
+    var autoUpdateSubscriptions: Boolean
+        get() = prefs.getBoolean(PREF_AUTO_UPDATE_SUBSCRIPTIONS, true)
+        set(value) {
+            prefs.edit().putBoolean(PREF_AUTO_UPDATE_SUBSCRIPTIONS, value).apply()
         }
+    
+    /**
+     * Check if auto-update routing is enabled
+     */
+    var autoUpdateRouting: Boolean
+        get() = prefs.getBoolean(PREF_AUTO_UPDATE_ROUTING, true)
+        set(value) {
+            prefs.edit().putBoolean(PREF_AUTO_UPDATE_ROUTING, value).apply()
+        }
+    
+    /**
+     * Get last routing update timestamp
+     */
+    private var lastRoutingUpdate: Long
+        get() = prefs.getLong(PREF_LAST_ROUTING_UPDATE, 0)
+        set(value) {
+            prefs.edit().putLong(PREF_LAST_ROUTING_UPDATE, value).apply()
+        }
+    
+    /**
+     * Get current routing version
+     */
+    var routingVersion: String
+        get() = prefs.getString(PREF_ROUTING_VERSION, "") ?: ""
+        set(value) {
+            prefs.edit().putString(PREF_ROUTING_VERSION, value).apply()
+        }
+    
+    /**
+     * Check if routing update is needed (daily update)
+     */
+    fun isRoutingUpdateNeeded(): Boolean {
+        val currentTime = System.currentTimeMillis()
+        val dayInMillis = TimeUnit.DAYS.toMillis(1)
         
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresBatteryNotLow(true)
-            .build()
-        
-        val updateWork = PeriodicWorkRequestBuilder<UpdateWorker>(
-            intervalHours.toLong(), TimeUnit.HOURS,
-            (intervalHours / 2).toLong(), TimeUnit.HOURS
-        )
-            .setConstraints(constraints)
-            .build()
-        
-        workManager.enqueueUniquePeriodicWork(
-            UPDATE_WORK_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
-            updateWork
-        )
-        
-        Log.i(TAG, "Scheduled update checks every $intervalHours hours")
+        return (currentTime - lastRoutingUpdate) >= dayInMillis
     }
     
     /**
-     * Check for app updates immediately
+     * Check for app updates
+     * @return true if update is available, false otherwise
      */
     suspend fun checkForAppUpdates(): Boolean = withContext(Dispatchers.IO) {
         try {
-            Log.i(TAG, "Checking for app updates")
-            // Placeholder implementation - will be implemented in a future update
+            // This would be implemented to check for app updates
+            // For now, we'll just return false (no update available)
             return@withContext false
         } catch (e: Exception) {
             Log.e(TAG, "Error checking for app updates", e)
@@ -93,12 +102,58 @@ class UpdateManager(private val context: Context) {
     }
     
     /**
-     * Check for routing rule updates
+     * Check for routing updates
+     * @return true if update is available and downloaded, false otherwise
      */
     suspend fun checkForRoutingUpdates(): Boolean = withContext(Dispatchers.IO) {
         try {
-            val routingManager = RoutingManager(context)
-            return@withContext routingManager.checkForRoutingUpdates()
+            if (!autoUpdateRouting || !isRoutingUpdateNeeded()) {
+                return@withContext false
+            }
+            
+            // Get latest release info
+            val response = URL(ROUTING_RULES_API).readText()
+            val releaseJson = JSONObject(response)
+            val latestVersion = releaseJson.getString("tag_name")
+            
+            // Check if we need to update
+            if (latestVersion == routingVersion) {
+                Log.i(TAG, "Routing rules are already up to date")
+                lastRoutingUpdate = System.currentTimeMillis()
+                return@withContext false
+            }
+            
+            // Download new routing rules
+            val assets = releaseJson.getJSONArray("assets")
+            var downloadUrl = ""
+            
+            for (i in 0 until assets.length()) {
+                val asset = assets.getJSONObject(i)
+                val name = asset.getString("name")
+                
+                if (name.endsWith(".dat") || name.contains("routing")) {
+                    downloadUrl = asset.getString("browser_download_url")
+                    break
+                }
+            }
+            
+            if (downloadUrl.isEmpty()) {
+                Log.e(TAG, "No routing rules found in release")
+                return@withContext false
+            }
+            
+            // Download and save the file
+            val success = downloadRoutingRules(downloadUrl)
+            
+            if (success) {
+                routingVersion = latestVersion
+                lastRoutingUpdate = System.currentTimeMillis()
+                Log.i(TAG, "Routing rules updated to version $latestVersion")
+                return@withContext true
+            } else {
+                Log.e(TAG, "Failed to download routing rules")
+                return@withContext false
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Error checking for routing updates", e)
             return@withContext false
@@ -106,40 +161,32 @@ class UpdateManager(private val context: Context) {
     }
     
     /**
-     * Download and install app update
+     * Download routing rules
+     * @param url Download URL
+     * @return true if download was successful, false otherwise
      */
-    suspend fun downloadAndInstallUpdate(updateInfo: UpdateInfo): Boolean = withContext(Dispatchers.IO) {
+    private suspend fun downloadRoutingRules(url: String): Boolean = withContext(Dispatchers.IO) {
         try {
-            Log.i(TAG, "Downloading and installing update: ${updateInfo.version}")
-            // Placeholder implementation - will be implemented in a future update
-            return@withContext false
+            // Create directory if it doesn't exist
+            val rulesDir = File(context.filesDir, ROUTING_RULES_DIR)
+            rulesDir.mkdirs()
+            
+            // Download the file
+            val connection = URL(url).openConnection()
+            connection.connectTimeout = 10000
+            connection.readTimeout = 10000
+            
+            val inputStream = connection.getInputStream()
+            val outputFile = File(rulesDir, "routing.dat")
+            
+            outputFile.outputStream().use { output ->
+                inputStream.copyTo(output)
+            }
+            
+            return@withContext true
         } catch (e: Exception) {
-            Log.e(TAG, "Error downloading/installing update", e)
+            Log.e(TAG, "Error downloading routing rules", e)
             return@withContext false
         }
     }
-    
-    /**
-     * Update routing rules
-     */
-    suspend fun updateRoutingRules(): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val routingManager = RoutingManager(context)
-            return@withContext routingManager.updateRoutingFiles()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating routing rules", e)
-            return@withContext false
-        }
-    }
-    
-    /**
-     * Data class for update information
-     */
-    data class UpdateInfo(
-        val version: String,
-        val downloadUrl: String,
-        val releaseNotes: String,
-        val apkSize: Long,
-        val isImportant: Boolean = false
-    )
 }
