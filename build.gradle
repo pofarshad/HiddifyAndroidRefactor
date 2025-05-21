@@ -6,30 +6,23 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2' // Compatible with Gradle 8.5
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0'
+        classpath 'com.android.tools.build:gradle:8.1.0' // Compatible with Gradle 8.5 and Java 21
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-allprojects {
-    repositories {
-        google()  // Make sure this is first
-        mavenCentral()
-        gradlePluginPortal()
-        maven { url "https://jitpack.io" }
-    }
-}
+// Repository management moved to settings.gradle using dependencyResolutionManagement
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
 
-// Ensure Java 11 compatibility
+// Ensure Java 17 compatibility for Gradle 8.5
 allprojects {
     tasks.withType(JavaCompile) {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
