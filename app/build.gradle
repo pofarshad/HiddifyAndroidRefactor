@@ -4,9 +4,12 @@ plugins {
     id 'kotlin-kapt'
 }
 
-// Add Java 17 compile arg for kapt
+// Using the correct syntax for kapt Java options
 kapt {
-    jvmTarget = "17"
+    javacOptions {
+        option("-source", "17")
+        option("-target", "17")
+    }
 }
 
 android {
