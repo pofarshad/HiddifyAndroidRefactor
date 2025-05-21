@@ -120,7 +120,7 @@ class XrayManager(private val context: Context) {
                 
                 if (result == 0) {
                     isRunning = false
-                    currentServerId = -1
+                    currentServerId = -1L
                     Log.i(TAG, "Xray stopped successfully")
                     return@withContext true
                 } else {

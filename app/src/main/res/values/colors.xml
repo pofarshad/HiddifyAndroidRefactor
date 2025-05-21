@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base metallic gold and black theme colors -->
-    <color name="gold_200">#FFD770</color>
-    <color name="gold_500">#D4AF37</color>
-    <color name="gold_700">#B8860B</color>
-    <color name="gold_accent">#FFD700</color>
+    <!-- Gold color palette for MarFaNet theme -->
+    <color name="gold_200">#FFF1CC</color>
+    <color name="gold_500">#FFC107</color>
+    <color name="gold_700">#FFA000</color>
+    <color name="gold_accent">#FFD54F</color>
     
-    <!-- Metallic black colors -->
-    <color name="black_100">#333333</color>
-    <color name="black_200">#222222</color>
-    <color name="black_500">#171717</color>
-    <color name="black_700">#0A0A0A</color>
+    <!-- Black color palette -->
+    <color name="black_300">#424242</color>
+    <color name="black_500">#212121</color>
+    <color name="black_700">#121212</color>
     
-    <!-- Standard colors -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    
-    <!-- Functional colors -->
-    <color name="success">#3ADF00</color>
-    <color name="warning">#FFB302</color>
-    <color name="error">#FF3B30</color>
-    <color name="info">#007AFF</color>
-    
-    <!-- Status colors -->
-    <color name="connected">#36D399</color>
-    <color name="disconnected">#F43F5E</color>
-    <color name="connecting">#FFCC00</color>
+    <!-- Text colors -->
+    <color name="text_primary">#F5F5F5</color>
+    <color name="text_secondary">#B3B3B3</color>
+    <color name="text_gold">#FFC107</color>
     
     <!-- Background colors -->
     <color name="background_primary">#121212</color>
     <color name="background_secondary">#1E1E1E</color>
-    <color name="background_tertiary">#2A2A2A</color>
     
-    <!-- Text colors -->
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#CCCCCC</color>
-    <color name="text_disabled">#777777</color>
-    <color name="text_gold">#D4AF37</color>
+    <!-- System colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="error">#CF6679</color>
     
-    <!-- Card colors -->
-    <color name="card_background">#252525</color>
-    <color name="card_background_selected">#353535</color>
-    <color name="card_border">#3A3A3A</color>
+    <!-- Status colors -->
+    <color name="status_connected">#4CAF50</color>
+    <color name="status_disconnected">#F44336</color>
 </resources>

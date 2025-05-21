@@ -135,12 +135,13 @@ class HiddifyNGApplication : Application() {
                     )
                 
                 // Schedule subscription update worker (every 30 minutes as requested)
-                if (settings.autoUpdateSubscriptions) {
+                val updateManager = UpdateManager(this)
+                if (updateManager.autoUpdateSubscriptions) {
                     Log.i(TAG, "Scheduling subscription update worker every $SUBSCRIPTION_UPDATE_INTERVAL_MINUTES minutes")
                     
                     val subscriptionRequest = PeriodicWorkRequestBuilder<SubscriptionWorker>(
-                        SUBSCRIPTION_UPDATE_INTERVAL_MINUTES, TimeUnit.MINUTES,
-                        SUBSCRIPTION_UPDATE_INTERVAL_MINUTES / 5, TimeUnit.MINUTES // Flex period
+                        SUBSCRIPTION_UPDATE_INTERVAL_MINUTES.toLong(), TimeUnit.MINUTES,
+                        (SUBSCRIPTION_UPDATE_INTERVAL_MINUTES / 5).toLong(), TimeUnit.MINUTES // Flex period
                     )
                         .setConstraints(constraints)
                         .build()
