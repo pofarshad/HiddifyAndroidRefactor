@@ -57,6 +57,38 @@ class RoutingManager(private val context: Context) {
     }
     
     /**
+     * Check for routing rule updates from repository
+     * @return true if updates are available, false otherwise
+     */
+    suspend fun checkForRoutingUpdates(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            Log.d(TAG, "Checking for routing rule updates")
+            
+            // If we don't have rules yet, definitely need update
+            if (isUpdateNeeded()) {
+                return@withContext true
+            }
+            
+            // Try to fetch metadata and compare versions
+            // For now, just return true if the update interval has passed
+            val lastUpdate = prefs.getLong(KEY_LAST_UPDATE, 0)
+            val now = System.currentTimeMillis()
+            val updateIntervalMillis = TimeUnit.HOURS.toMillis(UPDATE_INTERVAL_HOURS.toLong())
+            
+            return@withContext now - lastUpdate > updateIntervalMillis
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking for routing updates", e)
+            false
+        }
+    }
+    
+    /**
+     * Update routing files from repository
+     * @return true if successful, false otherwise
+     */
+    suspend fun updateRoutingFiles(): Boolean = updateRoutingRules()
+    
+    /**
      * Download and update routing rules from Chocolate4U/Iran-v2ray-rules repository
      * @return true if update was successful, false otherwise
      */
