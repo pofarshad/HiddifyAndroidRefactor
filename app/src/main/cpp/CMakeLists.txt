@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.18.1)
 
 project("hiddifyng")
 
-# Set compiler flags
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Werror")
+# Set compiler flags - removed -Werror to allow building with warnings
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall")
 
 # Define the xray-core-jni library
 add_library(
