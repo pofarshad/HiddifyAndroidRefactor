@@ -16,10 +16,8 @@ buildscript {
 allprojects {
     repositories {
         google()  // Make sure this is first
-        jcenter() // Adding jcenter as backup
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://maven.google.com" }
         maven { url "https://jitpack.io" }
     }
 }
