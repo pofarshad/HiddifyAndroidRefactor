@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_server_list"
-        android:title="Server List"
+        android:id="@+id/nav_home"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_servers"
         android:icon="@android:drawable/ic_menu_sort_by_size"
-        app:showAsAction="ifRoom" />
-    
+        android:title="Servers" />
     <item
-        android:id="@+id/menu_check_update"
-        android:title="Check for Updates"
-        android:icon="@android:drawable/ic_menu_rotate"
-        app:showAsAction="never" />
-    
-    <item
-        android:id="@+id/menu_settings"
-        android:title="Settings"
+        android:id="@+id/nav_settings"
         android:icon="@android:drawable/ic_menu_preferences"
-        app:showAsAction="never" />
+        android:title="Settings" />
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="About" />
 </menu>
