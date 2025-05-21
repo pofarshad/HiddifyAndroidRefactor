@@ -284,6 +284,19 @@ data class Server(
                     security = "tls",
                     path = "/"
                 )
+                "reality" -> Server(
+                    name = "New REALITY Server",
+                    protocol = "reality",
+                    address = "",
+                    port = 443,
+                    network = "tcp",
+                    security = "reality",
+                    encryption = "none",
+                    flow = "xtls-rprx-vision",
+                    fingerprint = "chrome",
+                    sni = "",  // Needs to be filled by user
+                    publicKey = ""  // Needs to be filled by user
+                )
                 else -> Server(
                     name = "New Server",
                     protocol = "vmess", // Default to VMess
