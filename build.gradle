@@ -2,15 +2,11 @@
 buildscript {
     repositories {
         google()  // Make sure this is first
-        jcenter() // Adding jcenter as backup
         mavenCentral()
         gradlePluginPortal()
-        maven {
-            url "https://maven.google.com"
-        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.2' // Using a more widely available version
+        classpath 'com.android.tools.build:gradle:7.0.4' // Updated to match Gradle 7.3.3
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
