@@ -3,12 +3,11 @@ buildscript {
     repositories {
         google()  // Make sure this is first
         mavenCentral()
-        jcenter() // For older dependencies
-        gradlePluginPortal()
+        jcenter()  // For older dependencies
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0' // Confirmed available version
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10'
+        classpath 'com.android.tools.build:gradle:4.2.2' // Widely compatible version
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -16,14 +15,14 @@ buildscript {
 
 // Repository management moved to settings.gradle using dependencyResolutionManagement
 
-tasks.register('clean', Delete) {
+task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-// Ensure Java 17 compatibility for Gradle 8.5
+// Ensure Java 11 compatibility for better compatibility
 allprojects {
     tasks.withType(JavaCompile) {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
