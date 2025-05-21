@@ -30,8 +30,8 @@ class HysteriaProtocol(private val server: Server) : ProtocolHandler() {
         }
         
         // Connection settings
-        settings.put("up_mbps", server.uploadMbps ?: 100)
-        settings.put("down_mbps", server.downloadMbps ?: 100)
+        settings.put("up_mbps", server.hysteriaUpMbps ?: 100)
+        settings.put("down_mbps", server.hysteriaDownMbps ?: 100)
         
         // Optional settings with sensible defaults
         settings.put("fast_open", true)
