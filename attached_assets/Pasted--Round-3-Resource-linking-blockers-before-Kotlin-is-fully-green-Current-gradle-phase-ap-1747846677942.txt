@@ -1,0 +1,78 @@
+# Round 3 – Resource‑linking blockers before Kotlin is fully green
+
+> **Current gradle phase:** `:app:processReleaseResources`
+>
+> After fixing the first real Kotlin compilation errors (Round 2) the build now stops **inside `aapt2`** while merging the `values.xml` bundle:
+>
+> ```
+> error: resource color/black_700 not found
+> … color/text_gold … gold_500 … background_primary …
+> ```
+
+---
+
+## 0  » SDK dir warning – fix once
+
+```
+WARNING: sdk.dir property in local.properties file. Problem: Directory does not exist
+```
+
+* Add (or correct) `sdk.dir=/opt/android-sdk` at the *root* **`local.properties`**.
+* Commit so CI picks it up.
+
+---
+
+## 1  » Missing colour resources (the *real* blocker)
+
+All reported IDs live in **`res/values/colors.xml`** (or a light/dark variant):
+
+| 🔍 Needed            | Typical hex                            | Action             |
+| -------------------- | -------------------------------------- | ------------------ |
+| `black_700`          | `#616161`                              | add if not present |
+| `black_500`          | `#9E9E9E`                              | idem               |
+| `gold_700`           | `#FFA000`                              | idem               |
+| `gold_500`           | `#FFC107`                              | idem               |
+| `gold_200`           | `#FFE082`                              | idem               |
+| `gold_accent`        | `#FFD54F`                              | idem               |
+| `text_gold`          | `?attr/colorOnPrimary` (or direct hex) | idem               |
+| `background_primary` | `?attr/colorSurface`                   | idem               |
+
+### Quick patch snippet
+
+```xml
+<!-- app/src/main/res/values/colors.xml -->
+<resources>
+    <color name="black_700">#616161</color>
+    <color name="black_500">#9E9E9E</color>
+    <color name="gold_700">#FFA000</color>
+    <color name="gold_500">#FFC107</color>
+    <color name="gold_200">#FFE082</color>
+    <color name="gold_accent">#FFD54F</color>
+    <color name="text_gold">#FFC107</color>
+    <color name="background_primary">@color/black_700</color>
+</resources>
+```
+
+*Adjust shades as desired – the compiler only needs **a** definition.*
+
+---
+
+## 2  » Re‑run the build (incremental)
+
+```bash
+./gradlew :app:processReleaseResources
+```
+
+If colours were the only gap, **`processReleaseResources` should now pass** and Gradle will continue to `assembleDebug` (or whatever target you invoke).
+
+---
+
+### Next action for you
+
+1. **Add the missing colours** (commit).
+2. Ensure `local.properties` contains the valid `sdk.dir`.
+3. Re‑run Gradle and paste only the *new* top‑most error if any.
+
+---
+
+*Doc updated* 🕑
