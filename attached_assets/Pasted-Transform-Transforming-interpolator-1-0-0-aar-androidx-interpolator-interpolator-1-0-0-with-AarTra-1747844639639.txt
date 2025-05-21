@@ -1,0 +1,356 @@
+Transform
+Transforming interpolator-1.0.0.aar (androidx.interpolator:interpolator:1.0.0) with AarTransform
+Transforming interpolator-1.0.0.aar (androidx.interpolator:interpolator:1.0.0) with ExtractAarTransform
+Transforming interpolator-1.0.0.aar (androidx.interpolator:interpolator:1.0.0) with AarTransform
+Transforming versionedparcelable-1.1.1.aar (androidx.versionedparcelable:versionedparcelable:1.1.1) with ExtractAarTransform
+Transforming versionedparcelable-1.1.1.aar (androidx.versionedparcelable:versionedparcelable:1.1.1) with AarTransform
+Transforming profileinstaller-1.3.0.aar (androidx.profileinstaller:profileinstaller:1.3.0) with ExtractAarTransform
+Transforming profileinstaller-1.3.0.aar (androidx.profileinstaller:profileinstaller:1.3.0) with AarTransform
+Transforming startup-runtime-1.1.1.aar (androidx.startup:startup-runtime:1.1.1) with ExtractAarTransform
+Transforming startup-runtime-1.1.1.aar (androidx.startup:startup-runtime:1.1.1) with AarTransform
+Transforming tracing-1.0.0.aar (androidx.tracing:tracing:1.0.0) with ExtractAarTransform
+Transforming tracing-1.0.0.aar (androidx.tracing:tracing:1.0.0) with AarTransform
+Transforming documentfile-1.0.0.aar (androidx.documentfile:documentfile:1.0.0) with ExtractAarTransform
+Transforming documentfile-1.0.0.aar (androidx.documentfile:documentfile:1.0.0) with AarTransform
+Transforming localbroadcastmanager-1.0.0.aar (androidx.localbroadcastmanager:localbroadcastmanager:1.0.0) with ExtractAarTransform
+Transforming localbroadcastmanager-1.0.0.aar (androidx.localbroadcastmanager:localbroadcastmanager:1.0.0) with AarTransform
+Transforming print-1.0.0.aar (androidx.print:print:1.0.0) with ExtractAarTransform
+Transforming print-1.0.0.aar (androidx.print:print:1.0.0) with AarTransform
+Transforming annotation-experimental-1.3.0.aar (androidx.annotation:annotation-experimental:1.3.0) with ExtractAarTransform
+Transforming annotation-experimental-1.3.0.aar (androidx.annotation:annotation-experimental:1.3.0) with AarTransform
+Caching disabled for task ':app:mergeReleaseAssets' because:
+  Simple merging task
+Task ':app:mergeReleaseAssets' is not up-to-date because:
+  Output property 'outputDir' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/assets/release/mergeReleaseAssets has been removed.
+The input changes require a full rebuild for incremental task ':app:mergeReleaseAssets'.
+Resolve mutations for :app:compressReleaseAssets (Thread[Execution worker,5,main]) started.
+:app:compressReleaseAssets (Thread[Execution worker,5,main]) started.
+
+> Task :app:compressReleaseAssets FROM-CACHE
+Build cache key for task ':app:compressReleaseAssets' is 9122aa955250b404fe93ee8ee8bf6030
+Task ':app:compressReleaseAssets' is not up-to-date because:
+  Output property 'outputDir' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/compressed_assets/release/compressReleaseAssets/out has been removed.
+Loaded cache entry for task ':app:compressReleaseAssets' with cache key 9122aa955250b404fe93ee8ee8bf6030
+Resolve mutations for :app:extractReleaseVersionControlInfo (Thread[Execution worker,5,main]) started.
+:app:extractReleaseVersionControlInfo (Thread[Execution worker,5,main]) started.
+
+> Task :app:extractReleaseVersionControlInfo
+Caching disabled for task ':app:extractReleaseVersionControlInfo' because:
+  Caching has been disabled for the task
+Task ':app:extractReleaseVersionControlInfo' is not up-to-date because:
+  Output property 'vcInfoFile' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/version_control_info_file/release/extractReleaseVersionControlInfo/version-control-info.textproto has been removed.
+Resolve mutations for :app:optimizeReleaseResources (Thread[Execution worker,5,main]) started.:app:optimizeReleaseResources (Thread[Execution worker,5,main]) started.
+
+> Task :app:mergeReleaseNativeDebugMetadata
+Caching disabled for task ':app:mergeReleaseNativeDebugMetadata' because:
+  Caching has been disabled for the task
+Task ':app:mergeReleaseNativeDebugMetadata' is not up-to-date because:
+  Output property 'outputFile' file /root/projects/HiddifyAndroidRefactor-main/app/build/outputs/native-debug-symbols/release/native-debug-symbols.zip has been removed.
+
+> Task :app:optimizeReleaseResources FROM-CACHE
+Custom actions are attached to task ':app:optimizeReleaseResources'.
+Build cache key for task ':app:optimizeReleaseResources' is f6aaefdd236ff4409f55e419dd1949ae
+Task ':app:optimizeReleaseResources' is not up-to-date because:
+  Output property 'optimizedProcessedRes' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/optimized_processed_res/release/optimizeReleaseResources has been removed.  Output property 'optimizedProcessedRes' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/optimized_processed_res/release/optimizeReleaseResources/output-metadata.json has been removed.
+  Output property 'optimizedProcessedRes' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/optimized_processed_res/release/optimizeReleaseResources/resources-release-optimize.ap_ has been removed.
+Loaded cache entry for task ':app:optimizeReleaseResources' with cache key f6aaefdd236ff4409f55e419dd1949ae
+Resolve mutations for :app:collectReleaseDependencies (Thread[Execution worker,5,main]) started.
+:app:collectReleaseDependencies (Thread[Execution worker,5,main]) started.
+
+> Task :app:collectReleaseDependencies
+Caching disabled for task ':app:collectReleaseDependencies' because:
+  Caching has been disabled for the task
+Task ':app:collectReleaseDependencies' is not up-to-date because:
+  Output property 'dependencyReport' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/metadata_library_dependencies_report/release/collectReleaseDependencies/dependencies.pb has been removed.
+Resolve mutations for :app:sdkReleaseDependencyData (Thread[Execution worker,5,main]) started.:app:sdkReleaseDependencyData (Thread[Execution worker,5,main]) started.
+
+> Task :app:sdkReleaseDependencyData
+Caching disabled for task ':app:sdkReleaseDependencyData' because:
+  Caching has been disabled for the task
+Task ':app:sdkReleaseDependencyData' is not up-to-date because:
+  Output property 'sdkDependencyData' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/sdk_dependency_data/release/sdkReleaseDependencyData/sdkDependencyData.pb has been removed.
+  Output property 'sdkDependencyDataPublic' file /root/projects/HiddifyAndroidRefactor-main/app/build/outputs/sdk-dependencies/release/sdkDependencies.txt has been removed.
+Resolve mutations for :app:writeReleaseAppMetadata (Thread[Execution worker,5,main]) started.
+:app:writeReleaseAppMetadata (Thread[Execution worker,5,main]) started.
+
+> Task :app:writeReleaseAppMetadata
+Caching disabled for task ':app:writeReleaseAppMetadata' because:
+  Caching has been disabled for the task
+Task ':app:writeReleaseAppMetadata' is not up-to-date because:
+  Output property 'outputFile' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/app_metadata/release/writeReleaseAppMetadata/app-metadata.properties has been removed.
+Resolve mutations for :app:writeReleaseSigningConfigVersions (Thread[Execution worker,5,main]) started.
+:app:writeReleaseSigningConfigVersions (Thread[Execution worker,5,main]) started.
+
+> Task :app:writeReleaseSigningConfigVersions
+Caching disabled for task ':app:writeReleaseSigningConfigVersions' because:
+  Caching has been disabled for the task
+Task ':app:writeReleaseSigningConfigVersions' is not up-to-date because:
+  Output property 'outputFile' file /root/projects/HiddifyAndroidRefactor-main/app/build/intermediates/signing_config_versions/release/writeReleaseSigningConfigVersions/signing-config-versions.json has been removed.
+
+> Task :app:compileReleaseKotlin FAILED
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt:125:36 Unresolved reference. None of the following candidates is applicable because of receiver type mismatch: 
+public inline operator fun BigDecimal.div(other: BigDecimal): BigDecimal defined in kotlin
+public inline operator fun BigInteger.div(other: BigInteger): BigInteger defined in kotlin
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt:138:37 Unresolved reference: UpdateManager
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:131:19 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:160:18 Unresolved reference: menu_settings
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:164:18 Unresolved reference: menu_check_update
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:168:18 Unresolved reference: menu_server_list
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:264:19 Unresolved reference: bestServer
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:264:46 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:284:19 Unresolved reference: trafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:284:48 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:310:86 Unresolved reference: connecting
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:323:84 Unresolved reference: background_tertiary
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:370:46 Unresolved reference: connecting
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:392:27 Unresolved reference: refreshTrafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:417:19 Unresolved reference: refreshTrafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:424:59 Unresolved reference: TrafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:481:48 Unresolved reference: bestServer
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:522:45 Unresolved reference: pingAllServersAsync
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:523:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:545:37 Unresolved reference: pingAllServersAsync
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:552:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:604:27 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:815:53 Unresolved reference: importSubscription
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:905:65 Unresolved reference: autoUpdateSubscriptions
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:915:26 Unresolved reference: autoUpdateSubscriptions
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:950:47 Unresolved reference: checkForAppUpdates
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:953:51 Unresolved reference: checkForRoutingUpdates
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1017:58 Unresolved reference: UpdateInfo
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1029:41 Unresolved reference: downloadAndInstallUpdate
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1087:41 Unresolved reference: updateRoutingRules
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1180:23 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1187:48 Unresolved reference: getServerById
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1196:23 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:452:80 Unresolved reference: tv_server_details
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:453:77 Unresolved reference: tv_server_ping
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:454:77 Unresolved reference: iv_connected
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:455:75 Unresolved reference: btn_edit
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:456:77 Unresolved reference: btn_delete
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/XrayManager.kt:121:21 Operator '==' cannot be applied to 'Boolean' and 'Int'
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:33:18 None of the following functions can be called with the arguments supplied: 
+public open fun put(p0: String!, p1: Any!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Boolean): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Double): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Float): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Int): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Long): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Collection<*>!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Map<*, *>!): JSONObject! defined in org.json.JSONObject
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:33:40 Unresolved reference: uploadMbps
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:34:18 None of the following functions can be called with the arguments supplied: 
+public open fun put(p0: String!, p1: Any!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Boolean): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Double): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Float): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Int): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Long): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Collection<*>!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Map<*, *>!): JSONObject! defined in org.json.JSONObject
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:34:42 Unresolved reference: downloadMbps
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:56:21 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:57:53 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:60:21 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:61:51 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:64:21 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:65:51 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:59:13 Smart cast to 'String' is impossible, because 'server.alpn' is a mutable property that could have been changed by this time
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:90:29 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:91:60 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:94:54 Unresolved reference: multiMode
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:60:17 Smart cast to 'String' is impossible, because 'server.alpn' is a mutable property that could have been changed by this time
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:92:29 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:93:60 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:96:54 Unresolved reference: multiMode
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:60:17 Smart cast to 'String' is impossible, because 'server.alpn' is a mutable property that could have been changed by this time
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:92:29 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:93:60 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:96:54 Unresolved reference: multiMode
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/XHttpProtocol.kt:75:23 Unresolved reference: useTls
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:11:1 Class 'HysteriaProtocol' is not abstract and does not implement abstract member public abstract fun getProtocolName(): String defined in com.hiddify.hiddifyng.protocols.ProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:11:41 This class does not have a constructor
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:13:5 'createOutboundConfig' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:26:5 'createProtocolSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:80:5 'createStreamSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:51:28 Unresolved reference: VmessProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:52:28 Unresolved reference: VlessProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:53:29 Unresolved reference: TrojanProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:54:34 Unresolved reference: ShadowsocksProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:99:49 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:102:37 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:36 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:67 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:80 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:106:37 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:106:74 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:134:32 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:134:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:142:37 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:36 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:72 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:85 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:145:37 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:145:84 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:146:58 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:156:32 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:156:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:157:32 Unresolved reference: spiderY
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:157:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:160:32 Unresolved reference: privateKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:160:68 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:163:32 Unresolved reference: showNetwork
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:163:70 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:166:32 Unresolved reference: utlsVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:166:70 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:40 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:65 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:85 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:359:20 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:365:20 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:383:21 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:385:37 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:385:71 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:452:90 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:454:88 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:457:88 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:458:88 Unresolved reference: spiderY
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:460:36 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:465:61 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:466:40 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:470:36 Unresolved reference: utlsVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:473:36 Unresolved reference: showNetwork
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:478:36 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:523:36 Unresolved reference: privateKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:563:24 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:576:20 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:577:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:586:20 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:587:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:591:20 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:592:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:596:20 Unresolved reference: spiderY
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:597:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:601:20 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:602:64 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:613:20 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:614:65 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:618:20 Unresolved reference: utlsVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:619:64 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:623:24 Unresolved reference: showNetwork
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:695:20 Unresolved reference: privateKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:696:63 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:10:1 Class 'XhttpProtocol' is not abstract and does not implement abstract member public abstract fun getProtocolName(): String defined in com.hiddify.hiddifyng.protocols.ProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:10:38 This class does not have a constructor
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:12:5 'createOutboundConfig' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:25:5 'createProtocolSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:69:5 'createStreamSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:71:47 Unresolved reference: checkVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:84:45 Unresolved reference: getLastUpdateTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:88:74 Overload resolution ambiguity: 
+public constructor Date(p0: Long) defined in java.util.Date
+public constructor Date(p0: String!) defined in java.util.Date
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:147:45 Unresolved reference: updateXrayCore
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:153:61 Unresolved reference: checkVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:185:46 Unresolved reference: updateRoutingRules
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/AutoUpdateManager.kt:136:40 Type mismatch: inferred type is String? but String was expected
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/AutoUpdateManager.kt:140:46 Type mismatch: inferred type is String? but String was expected
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:10:30 Unresolved reference: workers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:11:30 Unresolved reference: workers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:12:30 Unresolved reference: workers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:72:54 Unresolved reference: PingWorker
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:100:62 Unresolved reference: SubscriptionWorker
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:128:57 Unresolved reference: RoutingUpdateWorker
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/MemoryCache.kt:33:17 'public' function exposes its 'private-in-class' return type CacheEntry
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/MemoryCache.kt:56:17 'public' function exposes its 'private-in-class' return type CacheEntry
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:7:46 Unresolved reference: Subscription
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:34:44 Unresolved reference: subscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:74:58 Unresolved reference: Subscription
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:259:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:266:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:268:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:269:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:351:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:358:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:360:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:361:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:445:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:452:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:454:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:455:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:533:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:540:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:542:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:543:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:612:21 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:619:21 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:621:21 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:622:21 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:664:21 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:671:21 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:673:21 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:674:21 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:752:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:759:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:761:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:762:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:842:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:849:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:851:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:852:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:936:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:943:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:945:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:946:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1006:45 Unresolved reference: getServersBySubscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1009:70 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1009:85 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1009:99 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1029:25 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1030:25 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1041:30 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1041:45 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1041:59 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1048:27 Unresolved reference: deleteServers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1053:27 Unresolved reference: updateServers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1056:13 'if' must have both main and 'else' branches if used as an expression
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1058:27 Unresolved reference: insertServers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:8:43 Unresolved reference: SubscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:65:26 Unresolved reference: SubscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:72:27 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:72:37 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:90:26 Unresolved reference: SubscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/viewmodel/MainViewModel.kt:72:50 Unresolved reference: initializeRoutingFiles
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/RoutingUpdateWorker.kt:39:31 Unresolved reference: autoUpdateRouting
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/RoutingUpdateWorker.kt:62:39 Unresolved reference: XrayManager
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/SubscriptionWorker.kt:38:31 Unresolved reference: autoUpdateSubscriptions
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileReleaseKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 5s
+53 actionable tasks: 31 executed, 20 from cache, 2 up-to-date

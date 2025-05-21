@@ -1,0 +1,506 @@
+root@root:~/projects/HiddifyAndroidRefactor-main# ./gradlew :app:compileReleaseKotlin --stacktrace --info | grep -n "^e: " | head
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt:125:36 Unresolved reference. None of the following candidates is applicable because of receiver type mismatch: 
+public inline operator fun BigDecimal.div(other: BigDecimal): BigDecimal defined in kotlin
+public inline operator fun BigInteger.div(other: BigInteger): BigInteger defined in kotlin
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt:138:37 Unresolved reference: UpdateManager
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:131:19 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:160:18 Unresolved reference: menu_settings
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:164:18 Unresolved reference: menu_check_update
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:168:18 Unresolved reference: menu_server_list
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:264:19 Unresolved reference: bestServer
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:264:46 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:284:19 Unresolved reference: trafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:284:48 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:310:86 Unresolved reference: connecting
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:323:84 Unresolved reference: background_tertiary
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:370:46 Unresolved reference: connecting
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:392:27 Unresolved reference: refreshTrafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:417:19 Unresolved reference: refreshTrafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:424:59 Unresolved reference: TrafficStats
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:481:48 Unresolved reference: bestServer
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:522:45 Unresolved reference: pingAllServersAsync
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:523:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:545:37 Unresolved reference: pingAllServersAsync
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:552:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:604:27 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:815:53 Unresolved reference: importSubscription
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:905:65 Unresolved reference: autoUpdateSubscriptions
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:915:26 Unresolved reference: autoUpdateSubscriptions
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:950:47 Unresolved reference: checkForAppUpdates
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:953:51 Unresolved reference: checkForRoutingUpdates
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1017:58 Unresolved reference: UpdateInfo
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1029:41 Unresolved reference: downloadAndInstallUpdate
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1087:41 Unresolved reference: updateRoutingRules
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1180:23 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1187:48 Unresolved reference: getServerById
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1196:23 Unresolved reference: refreshData
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:452:80 Unresolved reference: tv_server_details
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:453:77 Unresolved reference: tv_server_ping
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:454:77 Unresolved reference: iv_connected
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:455:75 Unresolved reference: btn_edit
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt:456:77 Unresolved reference: btn_delete
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/XrayManager.kt:121:21 Operator '==' cannot be applied to 'Boolean' and 'Int'
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:33:18 None of the following functions can be called with the arguments supplied: 
+public open fun put(p0: String!, p1: Any!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Boolean): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Double): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Float): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Int): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Long): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Collection<*>!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Map<*, *>!): JSONObject! defined in org.json.JSONObject
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:33:40 Unresolved reference: uploadMbps
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:34:18 None of the following functions can be called with the arguments supplied: 
+public open fun put(p0: String!, p1: Any!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Boolean): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Double): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Float): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Int): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: Long): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Collection<*>!): JSONObject! defined in org.json.JSONObject
+public open fun put(p0: String!, p1: (Mutable)Map<*, *>!): JSONObject! defined in org.json.JSONObject
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/HysteriaProtocol.kt:34:42 Unresolved reference: downloadMbps
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:56:21 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:57:53 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:60:21 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:61:51 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:64:21 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/RealityProtocol.kt:65:51 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:59:13 Smart cast to 'String' is impossible, because 'server.alpn' is a mutable property that could have been changed by this time
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:90:29 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:91:60 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/TrojanProtocol.kt:94:54 Unresolved reference: multiMode
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:60:17 Smart cast to 'String' is impossible, because 'server.alpn' is a mutable property that could have been changed by this time
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:92:29 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:93:60 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VlessProtocol.kt:96:54 Unresolved reference: multiMode
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:60:17 Smart cast to 'String' is impossible, because 'server.alpn' is a mutable property that could have been changed by this time
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:92:29 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:93:60 Unresolved reference: serviceName
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/VmessProtocol.kt:96:54 Unresolved reference: multiMode
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/protocols/XHttpProtocol.kt:75:23 Unresolved reference: useTls
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:11:1 Class 'HysteriaProtocol' is not abstract and does not implement abstract member public abstract fun getProtocolName(): String defined in com.hiddify.hiddifyng.protocols.ProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:11:41 This class does not have a constructor
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:13:5 'createOutboundConfig' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:26:5 'createProtocolSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:80:5 'createStreamSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:51:28 Unresolved reference: VmessProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:52:28 Unresolved reference: VlessProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:53:29 Unresolved reference: TrojanProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:54:34 Unresolved reference: ShadowsocksProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:99:49 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:102:37 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:36 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:67 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:80 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:106:37 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:106:74 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:134:32 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:134:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:142:37 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:36 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:72 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:85 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:145:37 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:145:84 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:146:58 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:156:32 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:156:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:157:32 Unresolved reference: spiderY
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:157:62 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:160:32 Unresolved reference: privateKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:160:68 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:163:32 Unresolved reference: showNetwork
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:163:70 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:166:32 Unresolved reference: utlsVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:166:70 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:40 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:65 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:85 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:359:20 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:365:20 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:383:21 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:385:37 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:385:71 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:452:90 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:454:88 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:457:88 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:458:88 Unresolved reference: spiderY
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:460:36 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:465:61 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:466:40 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:470:36 Unresolved reference: utlsVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:473:36 Unresolved reference: showNetwork
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:478:36 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:523:36 Unresolved reference: privateKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:563:24 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:576:20 Unresolved reference: publicKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:577:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:586:20 Unresolved reference: shortId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:587:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:591:20 Unresolved reference: spiderX
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:592:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:596:20 Unresolved reference: spiderY
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:597:56 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:601:20 Unresolved reference: serverNames
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:602:64 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:613:20 Unresolved reference: utlsFingerprints
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:614:65 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:618:20 Unresolved reference: utlsVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:619:64 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:623:24 Unresolved reference: showNetwork
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:695:20 Unresolved reference: privateKey
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:696:63 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:10:1 Class 'XhttpProtocol' is not abstract and does not implement abstract member public abstract fun getProtocolName(): String defined in com.hiddify.hiddifyng.protocols.ProtocolHandler
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:10:38 This class does not have a constructor
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:12:5 'createOutboundConfig' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:25:5 'createProtocolSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:69:5 'createStreamSettings' overrides nothing
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:71:47 Unresolved reference: checkVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:84:45 Unresolved reference: getLastUpdateTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:88:74 Overload resolution ambiguity: 
+public constructor Date(p0: Long) defined in java.util.Date
+public constructor Date(p0: String!) defined in java.util.Date
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:147:45 Unresolved reference: updateXrayCore
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:153:61 Unresolved reference: checkVersion
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/ui/AboutFragment.kt:185:46 Unresolved reference: updateRoutingRules
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/AutoUpdateManager.kt:136:40 Type mismatch: inferred type is String? but String was expected
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/AutoUpdateManager.kt:140:46 Type mismatch: inferred type is String? but String was expected
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:10:30 Unresolved reference: workers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:11:30 Unresolved reference: workers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:12:30 Unresolved reference: workers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:72:54 Unresolved reference: PingWorker
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:100:62 Unresolved reference: SubscriptionWorker
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/BackgroundTaskScheduler.kt:128:57 Unresolved reference: RoutingUpdateWorker
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/MemoryCache.kt:33:17 'public' function exposes its 'private-in-class' return type CacheEntry
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/MemoryCache.kt:56:17 'public' function exposes its 'private-in-class' return type CacheEntry
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:7:46 Unresolved reference: Subscription
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:34:44 Unresolved reference: subscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:74:58 Unresolved reference: Subscription
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:259:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:266:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:268:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:269:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:351:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:358:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:360:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:361:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:445:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:452:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:454:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:455:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:533:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:540:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:542:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:543:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:612:21 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:619:21 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:621:21 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:622:21 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:664:21 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:671:21 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:673:21 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:674:21 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:752:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:759:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:761:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:762:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:842:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:849:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:851:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:852:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:936:17 Cannot find a parameter with this name: subscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:943:17 Cannot find a parameter with this name: extraParams
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:945:17 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:946:17 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1006:45 Unresolved reference: getServersBySubscriptionId
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1009:70 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1009:85 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1009:99 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1029:25 Cannot find a parameter with this name: lastPingTime
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1030:25 Cannot find a parameter with this name: isActive
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1041:30 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1041:45 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1041:59 Unresolved reference: it
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1048:27 Unresolved reference: deleteServers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1053:27 Unresolved reference: updateServers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1056:13 'if' must have both main and 'else' branches if used as an expression
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:1058:27 Unresolved reference: insertServers
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:8:43 Unresolved reference: SubscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:65:26 Unresolved reference: SubscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:72:27 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:72:37 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/UpdateManager.kt:90:26 Unresolved reference: SubscriptionDao
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/viewmodel/MainViewModel.kt:72:50 Unresolved reference: initializeRoutingFiles
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/RoutingUpdateWorker.kt:39:31 Unresolved reference: autoUpdateRouting
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/RoutingUpdateWorker.kt:62:39 Unresolved reference: XrayManager
+e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/SubscriptionWorker.kt:38:31 Unresolved reference: autoUpdateSubscriptions
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileReleaseKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+* Exception is:
+org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:compileReleaseKotlin'.
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:130)
+        at org.gradle.internal.Try$Failure.ifSuccessfulOrElse(Try.java:293)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:128)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+        at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+        at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+        at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+        at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+        at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+        at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:331)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:318)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+        at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:138)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:123)
+        at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+        at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
+        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
+        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
+        at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
+        at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+        at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+        at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:44)
+        at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+        at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+        at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:267)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:131)
+        at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+        at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+        at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
+        at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+        at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
+        at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+        at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+Caused by: org.gradle.workers.internal.DefaultWorkerExecutor$WorkExecutionException: A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+        at org.gradle.workers.internal.DefaultWorkerExecutor$WorkItemExecution.waitForCompletion(DefaultWorkerExecutor.java:287)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.lambda$waitForItemsAndGatherFailures$2(DefaultAsyncWorkTracker.java:130)
+        at org.gradle.internal.Factories$1.create(Factories.java:31)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withoutLocks(DefaultWorkerLeaseService.java:339)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withoutLocks(DefaultWorkerLeaseService.java:322)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withoutLock(DefaultWorkerLeaseService.java:327)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForItemsAndGatherFailures(DefaultAsyncWorkTracker.java:126)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForItemsAndGatherFailures(DefaultAsyncWorkTracker.java:92)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForAll(DefaultAsyncWorkTracker.java:78)
+        at org.gradle.internal.work.DefaultAsyncWorkTracker.waitForCompletion(DefaultAsyncWorkTracker.java:66)
+        at org.gradle.api.internal.tasks.execution.TaskExecution$3.run(TaskExecution.java:252)        at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:29)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:26)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:47)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.executeAction(TaskExecution.java:229)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.executeActions(TaskExecution.java:212)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.executeWithPreviousOutputFiles(TaskExecution.java:195)
+        at org.gradle.api.internal.tasks.execution.TaskExecution.execute(TaskExecution.java:162)
+        at org.gradle.internal.execution.steps.ExecuteStep.executeInternal(ExecuteStep.java:105)
+        at org.gradle.internal.execution.steps.ExecuteStep.access$000(ExecuteStep.java:44)
+        at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:59)
+        at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:56)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
+        at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:44)
+        at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
+        at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
+        at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
+        at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:50)
+        at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:28)
+        at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:67)
+        at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:37)
+        at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:61)
+        at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:26)
+        at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:69)
+        at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:46)
+        at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:40)
+        at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:29)
+        at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
+        at org.gradle.internal.execution.steps.BuildCacheStep.executeAndStoreInCache(BuildCacheStep.java:145)
+        at org.gradle.internal.execution.steps.BuildCacheStep.lambda$executeWithCache$4(BuildCacheStep.java:101)
+        at org.gradle.internal.execution.steps.BuildCacheStep.lambda$executeWithCache$5(BuildCacheStep.java:101)
+        at org.gradle.internal.Try$Success.map(Try.java:175)
+        at org.gradle.internal.execution.steps.BuildCacheStep.executeWithCache(BuildCacheStep.java:85)
+        at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$0(BuildCacheStep.java:74)
+        at org.gradle.internal.Either$Left.fold(Either.java:115)
+        at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
+        at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:73)
+        at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:48)
+        at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:46)
+        at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
+        at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
+        at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
+        at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:27)
+        at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:49)
+        at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:27)
+        at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:71)
+        at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:39)
+        at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:65)
+        at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:36)
+        at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:105)
+        at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:54)
+        at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:64)
+        at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:43)
+        at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkStep.java:125)
+        at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:61)
+        at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:36)
+        at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStartedStep.java:38)
+        at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36)
+        at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23)
+        at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
+        at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
+        at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:35)
+        at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:289)
+        at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
+        at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
+        at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
+        at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
+        at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
+        at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
+        at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
+        at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
+        at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
+        at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:48)
+        at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:35)
+        at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:61)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:127)
+        at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+        at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+        at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+        at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+        at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+        at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+        at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:331)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:318)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:314)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+        at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+        at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:138)
+        at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:123)
+        at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+        at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
+        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
+        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
+        at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
+        at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+        at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+        at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:44)
+        at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+        at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+        at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:267)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:131)
+        at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+        at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+        at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
+        at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+        at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
+        at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+        at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+Caused by: org.jetbrains.kotlin.gradle.tasks.CompilationErrorException: Compilation error. See log for more details
+        at org.jetbrains.kotlin.gradle.tasks.TasksUtilsKt.throwExceptionIfCompilationFailed(tasksUtils.kt:22)
+        at org.jetbrains.kotlin.compilerRunner.GradleKotlinCompilerWork.run(GradleKotlinCompilerWork.kt:144)
+        at org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction.execute(GradleCompilerRunnerWithWorkers.kt:76)
+        at org.gradle.workers.internal.DefaultWorkerServer.execute(DefaultWorkerServer.java:63)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:66)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1$1.create(NoIsolationWorkerFactory.java:62)
+        at org.gradle.internal.classloader.ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:100)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1.lambda$execute$0(NoIsolationWorkerFactory.java:62)
+        at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:44)
+        at org.gradle.workers.internal.AbstractWorker$1.call(AbstractWorker.java:41)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:209)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:204)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:66)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:166)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:59)
+        at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:53)
+        at org.gradle.workers.internal.AbstractWorker.executeWrappedInBuildOperation(AbstractWorker.java:41)
+        at org.gradle.workers.internal.NoIsolationWorkerFactory$1.execute(NoIsolationWorkerFactory.java:59)
+        at org.gradle.workers.internal.DefaultWorkerExecutor.lambda$submitWork$0(DefaultWorkerExecutor.java:174)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runExecution(DefaultConditionalExecutionQueue.java:195)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.access$700(DefaultConditionalExecutionQueue.java:128)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner$1.run(DefaultConditionalExecutionQueue.java:170)
+        at org.gradle.internal.Factories$1.create(Factories.java:31)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:267)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:131)
+        at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:136)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.runBatch(DefaultConditionalExecutionQueue.java:165)
+        at org.gradle.internal.work.DefaultConditionalExecutionQueue$ExecutionRunner.run(DefaultConditionalExecutionQueue.java:134)
+        ... 2 more
