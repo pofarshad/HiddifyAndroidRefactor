@@ -4,204 +4,190 @@ import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
-import java.net.HttpURLConnection
+import java.io.FileOutputStream
 import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.concurrent.TimeUnit
+import java.util.zip.ZipInputStream
 
 /**
- * Manager for handling routing rules from Iran-v2ray-rules repository
- * https://github.com/Chocolate4U/Iran-v2ray-rules
+ * Manages routing rules with efficient caching and daily updates from Chocolate4U/Iran-v2ray-rules
  */
 class RoutingManager(private val context: Context) {
-    private val TAG = "RoutingManager"
+    companion object {
+        private const val TAG = "RoutingManager"
+        private const val RULES_URL = "https://github.com/Chocolate4U/Iran-v2ray-rules/releases/latest/download/iran.dat"
+        private const val FALLBACK_RULES_URL = "https://cdn.jsdelivr.net/gh/Chocolate4U/Iran-v2ray-rules@latest/iran.dat"
+        private const val RULES_FILE_NAME = "iran.dat"
+        private const val RULES_JSON_FILE_NAME = "rules.json"
+        private const val PREFS_NAME = "routing_manager_prefs"
+        private const val KEY_LAST_UPDATE = "last_update_timestamp"
+        private const val UPDATE_INTERVAL_HOURS = 24
+    }
     
-    // Base repository URL
-    private val BASE_REPO_URL = "https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/master/"
+    private val dataDir = File(context.filesDir, "routing")
+    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     
-    // File names to download
-    private val ROUTING_FILES = listOf(
-        "geoip-iran.dat",
-        "geosite-iran.dat",
-        "geoip.dat",
-        "geosite.dat",
-        "iran.dat",
-        "geoip-lite.dat",
-        "geosite-lite.dat"
-    )
-    
-    // Manifest file for version checking
-    private val MANIFEST_FILE = "manifest.json"
+    init {
+        // Ensure routing directory exists
+        if (!dataDir.exists()) {
+            dataDir.mkdirs()
+        }
+    }
     
     /**
-     * Check if routing rule updates are available
-     * @return true if updates are available, false otherwise
+     * Check if routing rules need to be updated
      */
-    suspend fun checkForRoutingUpdates(): Boolean = withContext(Dispatchers.IO) {
+    fun isUpdateNeeded(): Boolean {
+        val rulesFile = File(dataDir, RULES_FILE_NAME)
+        
+        // If rules file doesn't exist, update is needed
+        if (!rulesFile.exists()) {
+            return true
+        }
+        
+        // Check if update interval has passed
+        val lastUpdate = prefs.getLong(KEY_LAST_UPDATE, 0)
+        val now = System.currentTimeMillis()
+        val updateIntervalMillis = TimeUnit.HOURS.toMillis(UPDATE_INTERVAL_HOURS.toLong())
+        
+        return now - lastUpdate > updateIntervalMillis
+    }
+    
+    /**
+     * Download and update routing rules from Chocolate4U/Iran-v2ray-rules repository
+     * @return true if update was successful, false otherwise
+     */
+    suspend fun updateRoutingRules(): Boolean = withContext(Dispatchers.IO) {
+        Log.d(TAG, "Updating routing rules")
+        
         try {
-            // Download manifest file
-            val manifestContent = downloadFile(BASE_REPO_URL + MANIFEST_FILE)
+            // Try primary URL first
+            var success = downloadRules(RULES_URL)
             
-            if (manifestContent.isEmpty()) {
-                Log.e(TAG, "Failed to download manifest file")
-                return@withContext false
+            // Fall back to alternative source if primary fails
+            if (!success) {
+                Log.d(TAG, "Primary URL failed, trying fallback URL")
+                success = downloadRules(FALLBACK_RULES_URL)
             }
             
-            // Parse manifest
-            val manifest = JSONObject(manifestContent)
-            val remoteVersion = manifest.optString("version", "")
-            val remoteUpdateTime = manifest.optLong("update_time", 0)
-            
-            if (remoteVersion.isEmpty() || remoteUpdateTime == 0L) {
-                Log.e(TAG, "Invalid manifest file format")
-                return@withContext false
+            if (success) {
+                // Mark update as complete
+                prefs.edit().putLong(KEY_LAST_UPDATE, System.currentTimeMillis()).apply()
+                Log.d(TAG, "Routing rules updated successfully")
             }
             
-            // Get local manifest if exists
-            val localManifestFile = File(context.filesDir, MANIFEST_FILE)
-            var localUpdateTime = 0L
+            success
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating routing rules", e)
+            false
+        }
+    }
+    
+    /**
+     * Download rules from specified URL
+     */
+    private suspend fun downloadRules(urlString: String): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val url = URL(urlString)
+            val connection = url.openConnection().apply {
+                connectTimeout = 10000 // 10s
+                readTimeout = 30000 // 30s
+            }
             
-            if (localManifestFile.exists()) {
-                try {
-                    val localManifest = JSONObject(localManifestFile.readText())
-                    localUpdateTime = localManifest.optLong("update_time", 0)
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error parsing local manifest file", e)
+            // Download to temporary file first
+            val tempFile = File(dataDir, "${RULES_FILE_NAME}.tmp")
+            connection.getInputStream().use { input ->
+                FileOutputStream(tempFile).use { output ->
+                    input.copyTo(output)
                 }
             }
             
-            // Check if update is needed
-            val updateNeeded = remoteUpdateTime > localUpdateTime
+            // Replace old file with new one
+            val destFile = File(dataDir, RULES_FILE_NAME)
+            if (tempFile.exists() && tempFile.length() > 0) {
+                tempFile.renameTo(destFile)
+                return@withContext true
+            }
             
-            Log.i(TAG, "Routing update check: remote=$remoteUpdateTime, local=$localUpdateTime, update needed=$updateNeeded")
-            
-            return@withContext updateNeeded
+            false
         } catch (e: Exception) {
-            Log.e(TAG, "Error checking for routing updates", e)
-            return@withContext false
+            Log.e(TAG, "Error downloading routing rules from $urlString", e)
+            false
         }
     }
     
     /**
-     * Update routing files from the repository
-     * @return true if successful, false otherwise
+     * Get path to the routing rules file
      */
-    suspend fun updateRoutingFiles(): Boolean = withContext(Dispatchers.IO) {
-        try {
-            // Create directory if it doesn't exist
-            val routingDir = File(context.filesDir, "routing")
-            if (!routingDir.exists()) {
-                routingDir.mkdirs()
-            }
-            
-            // Download manifest file first
-            val manifestContent = downloadFile(BASE_REPO_URL + MANIFEST_FILE)
-            
-            if (manifestContent.isEmpty()) {
-                Log.e(TAG, "Failed to download manifest file during update")
-                return@withContext false
-            }
-            
-            // Download each routing file
-            var allDownloaded = true
-            
-            for (fileName in ROUTING_FILES) {
-                val fileContent = downloadFile(BASE_REPO_URL + fileName)
-                
-                if (fileContent.isEmpty()) {
-                    Log.e(TAG, "Failed to download routing file: $fileName")
-                    allDownloaded = false
-                    continue
-                }
-                
-                // Save file
-                val file = File(routingDir, fileName)
-                file.writeBytes(fileContent.toByteArray())
-                
-                Log.i(TAG, "Successfully downloaded routing file: $fileName")
-            }
-            
-            // Save manifest file
-            val manifestFile = File(context.filesDir, MANIFEST_FILE)
-            manifestFile.writeText(manifestContent)
-            
-            // Parse manifest for logging
-            try {
-                val manifest = JSONObject(manifestContent)
-                val version = manifest.optString("version", "unknown")
-                val updateTime = manifest.optLong("update_time", 0)
-                
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
-                val updateTimeStr = dateFormat.format(Date(updateTime))
-                
-                Log.i(TAG, "Routing files updated to version $version (updated on $updateTimeStr)")
-            } catch (e: Exception) {
-                Log.e(TAG, "Error parsing downloaded manifest", e)
-            }
-            
-            return@withContext allDownloaded
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating routing files", e)
-            return@withContext false
-        }
+    fun getRoutingRulesPath(): String {
+        return File(dataDir, RULES_FILE_NAME).absolutePath
     }
     
     /**
-     * Get path to the routing files directory
-     * @return path to routing directory
+     * Create a Xray routing configuration object that uses the local rules
      */
-    fun getRoutingDirectory(): String {
-        return File(context.filesDir, "routing").absolutePath
+    fun createRoutingConfig(): JSONObject {
+        val routing = JSONObject()
+        
+        // Domain strategy
+        routing.put("domainStrategy", "IPIfNonMatch")
+        
+        // Rules array
+        val rules = JSONArray()
+        
+        // Direct rule for private IPs
+        val directRule = JSONObject()
+        directRule.put("type", "field")
+        directRule.put("outboundTag", "direct")
+        
+        // IP ranges for direct connection
+        val directIPs = JSONArray()
+        directIPs.put("geoip:private")
+        directIPs.put("geoip:cn")
+        directRule.put("ip", directIPs)
+        
+        // Domains for direct connection
+        val directDomains = JSONArray()
+        directDomains.put("geosite:cn")
+        directRule.put("domain", directDomains)
+        
+        // Proxy rule using iran.dat custom routing file
+        val proxyRule = JSONObject()
+        proxyRule.put("type", "field")
+        proxyRule.put("outboundTag", "proxy")
+        
+        // Custom iran.dat file reference
+        val proxyDomains = JSONArray()
+        proxyDomains.put("ext:${getRoutingRulesPath()}:ir")
+        proxyRule.put("domain", proxyDomains)
+        
+        // IP ranges for proxy
+        val proxyIPs = JSONArray()
+        proxyIPs.put("geoip:ir")
+        proxyRule.put("ip", proxyIPs)
+        
+        // Add rules to array
+        rules.put(directRule)
+        rules.put(proxyRule)
+        
+        // Default rule (anything not matching above rules)
+        val defaultRule = JSONObject()
+        defaultRule.put("type", "field")
+        defaultRule.put("outboundTag", "proxy")
+        rules.put(defaultRule)
+        
+        routing.put("rules", rules)
+        
+        return routing
     }
     
     /**
-     * Download file from URL
-     * @param url URL to download from
-     * @return File content as string, or empty string if failed
+     * Get the timestamp of the last update
      */
-    private suspend fun downloadFile(url: String): String = withContext(Dispatchers.IO) {
-        try {
-            val connection = URL(url).openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.readTimeout = 30000
-            connection.connectTimeout = 30000
-            connection.setRequestProperty("User-Agent", "MarFaNet-Co-Client")
-            
-            val responseCode = connection.responseCode
-            
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                val inputStream = connection.inputStream
-                val content = inputStream.readBytes()
-                inputStream.close()
-                connection.disconnect()
-                return@withContext String(content)
-            } else {
-                Log.e(TAG, "HTTP error when downloading file: $responseCode")
-                connection.disconnect()
-                return@withContext ""
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error downloading file from $url", e)
-            return@withContext ""
-        }
-    }
-    
-    /**
-     * Load routing configuration into Xray
-     * @return true if successful, false otherwise
-     */
-    suspend fun applyRoutingConfiguration(): Boolean = withContext(Dispatchers.IO) {
-        try {
-            // This would integrate with the XrayManager to apply routing configuration
-            // For now, we'll just log success message
-            
-            Log.i(TAG, "Routing configuration applied successfully")
-            return@withContext true
-        } catch (e: Exception) {
-            Log.e(TAG, "Error applying routing configuration", e)
-            return@withContext false
-        }
+    fun getLastUpdateTime(): Long {
+        return prefs.getLong(KEY_LAST_UPDATE, 0)
     }
 }
