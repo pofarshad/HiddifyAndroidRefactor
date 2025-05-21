@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This is now wrapped in a version-aware resource tag -->
-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:targetApi="26">
-    <background android:drawable="@color/black_700"/>
-    <foreground android:drawable="@drawable/ic_marfanet_logo"/>
-    <monochrome android:drawable="@drawable/ic_marfanet_logo"/>
-</adaptive-icon>

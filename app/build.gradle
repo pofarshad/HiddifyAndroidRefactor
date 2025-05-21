@@ -15,7 +15,7 @@ android {
     
     defaultConfig {
         applicationId "com.hiddify.hiddifyng"
-        minSdk 21
+        minSdk 26 // Increased to support adaptive icons
         targetSdk 35
         versionCode 1
         versionName "1.0.0"
