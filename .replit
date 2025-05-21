@@ -2,7 +2,7 @@ modules = ["kotlin", "openjdk-17", "java-17"]
 
 [nix]
 channel = "stable-24_05"
-packages = ["zip", "unzip", "openjdk17"]
+packages = ["zip", "unzip", "openjdk17", "imagemagick"]
 
 [workflows]
 runButton = "Project"
