@@ -3,11 +3,12 @@ buildscript {
     repositories {
         google()  // Make sure this is first
         mavenCentral()
+        jcenter() // For older dependencies
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.0' // Compatible with Gradle 8.5 and Java 21
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
+        classpath 'com.android.tools.build:gradle:7.3.0' // Confirmed available version
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
