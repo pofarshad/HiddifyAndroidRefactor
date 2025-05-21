@@ -2,224 +2,336 @@ package com.hiddify.hiddifyng.utils
 
 import android.content.Context
 import android.util.Log
+import com.hiddify.hiddifyng.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONObject
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.io.File
 import java.io.FileOutputStream
-import java.net.URL
 import java.util.concurrent.TimeUnit
 import java.util.zip.ZipInputStream
 
 /**
- * Manages routing rules with efficient caching and daily updates from Chocolate4U/Iran-v2ray-rules
+ * Manages routing rule updates from Chocolate4U/Iran-v2ray-rules repository
+ * Handles downloading, extraction and application of the routing rules
  */
 class RoutingManager(private val context: Context) {
     companion object {
         private const val TAG = "RoutingManager"
-        private const val RULES_URL = "https://github.com/Chocolate4U/Iran-v2ray-rules/releases/latest/download/iran.dat"
-        private const val FALLBACK_RULES_URL = "https://cdn.jsdelivr.net/gh/Chocolate4U/Iran-v2ray-rules@latest/iran.dat"
-        private const val RULES_FILE_NAME = "iran.dat"
-        private const val RULES_JSON_FILE_NAME = "rules.json"
-        private const val PREFS_NAME = "routing_manager_prefs"
-        private const val KEY_LAST_UPDATE = "last_update_timestamp"
-        private const val UPDATE_INTERVAL_HOURS = 24
+        
+        // Repository information
+        private const val REPO_OWNER = "Chocolate4U"
+        private const val REPO_NAME = "Iran-v2ray-rules"
+        private const val GITHUB_API_URL = "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/releases/latest"
+        private const val ROUTING_RULES_FILE_NAME = "rules.zip"
+        
+        // File paths
+        private const val ROUTING_DIR = "routing"
+        private const val VERSION_FILE = "version.txt"
     }
     
-    private val dataDir = File(context.filesDir, "routing")
-    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val httpClient = OkHttpClient.Builder()
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .build()
     
-    init {
-        // Ensure routing directory exists
-        if (!dataDir.exists()) {
-            dataDir.mkdirs()
-        }
+    private val routingDir by lazy {
+        File(context.filesDir, ROUTING_DIR).also { it.mkdirs() }
     }
     
-    /**
-     * Check if routing rules need to be updated
-     */
-    fun isUpdateNeeded(): Boolean {
-        val rulesFile = File(dataDir, RULES_FILE_NAME)
-        
-        // If rules file doesn't exist, update is needed
-        if (!rulesFile.exists()) {
-            return true
-        }
-        
-        // Check if update interval has passed
-        val lastUpdate = prefs.getLong(KEY_LAST_UPDATE, 0)
-        val now = System.currentTimeMillis()
-        val updateIntervalMillis = TimeUnit.HOURS.toMillis(UPDATE_INTERVAL_HOURS.toLong())
-        
-        return now - lastUpdate > updateIntervalMillis
+    private val versionFile by lazy {
+        File(routingDir, VERSION_FILE)
     }
     
     /**
-     * Check for routing rule updates from repository
-     * @return true if updates are available, false otherwise
+     * Check if routing files need to be updated
+     * Compares local version with the latest GitHub release
      */
     suspend fun checkForRoutingUpdates(): Boolean = withContext(Dispatchers.IO) {
         try {
-            Log.d(TAG, "Checking for routing rule updates")
+            Log.d(TAG, "Checking for routing updates")
             
-            // If we don't have rules yet, definitely need update
-            if (isUpdateNeeded()) {
+            // Get current version
+            val currentVersion = getCurrentVersion()
+            Log.d(TAG, "Current version: $currentVersion")
+            
+            // Get latest version from GitHub
+            val latestVersion = getLatestVersion()
+            Log.d(TAG, "Latest version: $latestVersion")
+            
+            // Files need update if versions don't match or files are missing
+            return@withContext if (latestVersion.isNullOrEmpty()) {
+                Log.w(TAG, "Failed to retrieve latest version")
+                false
+            } else if (currentVersion != latestVersion) {
+                Log.i(TAG, "New routing version available: $latestVersion")
+                true
+            } else {
+                // Check if essential files exist
+                val filesExist = checkEssentialFiles()
+                if (!filesExist) {
+                    Log.i(TAG, "Essential routing files missing, need update")
+                }
+                !filesExist
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error checking for updates", e)
+            false
+        }
+    }
+    
+    /**
+     * Update routing files from GitHub repository
+     */
+    suspend fun updateRoutingFiles(): Boolean = withContext(Dispatchers.IO) {
+        try {
+            Log.i(TAG, "Updating routing files")
+            
+            // Get latest release information
+            val releaseInfo = getLatestReleaseInfo() ?: return@withContext false
+            
+            // Find the routing rules asset URL
+            val downloadUrl = releaseInfo.assets
+                .find { it.name == ROUTING_RULES_FILE_NAME }
+                ?.downloadUrl
+            
+            if (downloadUrl.isNullOrEmpty()) {
+                Log.e(TAG, "Download URL not found in release info")
+                return@withContext false
+            }
+            
+            // Download the ZIP file
+            val zipFile = File(context.cacheDir, ROUTING_RULES_FILE_NAME)
+            if (!downloadFile(downloadUrl, zipFile)) {
+                Log.e(TAG, "Failed to download routing rules file")
+                return@withContext false
+            }
+            
+            // Extract files to routing directory
+            val extractSuccess = extractZipFile(zipFile, routingDir)
+            if (!extractSuccess) {
+                Log.e(TAG, "Failed to extract routing files")
+                return@withContext false
+            }
+            
+            // Save the new version
+            saveCurrentVersion(releaseInfo.tag)
+            Log.i(TAG, "Updated routing files to version ${releaseInfo.tag}")
+            
+            // Clean up
+            zipFile.delete()
+            
+            return@withContext true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating routing files", e)
+            return@withContext false
+        }
+    }
+    
+    /**
+     * Get current version from local storage
+     */
+    private fun getCurrentVersion(): String? {
+        if (!versionFile.exists()) {
+            return null
+        }
+        
+        return try {
+            versionFile.readText().trim()
+        } catch (e: Exception) {
+            Log.e(TAG, "Error reading version file", e)
+            null
+        }
+    }
+    
+    /**
+     * Save current version to local storage
+     */
+    private fun saveCurrentVersion(version: String) {
+        try {
+            versionFile.writeText(version)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error writing version file", e)
+        }
+    }
+    
+    /**
+     * Check if essential routing files exist
+     */
+    private fun checkEssentialFiles(): Boolean {
+        val requiredFiles = listOf(
+            "geoip.dat",
+            "geosite.dat",
+            "direct.txt",
+            "proxy.txt",
+            "block.txt"
+        )
+        
+        for (file in requiredFiles) {
+            if (!File(routingDir, file).exists()) {
+                Log.d(TAG, "Missing essential file: $file")
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    /**
+     * Get latest version from GitHub API
+     */
+    private suspend fun getLatestVersion(): String? = withContext(Dispatchers.IO) {
+        val releaseInfo = getLatestReleaseInfo() ?: return@withContext null
+        return@withContext releaseInfo.tag
+    }
+    
+    /**
+     * Get latest release information from GitHub API
+     */
+    private suspend fun getLatestReleaseInfo(): ReleaseInfo? = withContext(Dispatchers.IO) {
+        try {
+            val request = Request.Builder()
+                .url(GITHUB_API_URL)
+                .header("Accept", "application/vnd.github.v3+json")
+                .build()
+            
+            httpClient.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) {
+                    Log.e(TAG, "Error getting latest release: ${response.code}")
+                    return@withContext null
+                }
+                
+                val body = response.body?.string() ?: return@withContext null
+                
+                // Parse release information
+                val tag = extractTagName(body)
+                val assets = extractAssets(body)
+                
+                return@withContext ReleaseInfo(tag, assets)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting latest release info", e)
+            return@withContext null
+        }
+    }
+    
+    /**
+     * Extract tag name from GitHub API response
+     */
+    private fun extractTagName(body: String): String {
+        val tagRegex = "\"tag_name\"\\s*:\\s*\"([^\"]+)\"".toRegex()
+        val match = tagRegex.find(body)
+        return match?.groupValues?.get(1) ?: ""
+    }
+    
+    /**
+     * Extract assets information from GitHub API response
+     */
+    private fun extractAssets(body: String): List<AssetInfo> {
+        val result = mutableListOf<AssetInfo>()
+        
+        val assetsRegex = "\"assets\"\\s*:\\s*\\[(.*?)\\]".toRegex(RegexOption.DOT_MATCHES_ALL)
+        val assetsMatch = assetsRegex.find(body)
+        val assetsJson = assetsMatch?.groupValues?.get(1) ?: return result
+        
+        val assetRegex = "\\{(.*?)\\}".toRegex(RegexOption.DOT_MATCHES_ALL)
+        val nameRegex = "\"name\"\\s*:\\s*\"([^\"]+)\"".toRegex()
+        val urlRegex = "\"browser_download_url\"\\s*:\\s*\"([^\"]+)\"".toRegex()
+        
+        assetRegex.findAll(assetsJson).forEach { assetMatch ->
+            val assetJson = assetMatch.groupValues[1]
+            val name = nameRegex.find(assetJson)?.groupValues?.get(1) ?: ""
+            val url = urlRegex.find(assetJson)?.groupValues?.get(1) ?: ""
+            
+            if (name.isNotEmpty() && url.isNotEmpty()) {
+                result.add(AssetInfo(name, url))
+            }
+        }
+        
+        return result
+    }
+    
+    /**
+     * Download a file from a URL
+     */
+    private suspend fun downloadFile(url: String, destination: File): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val request = Request.Builder()
+                .url(url)
+                .build()
+            
+            httpClient.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) {
+                    Log.e(TAG, "Error downloading file: ${response.code}")
+                    return@withContext false
+                }
+                
+                val body = response.body ?: return@withContext false
+                
+                FileOutputStream(destination).use { output ->
+                    body.byteStream().use { input ->
+                        input.copyTo(output)
+                    }
+                }
+                
                 return@withContext true
             }
-            
-            // Try to fetch metadata and compare versions
-            // For now, just return true if the update interval has passed
-            val lastUpdate = prefs.getLong(KEY_LAST_UPDATE, 0)
-            val now = System.currentTimeMillis()
-            val updateIntervalMillis = TimeUnit.HOURS.toMillis(UPDATE_INTERVAL_HOURS.toLong())
-            
-            return@withContext now - lastUpdate > updateIntervalMillis
         } catch (e: Exception) {
-            Log.e(TAG, "Error checking for routing updates", e)
-            false
+            Log.e(TAG, "Error downloading file", e)
+            return@withContext false
         }
     }
     
     /**
-     * Update routing files from repository
-     * @return true if successful, false otherwise
+     * Extract a ZIP file to a destination directory
      */
-    suspend fun updateRoutingFiles(): Boolean = updateRoutingRules()
-    
-    /**
-     * Download and update routing rules from Chocolate4U/Iran-v2ray-rules repository
-     * @return true if update was successful, false otherwise
-     */
-    suspend fun updateRoutingRules(): Boolean = withContext(Dispatchers.IO) {
-        Log.d(TAG, "Updating routing rules")
-        
+    private suspend fun extractZipFile(zipFile: File, destDir: File): Boolean = withContext(Dispatchers.IO) {
         try {
-            // Try primary URL first
-            var success = downloadRules(RULES_URL)
-            
-            // Fall back to alternative source if primary fails
-            if (!success) {
-                Log.d(TAG, "Primary URL failed, trying fallback URL")
-                success = downloadRules(FALLBACK_RULES_URL)
-            }
-            
-            if (success) {
-                // Mark update as complete
-                prefs.edit().putLong(KEY_LAST_UPDATE, System.currentTimeMillis()).apply()
-                Log.d(TAG, "Routing rules updated successfully")
-            }
-            
-            success
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating routing rules", e)
-            false
-        }
-    }
-    
-    /**
-     * Download rules from specified URL
-     */
-    private suspend fun downloadRules(urlString: String): Boolean = withContext(Dispatchers.IO) {
-        try {
-            val url = URL(urlString)
-            val connection = url.openConnection().apply {
-                connectTimeout = 10000 // 10s
-                readTimeout = 30000 // 30s
-            }
-            
-            // Download to temporary file first
-            val tempFile = File(dataDir, "${RULES_FILE_NAME}.tmp")
-            connection.getInputStream().use { input ->
-                FileOutputStream(tempFile).use { output ->
-                    input.copyTo(output)
+            ZipInputStream(zipFile.inputStream()).use { zipInputStream ->
+                var entry = zipInputStream.nextEntry
+                
+                while (entry != null) {
+                    val outputFile = File(destDir, entry.name)
+                    
+                    // Create directories if needed
+                    if (entry.isDirectory) {
+                        outputFile.mkdirs()
+                    } else {
+                        // Create parent directories if needed
+                        outputFile.parentFile?.mkdirs()
+                        
+                        // Extract file
+                        FileOutputStream(outputFile).use { output ->
+                            zipInputStream.copyTo(output)
+                        }
+                    }
+                    
+                    zipInputStream.closeEntry()
+                    entry = zipInputStream.nextEntry
                 }
             }
             
-            // Replace old file with new one
-            val destFile = File(dataDir, RULES_FILE_NAME)
-            if (tempFile.exists() && tempFile.length() > 0) {
-                tempFile.renameTo(destFile)
-                return@withContext true
-            }
-            
-            false
+            return@withContext true
         } catch (e: Exception) {
-            Log.e(TAG, "Error downloading routing rules from $urlString", e)
-            false
+            Log.e(TAG, "Error extracting ZIP file", e)
+            return@withContext false
         }
     }
     
     /**
-     * Get path to the routing rules file
+     * Data class for release information
      */
-    fun getRoutingRulesPath(): String {
-        return File(dataDir, RULES_FILE_NAME).absolutePath
-    }
+    data class ReleaseInfo(
+        val tag: String,
+        val assets: List<AssetInfo>
+    )
     
     /**
-     * Create a Xray routing configuration object that uses the local rules
+     * Data class for asset information
      */
-    fun createRoutingConfig(): JSONObject {
-        val routing = JSONObject()
-        
-        // Domain strategy
-        routing.put("domainStrategy", "IPIfNonMatch")
-        
-        // Rules array
-        val rules = JSONArray()
-        
-        // Direct rule for private IPs
-        val directRule = JSONObject()
-        directRule.put("type", "field")
-        directRule.put("outboundTag", "direct")
-        
-        // IP ranges for direct connection
-        val directIPs = JSONArray()
-        directIPs.put("geoip:private")
-        directIPs.put("geoip:cn")
-        directRule.put("ip", directIPs)
-        
-        // Domains for direct connection
-        val directDomains = JSONArray()
-        directDomains.put("geosite:cn")
-        directRule.put("domain", directDomains)
-        
-        // Proxy rule using iran.dat custom routing file
-        val proxyRule = JSONObject()
-        proxyRule.put("type", "field")
-        proxyRule.put("outboundTag", "proxy")
-        
-        // Custom iran.dat file reference
-        val proxyDomains = JSONArray()
-        proxyDomains.put("ext:${getRoutingRulesPath()}:ir")
-        proxyRule.put("domain", proxyDomains)
-        
-        // IP ranges for proxy
-        val proxyIPs = JSONArray()
-        proxyIPs.put("geoip:ir")
-        proxyRule.put("ip", proxyIPs)
-        
-        // Add rules to array
-        rules.put(directRule)
-        rules.put(proxyRule)
-        
-        // Default rule (anything not matching above rules)
-        val defaultRule = JSONObject()
-        defaultRule.put("type", "field")
-        defaultRule.put("outboundTag", "proxy")
-        rules.put(defaultRule)
-        
-        routing.put("rules", rules)
-        
-        return routing
-    }
-    
-    /**
-     * Get the timestamp of the last update
-     */
-    fun getLastUpdateTime(): Long {
-        return prefs.getLong(KEY_LAST_UPDATE, 0)
-    }
+    data class AssetInfo(
+        val name: String,
+        val downloadUrl: String
+    )
 }
