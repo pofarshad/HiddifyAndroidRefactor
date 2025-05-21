@@ -109,7 +109,12 @@ data class Server(
     var publicKey: String? = null,    // Server's public key for encryption
     var shortId: String? = null,      // REALITY short ID
     var spiderX: String? = null,      // Spider X for additional verification
-    var privateKey: String? = null    // Client's private key (rarely used)
+    var privateKey: String? = null,   // Client's private key (rarely used)
+    var serverNames: String? = null,  // Comma-separated destination server names for uTLS
+    var spiderY: String? = null,      // Spider Y parameter (advanced verification)
+    var showNetwork: Boolean? = null, // Show network during uTLS handshake
+    var utlsVersion: String? = null,  // uTLS version
+    var utlsFingerprints: String? = null, // Alternative fingerprints separated by commas
 ) {
     /**
      * Generate a human-readable summary of the server with connection info

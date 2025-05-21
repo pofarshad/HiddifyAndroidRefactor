@@ -10,8 +10,8 @@ import java.util.Locale
 import java.util.UUID
 
 /**
- * Handler for REALITY protocol - a cutting-edge security enhancement for VLESS
- * Focuses on server fingerprint simulation and advanced anti-detection features
+ * Enhanced handler for REALITY protocol - a cutting-edge security enhancement for VLESS
+ * Features advanced anti-detection mechanisms, multiple server destinations, and advanced Spider verification
  */
 class RealityProtocolHandler : ProtocolHandler {
     private val TAG = "RealityProtocol"
@@ -24,15 +24,30 @@ class RealityProtocolHandler : ProtocolHandler {
         private const val DEFAULT_NETWORK = "tcp"
         private const val DEFAULT_SECURITY = "reality"
         private const val DEFAULT_PUBLIC_KEY_LENGTH = 43 // Base64 length of typical Ed25519 key
+        private const val DEFAULT_FINGERPRINT = "chrome"
         
-        // Well-known shortid length
+        // Well-known values
         private const val SHORTID_LENGTH = 8
+        
+        // Known fingerprints
+        private val VALID_FINGERPRINTS = listOf(
+            "chrome", "firefox", "safari", "ios", "android", "edge", "360", "qq",
+            "random", "randomized", "chrome_105", "chrome_106", "chrome_107", "chrome_108", 
+            "chrome_109", "chrome_110", "chrome_111", "chrome_112", "chrome_113", "chrome_114",
+            "firefox_102", "firefox_103", "firefox_104", "firefox_105", "firefox_106",
+            "edge_106", "edge_107", "edge_108", "edge_109", "safari_15_6_1", "safari_16_0"
+        )
+        
+        // Known network types
+        private val SUPPORTED_NETWORKS = listOf(
+            "tcp", "kcp", "ws", "http", "quic", "grpc", "httpupgrade", "tuic", "h2"
+        )
     }
     
     override fun getProtocolName(): String = "reality"
     
     /**
-     * Generate Xray-compatible configuration for REALITY protocol
+     * Generate Xray-compatible configuration for REALITY protocol with extended features
      * @param server Server configuration
      * @return JSON configuration string optimized for Xray core
      */
@@ -83,7 +98,36 @@ class RealityProtocolHandler : ProtocolHandler {
                         // Required: server public key for encryption
                         put("publicKey", server.publicKey)
                         
-                        // Required: Server Name Indication for TLS
+                        // Enhanced: Support for multiple server destinations
+                        if (!server.serverNames.isNullOrEmpty()) {
+                            // Split comma-separated server names into array
+                            val serverNameArray = JSONArray()
+                            server.serverNames?.split(",")?.map { it.trim() }?.forEach { 
+                                if (it.isNotEmpty()) serverNameArray.put(it)
+                            }
+                            
+                            // Add default serverName if not in list
+                            val sniHostname = server.sni ?: server.address
+                            var containsDefault = false
+                            
+                            for (i in 0 until serverNameArray.length()) {
+                                if (serverNameArray.getString(i) == sniHostname) {
+                                    containsDefault = true
+                                    break
+                                }
+                            }
+                            
+                            if (!containsDefault && serverNameArray.length() > 0) {
+                                serverNameArray.put(sniHostname)
+                            }
+                            
+                            // Add server names array if not empty
+                            if (serverNameArray.length() > 0) {
+                                put("serverNames", serverNameArray)
+                            }
+                        }
+                        
+                        // Required: Primary Server Name Indication for TLS
                         put("serverName", server.sni ?: server.address)
                         
                         // Optional: REALITY short ID (server-side ID verification)
@@ -92,22 +136,75 @@ class RealityProtocolHandler : ProtocolHandler {
                         // Optional: Fingerprint to mimic (e.g., "chrome", "firefox", etc)
                         server.fingerprint?.takeIf { it.isNotEmpty() }?.let {
                             put("fingerprint", it)
-                        } ?: put("fingerprint", "chrome")
+                        } ?: put("fingerprint", DEFAULT_FINGERPRINT)
                         
-                        // Optional: spider x for server-side validation
+                        // Enhanced: Support for multiple fingerprints
+                        if (!server.utlsFingerprints.isNullOrEmpty()) {
+                            val fingerprintArray = JSONArray()
+                            server.utlsFingerprints?.split(",")?.map { it.trim() }?.forEach {
+                                if (it.isNotEmpty() && VALID_FINGERPRINTS.contains(it.lowercase())) {
+                                    fingerprintArray.put(it)
+                                }
+                            }
+                            
+                            if (fingerprintArray.length() > 0) {
+                                put("fingerprints", fingerprintArray)
+                            }
+                        }
+                        
+                        // Advanced: Spider verification (X and Y parameters)
                         server.spiderX?.let { put("spiderX", it) }
+                        server.spiderY?.let { put("spiderY", it) }
+                        
+                        // Optional: User-provided private key
+                        server.privateKey?.let { put("privateKey", it) }
+                        
+                        // Show network for uTLS handshake
+                        server.showNetwork?.let { put("showNetwork", it) }
+                        
+                        // uTLS Version
+                        server.utlsVersion?.let { put("utlsVersion", it) }
                     }
                     put("realitySettings", realitySettings)
                     
-                    // TCP settings for most REALITY configurations
-                    if (server.network == "tcp" || server.network == null) {
-                        val tcpSettings = JSONObject()
-                        // Add any TCP-specific settings if needed
-                        put("tcpSettings", tcpSettings)
-                    }
-                    
-                    // Handle other network types if specified
-                    when (server.network) {
+                    // Network-specific settings based on the network type
+                    when (server.network?.lowercase(Locale.getDefault())) {
+                        null, "tcp" -> {
+                            val tcpSettings = JSONObject()
+                            server.headerType?.let {
+                                val header = JSONObject().apply {
+                                    put("type", it)
+                                    if (it == "http") {
+                                        // HTTP header configuration for obfuscation
+                                        val request = JSONObject()
+                                        val headers = JSONObject()
+                                        
+                                        // Add Host header if specified
+                                        server.host?.let { host ->
+                                            headers.put("Host", JSONArray().put(host))
+                                        }
+                                        
+                                        // Parse additional headers
+                                        server.headers?.split(";")?.forEach { header ->
+                                            val parts = header.split(":", limit = 2)
+                                            if (parts.size == 2) {
+                                                val key = parts[0].trim()
+                                                val value = parts[1].trim()
+                                                if (key.isNotEmpty() && value.isNotEmpty()) {
+                                                    headers.put(key, JSONArray().put(value))
+                                                }
+                                            }
+                                        }
+                                        
+                                        request.put("headers", headers)
+                                        put("request", request)
+                                    }
+                                }
+                                tcpSettings.put("header", header)
+                            }
+                            put("tcpSettings", tcpSettings)
+                        }
+                        
                         "ws" -> {
                             val wsSettings = JSONObject().apply {
                                 server.path?.let { put("path", it) }
@@ -116,15 +213,71 @@ class RealityProtocolHandler : ProtocolHandler {
                                         put("Host", it)
                                     }) 
                                 }
+                                
+                                // Parse additional headers
+                                val headers = JSONObject()
+                                server.host?.let { headers.put("Host", it) }
+                                
+                                server.headers?.split(";")?.forEach { header ->
+                                    val parts = header.split(":", limit = 2)
+                                    if (parts.size == 2) {
+                                        headers.put(parts[0].trim(), parts[1].trim())
+                                    }
+                                }
+                                
+                                if (headers.length() > 0) {
+                                    put("headers", headers)
+                                }
                             }
                             put("wsSettings", wsSettings)
                         }
+                        
                         "grpc" -> {
                             val grpcSettings = JSONObject().apply {
                                 server.path?.let { put("serviceName", it) }
                                 server.grpcMultiMode?.let { put("multiMode", it) }
                             }
                             put("grpcSettings", grpcSettings)
+                        }
+                        
+                        "h2", "http2" -> {
+                            val httpSettings = JSONObject().apply {
+                                // Multiple hosts for HTTP/2
+                                val hosts = JSONArray()
+                                server.host?.let { hosts.put(it) }
+                                server.serverNames?.split(",")?.forEach { hosts.put(it.trim()) }
+                                
+                                if (hosts.length() > 0) {
+                                    put("host", hosts)
+                                }
+                                
+                                server.path?.let { put("path", it) }
+                                
+                                // HTTP/2 specific settings
+                                server.allowHttp2?.let { put("read_idle_timeout", 60) }
+                            }
+                            put("httpSettings", httpSettings)
+                        }
+                        
+                        "httpupgrade" -> {
+                            val httpupgradeSettings = JSONObject().apply {
+                                server.path?.let { put("path", it) }
+                                server.host?.let { 
+                                    put("headers", JSONObject().apply {
+                                        put("Host", it)
+                                    }) 
+                                }
+                            }
+                            put("httpupgradeSettings", httpupgradeSettings)
+                        }
+                        
+                        "quic" -> {
+                            val quicSettings = JSONObject().apply {
+                                server.quicSecurity?.let { put("security", it) }
+                                server.quicKey?.let { put("key", it) }
+                                server.headerType?.let { put("header", JSONObject().put("type", it)) }
+                            }
+                            put("quicSettings", quicSettings)
                         }
                     }
                 }
@@ -171,7 +324,7 @@ class RealityProtocolHandler : ProtocolHandler {
     }
     
     /**
-     * Validate server configuration for REALITY protocol
+     * Validate server configuration for REALITY protocol with enhanced validation
      * @param server Server configuration to validate
      * @return true if valid, false otherwise with error logging
      */
@@ -220,17 +373,40 @@ class RealityProtocolHandler : ProtocolHandler {
             // Not a fatal error, we'll use address as fallback
         }
         
+        // Validate network type if specified
+        if (!server.network.isNullOrEmpty() && !SUPPORTED_NETWORKS.contains(server.network?.lowercase(Locale.getDefault()))) {
+            Log.w(TAG, "REALITY server warning: unsupported network type '${server.network}' (using TCP)")
+            // Not fatal, we'll use TCP as fallback
+        }
+        
+        // Validate multiple server names if provided
+        if (!server.serverNames.isNullOrEmpty()) {
+            // Check that at least one server name is valid
+            val validNames = server.serverNames?.split(",")?.filter { it.trim().isNotEmpty() }
+            if (validNames.isNullOrEmpty()) {
+                Log.w(TAG, "REALITY server warning: no valid server names in serverNames list")
+                // Not fatal
+            }
+        }
+        
+        // Validate fingerprint if specified
+        if (!server.fingerprint.isNullOrEmpty() && 
+            !VALID_FINGERPRINTS.contains(server.fingerprint?.lowercase(Locale.getDefault()))) {
+            Log.w(TAG, "REALITY server warning: fingerprint '${server.fingerprint}' not recognized (using chrome)")
+            // Not fatal, we'll use chrome as fallback
+        }
+        
         return true
     }
     
     /**
-     * Parse REALITY URL into Server object
+     * Parse REALITY URL into Server object with enhanced parameter support
      * @param url REALITY URL string (reality:// or vless+reality://)
      * @return Server object or null if parsing failed
      */
     override fun parseUrl(url: String): Server? {
         try {
-            // Handle two possible URL formats
+            // Handle various possible URL formats for REALITY
             val processedUrl = when {
                 url.startsWith("reality://") -> url
                 url.startsWith("vless+reality://") -> url.replace("vless+reality://", "reality://")
@@ -262,31 +438,89 @@ class RealityProtocolHandler : ProtocolHandler {
                 network = DEFAULT_NETWORK
             )
             
-            // Process all query parameters
+            // Process all query parameters with enhanced parameter support
             uri.queryParameterNames.forEach { param ->
                 try {
                     when (param.lowercase(Locale.getDefault())) {
+                        // Network type parameters
                         "type", "network" -> uri.getQueryParameter(param)?.let { server.network = it }
                         "path" -> uri.getQueryParameter(param)?.let { server.path = it }
                         "host" -> uri.getQueryParameter(param)?.let { server.host = it }
+                        
+                        // Core REALITY parameters
                         "sni" -> uri.getQueryParameter(param)?.let { server.sni = it }
                         "pbk", "publickey" -> uri.getQueryParameter(param)?.let { server.publicKey = it }
                         "fp", "fingerprint" -> uri.getQueryParameter(param)?.let { server.fingerprint = it }
                         "sid", "shortid" -> uri.getQueryParameter(param)?.let { server.shortId = it }
+                        
+                        // Advanced REALITY parameters
                         "spx", "spiderx" -> uri.getQueryParameter(param)?.let { server.spiderX = it }
+                        "spy", "spidery" -> uri.getQueryParameter(param)?.let { server.spiderY = it }
+                        "sni-list", "servernames", "serverNames" -> uri.getQueryParameter(param)?.let { 
+                            server.serverNames = it 
+                        }
+                        "pbk-list", "pbks", "publickeys" -> uri.getQueryParameter(param)?.let {
+                            // Multiple public keys not supported yet, use the first one
+                            val keys = it.split(",")
+                            if (keys.isNotEmpty() && server.publicKey.isNullOrEmpty()) {
+                                server.publicKey = keys[0].trim()
+                            }
+                        }
+                        "utls-version", "utlsVersion" -> uri.getQueryParameter(param)?.let { 
+                            server.utlsVersion = it 
+                        }
+                        "show-network", "showNetwork" -> uri.getQueryParameter(param)?.let {
+                            server.showNetwork = it == "1" || it.equals("true", ignoreCase = true)
+                        }
+                        
+                        // Multiple fingerprints
+                        "fp-list", "fingerprints", "utlsFingerprints" -> uri.getQueryParameter(param)?.let {
+                            server.utlsFingerprints = it
+                        }
+                        
+                        // VLESS parameters
                         "flow" -> uri.getQueryParameter(param)?.let { server.flow = it }
                         "encryption" -> uri.getQueryParameter(param)?.let { server.encryption = it }
+                        
+                        // Transport parameters
                         "headerType" -> uri.getQueryParameter(param)?.let { server.headerType = it }
                         "serviceName" -> uri.getQueryParameter(param)?.let { server.path = it } // gRPC service name
+                        "quicsecurity" -> uri.getQueryParameter(param)?.let { server.quicSecurity = it }
+                        "quickey" -> uri.getQueryParameter(param)?.let { server.quicKey = it }
+                        "allowinsecure", "allowInsecure" -> uri.getQueryParameter(param)?.let {
+                            server.allowInsecure = it == "1" || it.equals("true", ignoreCase = true)
+                        }
+                        "allowhttp2", "allowHttp2" -> uri.getQueryParameter(param)?.let {
+                            server.allowHttp2 = it == "1" || it.equals("true", ignoreCase = true)
+                        }
+                        
+                        // Headers parameter (Base64 encoded semicolon-separated key:value)
+                        "headers" -> uri.getQueryParameter(param)?.let {
+                            try {
+                                val decodedHeaders = decodeBase64IfNeeded(it)
+                                server.headers = decodedHeaders
+                            } catch (e: Exception) {
+                                // If decoding fails, use as-is
+                                server.headers = it
+                            }
+                        }
+                        
+                        // Connection parameters
                         "mux" -> uri.getQueryParameter(param)?.let {
                             server.enableMux = it == "1" || it.equals("true", ignoreCase = true)
                         }
                         "muxConcurrency" -> uri.getQueryParameter(param)?.toIntOrNull()?.let {
                             if (it > 0) server.muxConcurrency = it
                         }
-                        // Handle gRPC mode
+                        
+                        // gRPC mode
                         "mode" -> uri.getQueryParameter(param)?.let {
                             if (it == "multi" || it == "gun") server.grpcMultiMode = true
+                        }
+                        
+                        // Private key (rarely used)
+                        "privkey", "privatekey" -> uri.getQueryParameter(param)?.let {
+                            server.privateKey = it
                         }
                     }
                 } catch (e: Exception) {
@@ -296,7 +530,7 @@ class RealityProtocolHandler : ProtocolHandler {
             
             // Set defaults if not specified
             if (server.fingerprint.isNullOrEmpty()) {
-                server.fingerprint = "chrome"
+                server.fingerprint = DEFAULT_FINGERPRINT
             }
             
             if (server.flow.isNullOrEmpty()) {
@@ -317,7 +551,7 @@ class RealityProtocolHandler : ProtocolHandler {
     }
     
     /**
-     * Generate shareable URL for this REALITY server
+     * Generate shareable URL for this REALITY server with enhanced parameters
      * @param server Server configuration
      * @return URL string for sharing
      */
@@ -358,22 +592,51 @@ class RealityProtocolHandler : ProtocolHandler {
                 uriBuilder.appendQueryParameter("spx", it)
             }
             
+            // Enhanced: Spider Y
+            server.spiderY?.let {
+                uriBuilder.appendQueryParameter("spy", it)
+            }
+            
+            // Enhanced: Multiple server names
+            server.serverNames?.let {
+                uriBuilder.appendQueryParameter("serverNames", it)
+            }
+            
             // Fingerprint
             server.fingerprint?.let {
-                uriBuilder.appendQueryParameter("fp", it)
+                if (it != DEFAULT_FINGERPRINT) {
+                    uriBuilder.appendQueryParameter("fp", it)
+                }
+            }
+            
+            // Enhanced: Multiple fingerprints
+            server.utlsFingerprints?.let {
+                uriBuilder.appendQueryParameter("fingerprints", it)
+            }
+            
+            // uTLS version
+            server.utlsVersion?.let {
+                uriBuilder.appendQueryParameter("utlsVersion", it)
+            }
+            
+            // Show network
+            if (server.showNetwork == true) {
+                uriBuilder.appendQueryParameter("showNetwork", "1")
             }
             
             // Flow control
             server.flow?.let {
-                uriBuilder.appendQueryParameter("flow", it)
+                if (it != DEFAULT_FLOW) {
+                    uriBuilder.appendQueryParameter("flow", it)
+                }
             }
             
-            // Network type if not default
+            // Network type
             if (server.network != DEFAULT_NETWORK && !server.network.isNullOrEmpty()) {
                 uriBuilder.appendQueryParameter("type", server.network)
                 
                 // Add network-specific parameters
-                when (server.network) {
+                when (server.network?.lowercase(Locale.getDefault())) {
                     "ws" -> {
                         server.path?.let { uriBuilder.appendQueryParameter("path", it) }
                         server.host?.let { uriBuilder.appendQueryParameter("host", it) }
@@ -387,6 +650,36 @@ class RealityProtocolHandler : ProtocolHandler {
                     "tcp" -> {
                         server.headerType?.let { uriBuilder.appendQueryParameter("headerType", it) }
                     }
+                    "h2", "http2" -> {
+                        server.path?.let { uriBuilder.appendQueryParameter("path", it) }
+                        server.host?.let { uriBuilder.appendQueryParameter("host", it) }
+                        if (server.allowHttp2 == true) {
+                            uriBuilder.appendQueryParameter("allowHttp2", "1")
+                        }
+                    }
+                    "quic" -> {
+                        server.quicSecurity?.let { uriBuilder.appendQueryParameter("quicSecurity", it) }
+                        server.quicKey?.let { uriBuilder.appendQueryParameter("quicKey", it) }
+                        server.headerType?.let { uriBuilder.appendQueryParameter("headerType", it) }
+                    }
+                    "httpupgrade" -> {
+                        server.path?.let { uriBuilder.appendQueryParameter("path", it) }
+                        server.host?.let { uriBuilder.appendQueryParameter("host", it) }
+                    }
+                }
+            }
+            
+            // Headers (Base64 encoded)
+            server.headers?.let {
+                try {
+                    val encodedHeaders = Base64.encodeToString(
+                        it.toByteArray(), 
+                        Base64.URL_SAFE or Base64.NO_PADDING
+                    )
+                    uriBuilder.appendQueryParameter("headers", encodedHeaders)
+                } catch (e: Exception) {
+                    Log.w(TAG, "Failed to encode headers, using raw", e)
+                    uriBuilder.appendQueryParameter("headers", it)
                 }
             }
             
@@ -398,10 +691,46 @@ class RealityProtocolHandler : ProtocolHandler {
                 }
             }
             
+            // Private key (rarely used)
+            server.privateKey?.let {
+                uriBuilder.appendQueryParameter("privateKey", it)
+            }
+            
             return uriBuilder.build().toString()
         } catch (e: Exception) {
             Log.e(TAG, "Error generating REALITY URL", e)
             return ""
+        }
+    }
+    
+    /**
+     * Helper function to decode Base64 if the string is encoded
+     * Supports multiple Base64 encoding formats
+     * 
+     * @param input Potentially Base64 encoded string
+     * @return Decoded string or original if not Base64
+     */
+    private fun decodeBase64IfNeeded(input: String): String {
+        return try {
+            // Try different Base64 decoding flags
+            val decoded = try {
+                Base64.decode(input, Base64.URL_SAFE)
+            } catch (e: Exception) {
+                try {
+                    Base64.decode(input, Base64.DEFAULT)
+                } catch (e2: Exception) {
+                    try {
+                        Base64.decode(input, Base64.URL_SAFE or Base64.NO_PADDING)
+                    } catch (e3: Exception) {
+                        // Last attempt with default and no padding
+                        Base64.decode(input, Base64.DEFAULT or Base64.NO_PADDING)
+                    }
+                }
+            }
+            String(decoded)
+        } catch (e: Exception) {
+            // If it's not Base64, return the original string
+            input
         }
     }
 }
