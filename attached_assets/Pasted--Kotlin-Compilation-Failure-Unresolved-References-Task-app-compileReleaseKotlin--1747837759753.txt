@@ -1,0 +1,94 @@
+# Kotlin Compilation Failure – Unresolved References
+
+> **Task:** `:app:compileReleaseKotlin`
+>
+> **Errors (first block)**
+>
+> ```
+> SubscriptionWorker.kt:56:62 ‑ Unresolved reference: workerParams
+> UpdateWorker.kt:96:45  ‑ Unresolved reference: checkForRoutingUpdates
+> UpdateWorker.kt:101:46 ‑ Unresolved reference: updateRoutingFiles
+> ```
+
+---
+
+## 1  Root‑Cause Analysis
+
+| File                    | Line | Missing Symbol               | Likely Cause                                         |
+| ----------------------- | ---- | ---------------------------- | ---------------------------------------------------- |
+| `SubscriptionWorker.kt` | 56   | **`workerParams`**           | Constructor param renamed ➜ field no longer in scope |
+| `UpdateWorker.kt`       | 96   | **`checkForRoutingUpdates`** | Helper moved / deleted during refactor               |
+| `UpdateWorker.kt`       | 101  | **`updateRoutingFiles`**     | Ditto – function removed or package path changed     |
+
+### A. `workerParams`
+
+* **Current signature** – class declared as:
+
+  ```kotlin
+  class SubscriptionWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx, params) {
+  ```
+
+  Inside `doWork()` the code still refers to a *shadow* property `workerParams` that existed in the old `Worker` base‑class but **not** in `CoroutineWorker`.
+
+* **Fix** – Replace `workerParams` with the constructor parameter `params` **or** use the provided property `this.tags` / `this.id` etc.
+
+### B. `checkForRoutingUpdates` & `updateRoutingFiles`
+
+* Both helpers lived in the now‑removed `RoutingManager`. During split they were promised to be generated but never materialised.
+* Failing calls sit inside a **Worker** that runs in the background → easiest is to **delegate** to `RoutingManager` singleton again **or** inline the logic.
+
+---
+
+## 2  Minimal Patch
+
+```kotlin
+// SubscriptionWorker.kt
+class SubscriptionWorker(
+    ctx: Context,
+    params: WorkerParameters
+) : CoroutineWorker(ctx, params) {
+    override suspend fun doWork(): Result {
+        // ✅ use the ctor param instead of the old field
+        val subscriptionId = inputData.getLong(KEY_SUB_ID, -1L)
+        ...
+    }
+}
+
+// UpdateWorker.kt (inside doWork)
+val needRouting = RoutingManager.checkForRoutingUpdates()
+if (needRouting) {
+    RoutingManager.updateRoutingFiles()
+}
+```
+
+Add (or restore) `RoutingManager`:
+
+```kotlin
+object RoutingManager {
+    fun checkForRoutingUpdates(): Boolean { /* todo */ }
+    fun updateRoutingFiles() { /* todo */ }
+}
+```
+
+---
+
+## 3  Verification Checklist
+
+* [ ] Build with `./gradlew :app:compileReleaseKotlin` – **no** Unresolved refs.
+* [ ] Run unit tests for Routing & Subscription flows.
+* [ ] Update CI gate to run `lint` & `test` on every PR.
+
+---
+
+## 4  Prompt Snippet for Replit AI
+
+```text
+<<SYSTEM INSTRUCTIONS>>
+Focus on *Unresolved reference* compilation errors. For each:
+1. Locate first occurrence in source.
+2. Propose the minimal code change (rename, import, restore file).
+3. If symbol belonged to deleted component, resurrect stub in correct package.
+Return a patch‑ready diff.
+```
+
+*Doc v1 – 2025‑05‑21*

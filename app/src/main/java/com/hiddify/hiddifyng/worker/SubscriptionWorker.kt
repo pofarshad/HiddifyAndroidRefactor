@@ -53,7 +53,7 @@ class SubscriptionWorker(
                     Log.i(TAG, "Starting ping test after subscription update")
                     
                     try {
-                        val pingWorker = PingWorker(context, workerParams)
+                        val pingWorker = PingWorker(context, this.workerParams)
                         pingWorker.doWork()
                         Log.i(TAG, "Ping test completed after subscription update")
                     } catch (e: Exception) {
