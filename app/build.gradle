@@ -2,12 +2,16 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'com.android.bundle'
 }
 
 android {
     namespace "com.hiddify.hiddifyng"
     compileSdk 33
+    
+    // Enable BuildConfig generation
+    buildFeatures {
+        buildConfig true
+    }
     
     defaultConfig {
         applicationId "com.hiddify.hiddifyng"
