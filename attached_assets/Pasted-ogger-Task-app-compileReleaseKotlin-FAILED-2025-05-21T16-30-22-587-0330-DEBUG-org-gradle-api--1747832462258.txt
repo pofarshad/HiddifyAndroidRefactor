@@ -1,0 +1,343 @@
+ogger] > Task :app:compileReleaseKotlin FAILED
+2025-05-21T16:30:22.587+0330 [DEBUG] [org.gradle.api.Task] [KOTLIN] compile iteration: app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt, app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt, app/src/main/java/com/hiddify/hiddifyng/activity/ServerListActivity.kt, app/src/main/java/com/hiddify/hiddifyng/core/XrayManager.kt, app/src/main/java/com/hiddify/hiddifyng/database/AppDatabase.kt, app/src/main/java/com/hiddify/hiddifyng/database/converter/DateConverter.kt, app/src/main/java/com/hiddify/hiddifyng/database/dao/AppSettingsDao.kt, app/src/main/java/com/hiddify/hiddifyng/database/dao/ServerDao.kt, app/src/main/java/com/hiddify/hiddifyng/database/dao/ServerGroupDao.kt, app/src/main/java/com/hiddify/hiddifyng/database/entity/AppSettings.kt, app/src/main/java/com/hiddify/hiddifyng/database/entity/Server.kt, app/src/main/java/com/hiddify/hiddifyng/database/entity/ServerGroup.kt, app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt, app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocolHandler.kt, app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt, app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt, app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt, app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocolHandler.kt, app/src/main/java/com/hiddify/hiddifyng/receiver/BootCompleteReceiver.kt, app/src/main/java/com/hiddify/hiddifyng/service/V2RayServiceManager.kt, app/src/main/java/com/hiddify/hiddifyng/utils/AutoUpdateManager.kt, app/src/main/java/com/hiddify/hiddifyng/utils/PingUtils.kt, app/src/main/java/com/hiddify/hiddifyng/utils/RoutingManager.kt, app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt, app/src/main/java/com/hiddify/hiddifyng/viewmodel/MainViewModel.kt, app/src/main/java/com/hiddify/hiddifyng/worker/PingWorker.kt, app/src/main/java/com/hiddify/hiddifyng/worker/SubscriptionWorker.kt, app/src/main/java/com/hiddify/hiddifyng/worker/UpdateWorker.kt
+2025-05-21T16:30:22.587+0330 [DEBUG] [org.gradle.api.Task] [KOTLIN] compiler exit code: COMPILATION_ERROR
+2025-05-21T16:30:22.650+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "org.jetbrains.kotlin.daemon.common.CompileService$CallResult$Good", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.650+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "org.jetbrains.kotlin.daemon.common.CompileService$CallResult", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.650+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "java.lang.Integer", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.650+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "java.lang.Number", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.650+0330 [DEBUG] [sun.rmi.client.ref] WorkerExecutor Queue Thread 2: free connection (reuse = true)
+2025-05-21T16:30:22.650+0330 [DEBUG] [sun.rmi.transport.tcp] WorkerExecutor Queue Thread 2: reuse connection
+2025-05-21T16:30:22.650+0330 [DEBUG] [org.gradle.api.Task] v: Using Kotlin home directory <no_path>
+2025-05-21T16:30:22.650+0330 [DEBUG] [org.gradle.api.Task] v: Exception on loading scripting plugin: java.lang.ClassNotFoundException: org.jetbrains.kotlin.scripting.compiler.plugin.ScriptingCompilerConfigurationComponentRegistrar
+2025-05-21T16:30:22.650+0330 [DEBUG] [org.gradle.api.Task] v: Scripting plugin will not be loaded: not all required jars are present in the classpath (missing files: [./kotlin-scripting-compiler.jar, ./kotlin-scripting-compiler-impl.jar, ./kotlinx-coroutines-core-jvm.jar, ./kotlin-scripting-common.jar, ./kotlin-scripting-jvm.jar, ./js.engines.jar])
+2025-05-21T16:30:22.650+0330 [DEBUG] [org.gradle.api.Task] v: Using JVM IR backend
+2025-05-21T16:30:22.650+0330 [DEBUG] [org.gradle.api.Task] v: Configuring the compilation environment
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt:124:21 Type mismatch: inferred type is {Comparable<CapturedType(*)> & Number} but Long was expected
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt:125:35 Unresolved reference. None of the following candidates is applicable because of receiver type mismatch: 
+public inline operator fun BigDecimal.div(other: BigDecimal): BigDecimal defined in kotlin
+public inline operator fun BigInteger.div(other: BigInteger): BigInteger defined in kotlin
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/HiddifyNGApplication.kt:138:30 Unresolved reference: autoUpdateSubscriptions
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:131:19 Unresolved reference: refreshData
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:264:19 Unresolved reference: bestServer
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:264:46 Cannot infer a type for this parameter. Please specify it explicitly.
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:284:19 Unresolved reference: trafficStats
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:284:48 Cannot infer a type for this parameter. Please specify it explicitly.
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:392:27 Unresolved reference: refreshTrafficStats
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:417:19 Unresolved reference: refreshTrafficStats
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:424:59 Unresolved reference: TrafficStats
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:481:48 Unresolved reference: bestServer
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:522:45 Unresolved reference: pingAllServersAsync
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:523:62 Unresolved reference: it
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:545:37 Unresolved reference: pingAllServersAsync
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:552:56 Unresolved reference: it
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:604:27 Unresolved reference: refreshData
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:634:56 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.650+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:703:56 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:790:56 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:798:71 Unresolved reference: et_subscription_name
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:815:53 Unresolved reference: importSubscription
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:881:54 Unresolved reference: Theme_MarFaNet_BottomSheetDialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:904:86 Unresolved reference: switch_auto_update_subscriptions
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:905:65 Unresolved reference: autoUpdateSubscriptions
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:915:26 Unresolved reference: autoUpdateSubscriptions
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:950:47 Unresolved reference: checkForAppUpdates
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:953:51 Unresolved reference: checkForRoutingUpdates
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:961:72 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:972:72 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:983:72 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1017:58 Unresolved reference: UpdateInfo
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1019:64 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1029:41 Unresolved reference: downloadAndInstallUpdate
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1040:68 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1077:64 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1087:41 Unresolved reference: updateRoutingRules
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1136:76 Unresolved reference: Theme_MarFaNet_Dialog
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1180:23 Unresolved reference: refreshData
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1187:48 Unresolved reference: getServerById
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/activity/MainActivity.kt:1196:23 Unresolved reference: refreshData
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/core/XrayManager.kt:121:21 Operator '==' cannot be applied to 'Boolean' and 'Int'
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:11:1 Class 'HysteriaProtocol' is not abstract and does not implement abstract member public abstract fun getProtocolName(): String defined in com.hiddify.hiddifyng.protocols.ProtocolHandler
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:11:41 This class does not have a constructor
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:13:5 'createOutboundConfig' overrides nothing
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:26:5 'createProtocolSettings' overrides nothing
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/HysteriaProtocol.kt:80:5 'createStreamSettings' overrides nothing
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:51:28 Unresolved reference: VmessProtocolHandler
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:52:28 Unresolved reference: VlessProtocolHandler
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:53:29 Unresolved reference: TrojanProtocolHandler
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/ProtocolHandler.kt:54:34 Unresolved reference: ShadowsocksProtocolHandler
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:99:49 Unresolved reference: publicKey
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:102:37 Unresolved reference: serverNames
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:36 Unresolved reference: serverNames
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:67 Unresolved reference: it
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:105:80 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:106:37 Unresolved reference: it
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:106:74 Unresolved reference: it
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:134:32 Unresolved reference: shortId
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:134:62 Unresolved reference: it
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:142:37 Unresolved reference: utlsFingerprints
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:36 Unresolved reference: utlsFingerprints
+2025-05-21T16:30:22.651+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:72 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:144:85 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:145:37 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:145:84 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:146:58 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:156:32 Unresolved reference: spiderX
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:156:62 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:157:32 Unresolved reference: spiderY
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:157:62 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:160:32 Unresolved reference: privateKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:160:68 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:163:32 Unresolved reference: showNetwork
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:163:70 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:166:32 Unresolved reference: utlsVersion
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:166:70 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:40 Unresolved reference: serverNames
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:65 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:248:85 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:359:20 Unresolved reference: publicKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:365:20 Unresolved reference: publicKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:383:21 Unresolved reference: serverNames
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:385:37 Unresolved reference: serverNames
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:385:71 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:452:90 Unresolved reference: publicKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:454:88 Unresolved reference: shortId
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:457:88 Unresolved reference: spiderX
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:458:88 Unresolved reference: spiderY
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:460:36 Unresolved reference: serverNames
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:465:61 Unresolved reference: publicKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:466:40 Unresolved reference: publicKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:470:36 Unresolved reference: utlsVersion
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:473:36 Unresolved reference: showNetwork
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:478:36 Unresolved reference: utlsFingerprints
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:523:36 Unresolved reference: privateKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:563:24 Unresolved reference: publicKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:576:20 Unresolved reference: publicKey
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:577:56 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:586:20 Unresolved reference: shortId
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:587:56 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:591:20 Unresolved reference: spiderX
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:592:56 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:596:20 Unresolved reference: spiderY
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:597:56 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:601:20 Unresolved reference: serverNames
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:602:64 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:613:20 Unresolved reference: utlsFingerprints
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:614:65 Unresolved reference: it
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:618:20 Unresolved reference: utlsVersion
+2025-05-21T16:30:22.652+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:619:64 Unresolved reference: it
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:623:24 Unresolved reference: showNetwork
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:695:20 Unresolved reference: privateKey
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/RealityProtocolHandler.kt:696:63 Unresolved reference: it
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:10:1 Class 'XhttpProtocol' is not abstract and does not implement abstract member public abstract fun getProtocolName(): String defined in com.hiddify.hiddifyng.protocols.ProtocolHandler
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:10:38 This class does not have a constructor
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:12:5 'createOutboundConfig' overrides nothing
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:25:5 'createProtocolSettings' overrides nothing
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/protocols/XhttpProtocol.kt:69:5 'createStreamSettings' overrides nothing
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/AutoUpdateManager.kt:136:40 Type mismatch: inferred type is String? but String was expected
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/AutoUpdateManager.kt:140:46 Type mismatch: inferred type is String? but String was expected
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:32:37 Unresolved reference: getAllGroupsWithSubscriptionUrl
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:57:23 Unresolved reference: subscriptionUrl
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:63:58 Unresolved reference: subscriptionUrl
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:87:27 Unresolved reference: deleteServersFromSubscription
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:91:31 Suspension functions can be called only within coroutine body
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:96:32 Unresolved reference: updateLastUpdated
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:164:33 Unresolved reference: getAllProtocolHandlers
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:164:58 Overload resolution ambiguity: 
+public inline fun <T> Iterable<TypeVariable(T)>.forEach(action: (TypeVariable(T)) -> Unit): Unit defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.forEach(action: (Map.Entry<TypeVariable(K), TypeVariable(V)>) -> Unit): Unit defined in kotlin.collections
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:164:68 Cannot infer a type for this parameter. Please specify it explicitly.
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:168:36 Variable expected
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/utils/SubscriptionManager.kt:169:36 Variable expected
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/viewmodel/MainViewModel.kt:72:50 Unresolved reference: initializeRoutingFiles
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/SubscriptionWorker.kt:36:31 Unresolved reference: autoUpdateSubscriptions
+2025-05-21T16:30:22.653+0330 [ERROR] [org.gradle.api.Task] e: file:///root/projects/HiddifyAndroidRefactor-main/app/src/main/java/com/hiddify/hiddifyng/worker/SubscriptionWorker.kt:56:62 Unresolved reference: workerParams
+2025-05-21T16:30:22.653+0330 [DEBUG] [sun.rmi.transport.tcp] WorkerExecutor Queue Thread 2: reuse connection
+2025-05-21T16:30:22.653+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "org.jetbrains.kotlin.daemon.common.CompileService$CallResult$Good", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.653+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "org.jetbrains.kotlin.daemon.common.CompileService$CallResult", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.653+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "java.lang.Long", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.653+0330 [DEBUG] [sun.rmi.loader] WorkerExecutor Queue Thread 2: name = "java.lang.Number", codebase = "", defaultLoader = InstrumentingVisitableURLClassLoader(ClassLoaderScopeIdentifier.Id{coreAndPlugins:settings[:]:buildSrc[:]:root-project[:](export)})
+2025-05-21T16:30:22.653+0330 [DEBUG] [sun.rmi.client.ref] WorkerExecutor Queue Thread 2: free connection (reuse = true)
+2025-05-21T16:30:22.654+0330 [DEBUG] [sun.rmi.transport.tcp] WorkerExecutor Queue Thread 2: reuse connection
+2025-05-21T16:30:22.654+0330 [DEBUG] [sun.rmi.transport.tcp] WorkerExecutor Queue Thread 2: reuse connection
+2025-05-21T16:30:22.654+0330 [DEBUG] [sun.rmi.client.ref] WorkerExecutor Queue Thread 2: free connection (reuse = true)
+2025-05-21T16:30:22.654+0330 [DEBUG] [sun.rmi.transport.tcp] WorkerExecutor Queue Thread 2: reuse connection
+2025-05-21T16:30:22.654+0330 [DEBUG] [org.gradle.api.Task] Finished executing kotlin compiler using DAEMON strategy
+2025-05-21T16:30:22.654+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: acquired lock on worker lease
+2025-05-21T16:30:22.654+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Execute execute for :app:compileReleaseKotlin' completed
+2025-05-21T16:30:22.654+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Executing task ':app:compileReleaseKotlin'' completed
+2025-05-21T16:30:22.654+0330 [DEBUG] [org.gradle.internal.vfs.impl.AbstractVirtualFileSystem] Invalidating VFS paths: [/root/projects/HiddifyAndroidRefactor-main/app/build/kotlin/compileReleaseKotlin/classpath-snapshot, /root/projects/HiddifyAndroidRefactor-main/app/build/tmp/kotlin-classes/release, /root/projects/HiddifyAndroidRefactor-main/app/build/kotlin/compileReleaseKotlin/cacheable, /root/projects/HiddifyAndroidRefactor-main/app/build/kotlin/compileReleaseKotlin/local-state]
+2025-05-21T16:30:22.655+0330 [DEBUG] [org.gradle.internal.watch.registry.impl.NonHierarchicalFileWatcherUpdater] Watching 304 directories to track changes
+2025-05-21T16:30:22.655+0330 [DEBUG] [org.gradle.internal.watch.registry.impl.NonHierarchicalFileWatcherUpdater] Watching 305 directories to track changes
+2025-05-21T16:30:22.655+0330 [DEBUG] [org.gradle.internal.watch.registry.impl.NonHierarchicalFileWatcherUpdater] Watching 310 directories to track changes
+2025-05-21T16:30:22.655+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Snapshot outputs after executing task ':app:compileReleaseKotlin'' completed
+2025-05-21T16:30:22.655+0330 [DEBUG] [org.gradle.internal.execution.steps.BuildCacheStep] Not storing result of task ':app:compileReleaseKotlin' in cache because the execution failed
+2025-05-21T16:30:22.656+0330 [DEBUG] [org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter] Removed task artifact state for task ':app:compileReleaseKotlin' from context.
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Task :app:compileReleaseKotlin'
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Task :app:compileReleaseKotlin' completed
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:compileReleaseKotlin completed, executed: true
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:compileReleaseKotlin failed
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:compileReleaseJavaWithJavac completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:compileReleaseJavaWithJavac completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:generateReleaseLintVitalReportModel completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:generateReleaseLintVitalReportModel completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:lintVitalAnalyzeRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:lintVitalAnalyzeRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:lintVitalReportRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:lintVitalReportRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:lintVitalRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:dexBuilderRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:dexBuilderRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:mergeDexRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:mergeDexRelease completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:mergeReleaseGlobalSynthetics completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:mergeReleaseGlobalSynthetics completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:compileReleaseArtProfile completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:compileReleaseArtProfile completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:processReleaseJavaRes completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:processReleaseJavaRes completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:mergeReleaseJavaResource completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:mergeReleaseJavaResource completed, executed: false
+2025-05-21T16:30:22.657+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:packageRelease completed, executed: false
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:packageRelease completed, executed: false
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:assembleRelease completed, executed: false
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node :app:createReleaseApkListingFileRedirect completed, executed: false
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.execution.plan.DefaultFinalizedExecutionPlan] Node Resolve mutations for :app:createReleaseApkListingFileRedirect completed, executed: false
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] included builds: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Run tasks'
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Run tasks' completed
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] included builds: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: released lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 7: acquired lock on worker lease
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Run main tasks'
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Run main tasks' completed
+2025-05-21T16:30:22.658+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Finish root build tree' started
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Execute 'allprojects {}' action' started
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 7: acquired lock on state of project :
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Cross-configure project :' started
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Cross-configure project :'
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Cross-configure project :' completed
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 7: released lock on state of project :
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 7: acquired lock on state of project :app
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Cross-configure project :app' started
+2025-05-21T16:30:22.659+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: acquired lock on worker lease
+2025-05-21T16:30:22.660+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: released lock on worker lease
+2025-05-21T16:30:22.660+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: acquired lock on worker lease
+2025-05-21T16:30:22.660+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: released lock on worker lease
+2025-05-21T16:30:22.660+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: acquired lock on worker lease
+2025-05-21T16:30:22.660+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on worker lease
+2025-05-21T16:30:22.666+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Cross-configure project :app'
+2025-05-21T16:30:22.666+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Cross-configure project :app' completed
+2025-05-21T16:30:22.666+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 7: released lock on state of project :app
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Execute 'allprojects {}' action'
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Execute 'allprojects {}' action' completed
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [class org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler.reportGlobalMetrics]
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [class org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler.reportBuildFinish]
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [report metric STATISTICS_COLLECT_METRICS_OVERHEAD]
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [class org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler.reportGlobalMetrics]
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [class org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler.reportBuildFinish]
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [report metric STATISTICS_COLLECT_METRICS_OVERHEAD]
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [class org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler.buildFinished]
+2025-05-21T16:30:22.667+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.statistics.KotlinBuildStatHandler] Executing [report metric STATISTICS_COLLECT_METRICS_OVERHEAD]
+2025-05-21T16:30:22.668+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.KotlinGradleFinishBuildHandler] [KOTLIN] Deleted session-is-alive flag file: kotlin/sessions/kotlin-compiler-1785781717661917569.salive
+2025-05-21T16:30:22.668+0330 [DEBUG] [org.jetbrains.kotlin.gradle.plugin.KotlinGradleBuildServices$Inject] [KOTLIN] Disposed KotlinGradleBuildServices
+2025-05-21T16:30:22.668+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Finish root build tree'
+2025-05-21T16:30:22.668+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Finish root build tree' completed
+2025-05-21T16:30:22.668+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T16:30:22.668+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] FAILURE: Build failed with an exception.
+2025-05-21T16:30:22.668+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T16:30:22.668+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * What went wrong:
+2025-05-21T16:30:22.668+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] Execution failed for task ':app:compileReleaseKotlin'.
+2025-05-21T16:30:22.668+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+2025-05-21T16:30:22.668+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter]    > Compilation error. See log for more details
+2025-05-21T16:30:22.669+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T16:30:22.669+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * Try:
+2025-05-21T16:30:22.669+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Run with --stacktrace option to get the stack trace.
+2025-05-21T16:30:22.669+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Run with --scan to get full insights.
+2025-05-21T16:30:22.669+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Get more help at https://help.gradle.org.
+2025-05-21T16:30:22.669+0330 [WARN] [org.gradle.internal.featurelifecycle.LoggingDeprecatedFeatureHandler] 
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2025-05-21T16:30:22.669+0330 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] 
+2025-05-21T16:30:22.669+0330 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] BUILD FAILED in 6s
+2025-05-21T16:30:22.669+0330 [LIFECYCLE] [org.gradle.internal.buildevents.TaskExecutionStatisticsReporter] 53 actionable tasks: 31 executed, 20 from cache, 2 up-to-date
+2025-05-21T16:30:22.669+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Build finished for file system watching' started
+2025-05-21T16:30:22.673+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: acquired lock on worker lease
+2025-05-21T16:30:22.673+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 3: released lock on worker lease
+2025-05-21T16:30:22.673+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: acquired lock on worker lease
+2025-05-21T16:30:22.673+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker: released lock on worker lease
+2025-05-21T16:30:22.673+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: acquired lock on worker lease
+2025-05-21T16:30:22.673+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Execution worker Thread 2: released lock on worker lease
+2025-05-21T16:30:22.679+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Build finished for file system watching'
+2025-05-21T16:30:22.679+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Build finished for file system watching' completed
+2025-05-21T16:30:22.680+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for cache directory md-supplier (/root/.gradle/caches/8.9/md-supplier)
+2025-05-21T16:30:22.680+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on cache directory md-supplier (/root/.gradle/caches/8.9/md-supplier).
+2025-05-21T16:30:22.680+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for Build Output Cleanup Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/buildOutputCleanup)
+2025-05-21T16:30:22.680+0330 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache outputFiles.bin (/root/projects/HiddifyAndroidRefactor-main/.gradle/buildOutputCleanup/outputFiles.bin)
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on Build Output Cleanup Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/buildOutputCleanup).
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for execution history cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/executionHistory)
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache executionHistory.bin (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/executionHistory/executionHistory.bin)
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on execution history cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/executionHistory).
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for Build cache (/root/.gradle/caches/build-cache-1)
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on Build cache (/root/.gradle/caches/build-cache-1).
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] Build cache (/root/.gradle/caches/build-cache-1) has last been fully cleaned up 0 hours ago
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] Skipping cleanup for Build cache (/root/.gradle/caches/build-cache-1) as it is not yet due
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for cache directory md-rule (/root/.gradle/caches/8.9/md-rule)
+2025-05-21T16:30:22.681+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on cache directory md-rule (/root/.gradle/caches/8.9/md-rule).
+2025-05-21T16:30:22.682+0330 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.CachedStoreFactory] Resolution result cache closed. Cache reads: 0, disk reads: 1 (avg: 0.0 secs, total: 0.0 secs)
+2025-05-21T16:30:22.682+0330 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.CachedStoreFactory] Resolution result cache closed. Cache reads: 5, disk reads: 2 (avg: 0.001 secs, total: 0.002 secs)
+2025-05-21T16:30:22.683+0330 [DEBUG] [org.gradle.api.internal.artifacts.ivyservice.resolveengine.store.ResolutionResultsStoreFactory] Deleted 8 resolution results binary files in 0.001 secs
+2025-05-21T16:30:22.684+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Run build'
+2025-05-21T16:30:22.684+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Run build' completed
+2025-05-21T16:30:22.684+0330 [DEBUG] [org.gradle.internal.resources.AbstractTrackedResourceLock] Daemon worker Thread 7: released lock on worker lease
+2025-05-21T16:30:22.686+0330 [DEBUG] [org.gradle.deployment.internal.DefaultDeploymentRegistry] Stopping 0 deployment handles
+2025-05-21T16:30:22.686+0330 [DEBUG] [org.gradle.deployment.internal.DefaultDeploymentRegistry] Stopped deployment handles
+2025-05-21T16:30:22.686+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for file hash cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/fileHashes)
+2025-05-21T16:30:22.686+0330 [DEBUG] [org.gradle.cache.internal.btree.BTreePersistentIndexedCache] Closing cache fileHashes.bin (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/fileHashes/fileHashes.bin)
+2025-05-21T16:30:22.686+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on file hash cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/fileHashes).
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.LockOnDemandCrossProcessCacheAccess] Releasing file lock for checksums cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/checksums)
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultFileLockManager] Releasing lock on checksums cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/checksums).
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] VCS Checkout Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/vcs-1) has last been fully cleaned up 0 hours ago
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] Skipping cleanup for VCS Checkout Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/vcs-1) as it is not yet due
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache VCS Checkout Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/vcs-1) was closed 0 times.
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache VCS metadata (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/vcsMetadata) was closed 0 times.
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache Compressed Files Expansion Cache (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/expanded) was closed 0 times.
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] dependencies-accessors (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/dependencies-accessors) has last been fully cleaned up 0 hours ago
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCleanupExecutor] Skipping cleanup for dependencies-accessors (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/dependencies-accessors) as it is not yet due
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.cache.internal.DefaultCacheCoordinator] Cache dependencies-accessors (/root/projects/HiddifyAndroidRefactor-main/.gradle/8.9/dependencies-accessors) was closed 0 times.
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Deleting unused version-specific caches in /root/projects/HiddifyAndroidRefactor-main/.gradle' started
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Completing Build operation 'Deleting unused version-specific caches in /root/projects/HiddifyAndroidRefactor-main/.gradle'
+2025-05-21T16:30:22.688+0330 [DEBUG] [org.gradle.internal.operations.DefaultBuildOperationRunner] Build operation 'Deleting unused version-specific caches in /root/projects/HiddifyAndroidRefactor-main/.gradle' completed
+2025-05-21T16:30:22.699+0330 [DEBUG] [org.gradle.launcher.daemon.server.exec.ExecuteBuild] The daemon has finished executing the build.
+2025-05-21T16:30:22.735+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: dispatching class org.gradle.launcher.daemon.protocol.CloseInput
+2025-05-21T16:30:22.735+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClient] Received result Success[value=org.gradle.launcher.exec.BuildActionResult@736d6a5c] from daemon DaemonInfo{pid=2464, address=[2950a0e5-2e46-4de0-af87-4f3197cf0cff port:22067, addresses:[/127.0.0.1]], state=Idle, lastBusy=1747832390852, context=DefaultDaemonContext[uid=cf668b66-f4e1-4bba-85f1-aeae815bb572,javaHome=/usr/lib/jvm/java-17-openjdk-amd64,javaVersion=17,daemonRegistryDir=/root/.gradle/daemon,pid=2464,idleTimeout=10800000,priority=NORMAL,applyInstrumentationAgent=true,nativeServicesMode=ENABLED,daemonOpts=--add-opens=java.base/java.io=ALL-UNNAMED,--add-opens=java.base/java.util=ALL-UNNAMED,--add-opens=java.base/java.lang=ALL-UNNAMED,--add-opens=java.base/java.lang.reflect=ALL-UNNAMED,--add-opens=java.base/java.util.concurrent=ALL-UNNAMED,--add-opens=java.base/java.util=ALL-UNNAMED,--add-opens=java.base/java.lang=ALL-UNNAMED,--add-opens=java.base/java.lang.invoke=ALL-UNNAMED,--add-opens=java.prefs/java.util.prefs=ALL-UNNAMED,--add-exports=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED,--add-exports=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED,--add-opens=java.base/java.nio.charset=ALL-UNNAMED,--add-opens=java.base/java.net=ALL-UNNAMED,--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED,-Xmx2048m,-Dfile.encoding=UTF-8,-Duser.country,-Duser.language=en,-Duser.variant]} (build should be done).
+2025-05-21T16:30:22.735+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: dispatching class org.gradle.launcher.daemon.protocol.Finished
+2025-05-21T16:30:22.735+0330 [DEBUG] [org.gradle.launcher.daemon.client.DaemonClientConnection] thread 1: connection stop
+2025-05-21T16:30:22.736+0330 [LIFECYCLE] [org.gradle.launcher.cli.DebugLoggerWarningAction] 
+#############################################################################
+   WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+
+   Debug level logging will leak security sensitive information!
+
+   For more details, please refer to https://docs.gradle.org/8.9/userguide/logging.html#sec:debug_security in the Gradle documentation.
+#############################################################################

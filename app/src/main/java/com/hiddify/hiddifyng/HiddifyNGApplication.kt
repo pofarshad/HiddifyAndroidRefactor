@@ -121,8 +121,8 @@ class HiddifyNGApplication : Application() {
                 Log.i(TAG, "Scheduling ping worker every $pingFrequency minutes")
                 
                 val pingRequest = PeriodicWorkRequestBuilder<PingWorker>(
-                    pingFrequency, TimeUnit.MINUTES,
-                    pingFrequency / 2, TimeUnit.MINUTES // Flex period
+                    pingFrequency.toLong(), TimeUnit.MINUTES,
+                    (pingFrequency / 2).toLong(), TimeUnit.MINUTES // Flex period
                 )
                     .setConstraints(constraints)
                     .build()

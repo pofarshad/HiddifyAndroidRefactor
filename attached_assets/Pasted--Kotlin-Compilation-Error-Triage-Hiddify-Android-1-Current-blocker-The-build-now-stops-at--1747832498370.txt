@@ -1,0 +1,97 @@
+# Kotlin Compilation Error Triage – Hiddify Android
+
+## 1  Current blocker
+
+The build now stops at **`:app:compileReleaseKotlin`** with hundreds of “*unresolved reference* / *type‑mismatch*” messages. These come from three root causes:
+
+* **Out‑of‑date generated Room stubs** after our AGP & Kotlin upgrade
+* **Missing/renamed project classes** (e.g. `TrafficStats`, `PingUtils#pingAllServersAsync`)
+* **Protocol handler subclasses** that don’t implement the new abstract API
+
+---
+
+## 2  Fix in bite‑size passes
+
+\### 2‑1  Clean & re‑generate kapt code
+
+```bash
+./gradlew clean
+rm -rf app/build/tmp/kapt3            # old stubs
+```
+
+Re‑build once after every few edits to surface only the next group of errors:
+
+```bash
+./gradlew :app:compileReleaseKotlin
+```
+
+\### 2‑2  Room entity / DAO issues
+
+| Offending file                       | Error snippet                                               | What to change                                                                                                                                              |
+| ------------------------------------ | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `AppSettings.kt`                     | `Cannot find setter for field id`                           | Make the property **mutable** or supply a custom setter:<br>`@PrimaryKey(autoGenerate = true) var id: Int = 0`                                              |
+| Any DAO method returning `Object`    | “Not sure how to convert a Cursor…”                         | Give them proper **suspend** / Flow types, e.g.<br>`@Query("SELECT * FROM server WHERE id = :serverId") suspend fun getServerById(serverId: Long): Server?` |
+| Warning “multiple good constructors” | Add `@Ignore` to secondary ctors you don’t want Room to use |                                                                                                                                                             |
+
+After fixing entities/DAOs, run `./gradlew :app:kaptGenerateStubsReleaseKotlin` once to confirm Room stops complaining.
+
+\### 2‑3  Kotlin std‑lib type mismatches
+
+* `HiddifyNGApplication.kt:124–125`  — cast prefs values explicitly:
+
+  ```kotlin
+  val lastUpdateTimestamp: Long = prefs.getLong(KEY_LAST_UPDATE, 0L)
+  val updateInterval: Long = prefs.getInt(KEY_UPDATE_INTERVAL, 24).toLong()
+  ```
+* Replace `/` on `BigDecimal` with `divide()`.
+
+\### 2‑4  Missing helper classes / IDs
+The upgrade path dropped several convenience wrappers.  Either:
+
+1. **Re‑import them** from the original Hiddify repo; **or**
+2. **Comment‑out** their callers for now, then add your own replacements.
+
+Quick grep list:
+
+```bash
+grep -R "\<TrafficStats\>\|bestServer\|pingAllServersAsync" app/src/main/java
+```
+
+\### 2‑5  ProtocolHandler hierarchy
+`ProtocolHandler` is now **abstract**.  Every subclass must:
+
+```kotlin
+class HysteriaProtocol(private val server: Server) : ProtocolHandler() {
+    override fun getProtocolName() = "hysteria"
+    override fun createOutboundConfig() = …
+    // implement the other abstract funcs
+}
+```
+
+Add a **primary constructor** and implement **all** abstract members (`createOutboundConfig`, `createProtocolSettings`, `createStreamSettings`).
+
+---
+
+## 3  Gradle / Kotlin build flags recap
+
+```gradle
+android {
+    compileSdk 35
+    buildFeatures { buildConfig true }
+}
+
+kotlinOptions { jvmTarget = "17" }
+```
+
+Make sure they appear **once** in *app/build.gradle*.
+
+---
+
+## 4  Iteration checklist
+
+* [ ] Build cleans without Room errors
+* [ ] No unresolved references in `MainActivity.kt`
+* [ ] All protocol handlers compile
+* [ ] `./gradlew assembleRelease` finishes
+
+> 💡 Keep a live watcher: `./gradlew --continuous compileReleaseKotlin` – it recompiles as soon as you save.
