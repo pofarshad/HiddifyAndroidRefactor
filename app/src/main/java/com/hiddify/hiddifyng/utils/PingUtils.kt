@@ -1,114 +1,246 @@
 package com.hiddify.hiddifyng.utils
 
 import android.util.Log
-import com.hiddify.hiddifyng.database.dao.ServerDao
 import com.hiddify.hiddifyng.database.entity.Server
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Socket
-import java.net.URI
-import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
+import kotlin.math.min
 
+/**
+ * Utility for ping testing servers
+ * Supports TCP, ICMP, and HTTP ping methods for comprehensive latency measurement
+ */
 object PingUtils {
     private const val TAG = "PingUtils"
-    private const val PING_TIMEOUT = 2000 // 2 seconds
+    private const val TIMEOUT_MS = 5000
+    private const val NUM_SAMPLES = 3 // Number of ping samples to average
+    private const val FAILED_PING = -1
     
     /**
-     * Ping all servers in the database and update their ping values
-     * Returns the server with the lowest ping value
+     * Ping a server using the most appropriate method based on server type
+     * Returns the ping time in milliseconds, or FAILED_PING if failed
      */
-    suspend fun pingAllServersAsync(serverDao: ServerDao): Server? = coroutineScope {
+    suspend fun pingServer(server: Server): Int {
+        val host = parseHost(server.address)
+        val port = parsePort(server.address)
+        
+        if (host.isEmpty() || port <= 0) {
+            Log.e(TAG, "Invalid server address: ${server.address}")
+            return FAILED_PING
+        }
+        
+        // Try multiple ping methods and take the best result
+        val results = mutableListOf<Int>()
+        
+        // Try TCP ping (most reliable for VPN servers)
+        val tcpPing = pingTcp(host, port)
+        if (tcpPing > 0) results.add(tcpPing)
+        
+        // Try ICMP ping if TCP failed
+        if (results.isEmpty()) {
+            val icmpPing = pingIcmp(host)
+            if (icmpPing > 0) results.add(icmpPing)
+        }
+        
+        // Try HTTP ping as a fallback
+        if (results.isEmpty() && isCommonHttpPort(port)) {
+            val httpPing = pingHttp(host, port)
+            if (httpPing > 0) results.add(httpPing)
+        }
+        
+        // Return the minimum successful ping value or FAILED_PING
+        return if (results.isNotEmpty()) results.minOrNull() ?: FAILED_PING else FAILED_PING
+    }
+    
+    /**
+     * Parse host from server address
+     */
+    private fun parseHost(address: String): String {
         try {
-            // Get all servers
-            val servers = serverDao.getAllServers()
-            if (servers.isEmpty()) return@coroutineScope null
-            
-            // Ping all servers concurrently
-            val pingTasks = servers.map { server ->
-                async(Dispatchers.IO) {
-                    val pingResult = pingServer(server)
-                    // Update server ping in database
-                    serverDao.updateServerPing(server.id, pingResult)
-                    Pair(server, pingResult)
+            // Extract host from address formats:
+            // host:port, host, [2001:db8::1]:port, etc.
+            val hostPart = if (address.startsWith("[")) {
+                // IPv6 address
+                val closeBracketIndex = address.indexOf("]")
+                if (closeBracketIndex > 0) {
+                    address.substring(1, closeBracketIndex)
+                } else {
+                    ""
+                }
+            } else {
+                // IPv4 or hostname
+                val colonIndex = address.lastIndexOf(":")
+                if (colonIndex > 0) {
+                    address.substring(0, colonIndex)
+                } else {
+                    address
                 }
             }
             
-            // Wait for all pings to complete
-            val results = pingTasks.awaitAll()
-            
-            // Find server with lowest ping
-            val bestServer = results
-                .filter { (_, ping) -> ping > 0 } // Filter out failed pings
-                .minByOrNull { (_, ping) -> ping }
-                ?.first
-            
-            // Log results
-            Log.d(TAG, "Pinged ${servers.size} servers, best ping: ${bestServer?.ping ?: "none"}")
-            
-            bestServer
+            return hostPart.trim()
         } catch (e: Exception) {
-            Log.e(TAG, "Error during ping operation", e)
-            null
+            Log.e(TAG, "Error parsing host from address: $address", e)
+            return ""
         }
     }
     
     /**
-     * Get the best server (lowest ping) from database
+     * Parse port from server address
      */
-    suspend fun bestServer(serverDao: ServerDao): Server? = withContext(Dispatchers.IO) {
-        serverDao.getBestServer()
-    }
-    
-    /**
-     * Ping a single server and return the ping time in milliseconds
-     * Returns -1 if ping fails
-     */
-    suspend fun pingServer(server: Server): Int = withContext(Dispatchers.IO) {
+    private fun parsePort(address: String): Int {
         try {
-            // Extract host from server address
-            val uri = URI(server.address)
-            val host = uri.host ?: return@withContext -1
-            
-            val port = when {
-                uri.port > 0 -> uri.port
-                uri.scheme == "https" -> 443
-                uri.scheme == "http" -> 80
-                else -> 80
+            // Extract port from address formats:
+            // host:port, [2001:db8::1]:port
+            val portStr = when {
+                address.contains("]:") -> {
+                    // IPv6 with port
+                    address.substringAfterLast("]:")
+                }
+                address.contains(":") && !address.startsWith("[") -> {
+                    // IPv4 with port or hostname:port
+                    address.substringAfterLast(":")
+                }
+                else -> {
+                    // Default to common ports
+                    return 443 // Default to HTTPS port
+                }
             }
             
-            // Use socket connection to measure ping
-            val startTime = System.currentTimeMillis()
-            Socket().use { socket ->
-                socket.connect(InetSocketAddress(host, port), PING_TIMEOUT)
-            }
-            val pingTime = (System.currentTimeMillis() - startTime).toInt()
-            
-            // Log successful ping
-            Log.d(TAG, "Ping to ${server.name}: $pingTime ms")
-            pingTime
-        } catch (e: UnknownHostException) {
-            Log.e(TAG, "Could not resolve host for ${server.name}", e)
-            -1
-        } catch (e: IOException) {
-            Log.e(TAG, "Connection error for ${server.name}", e)
-            -1
+            return portStr.trim().toIntOrNull() ?: 443
         } catch (e: Exception) {
-            Log.e(TAG, "Ping failed for ${server.name}", e)
-            -1
+            Log.e(TAG, "Error parsing port from address: $address", e)
+            return 443 // Default to HTTPS port
         }
     }
     
     /**
-     * Get server by ID from database
+     * Perform a TCP ping
      */
-    suspend fun getServerById(serverDao: ServerDao, serverId: Long): Server? = withContext(Dispatchers.IO) {
-        serverDao.getServerById(serverId)
+    private fun pingTcp(host: String, port: Int): Int {
+        var bestTime = FAILED_PING
+        var socket: Socket? = null
+        
+        for (i in 0 until NUM_SAMPLES) {
+            try {
+                val startTime = System.nanoTime()
+                socket = Socket()
+                socket.connect(InetSocketAddress(host, port), TIMEOUT_MS)
+                val endTime = System.nanoTime()
+                
+                val timeMs = TimeUnit.NANOSECONDS.toMillis(endTime - startTime)
+                
+                // Update best time
+                if (bestTime == FAILED_PING || timeMs < bestTime) {
+                    bestTime = timeMs.toInt()
+                }
+                
+                Log.d(TAG, "TCP ping to $host:$port - $timeMs ms")
+            } catch (e: Exception) {
+                Log.d(TAG, "TCP ping to $host:$port failed", e)
+            } finally {
+                try {
+                    socket?.close()
+                } catch (e: IOException) {
+                    // Ignore
+                }
+            }
+            
+            // Small delay between samples
+            Thread.sleep(100)
+        }
+        
+        return bestTime
+    }
+    
+    /**
+     * Perform an ICMP ping (requires root)
+     */
+    private fun pingIcmp(host: String): Int {
+        try {
+            val runtime = Runtime.getRuntime()
+            var pingTimeout = min(TIMEOUT_MS, 5000).toString()
+            
+            // Determine OS and adjust command
+            val pingCommand = if (System.getProperty("os.name").lowercase().contains("windows")) {
+                // Windows ping
+                "ping -n 1 -w $pingTimeout $host"
+            } else {
+                // Linux/Android ping
+                "ping -c 1 -W $pingTimeout $host"
+            }
+            
+            val startTime = System.nanoTime()
+            val process = runtime.exec(pingCommand)
+            val exitValue = process.waitFor()
+            val endTime = System.nanoTime()
+            
+            return if (exitValue == 0) {
+                // Ping succeeded
+                val timeMs = TimeUnit.NANOSECONDS.toMillis(endTime - startTime)
+                Log.d(TAG, "ICMP ping to $host - $timeMs ms")
+                timeMs.toInt()
+            } else {
+                Log.d(TAG, "ICMP ping to $host failed with exit code $exitValue")
+                FAILED_PING
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "ICMP ping to $host failed", e)
+            return FAILED_PING
+        }
+    }
+    
+    /**
+     * Perform an HTTP ping
+     */
+    private fun pingHttp(host: String, port: Int): Int {
+        var bestTime = FAILED_PING
+        
+        for (i in 0 until NUM_SAMPLES) {
+            try {
+                val protocol = if (port == 443) "https" else "http"
+                val url = java.net.URL("$protocol://$host:$port")
+                
+                val startTime = System.nanoTime()
+                val connection = url.openConnection() as java.net.HttpURLConnection
+                connection.connectTimeout = TIMEOUT_MS
+                connection.readTimeout = TIMEOUT_MS
+                connection.requestMethod = "HEAD" // Just get headers, not body
+                
+                val responseCode = connection.responseCode
+                val endTime = System.nanoTime()
+                
+                if (responseCode >= 200 && responseCode < 400) {
+                    val timeMs = TimeUnit.NANOSECONDS.toMillis(endTime - startTime)
+                    
+                    // Update best time
+                    if (bestTime == FAILED_PING || timeMs < bestTime) {
+                        bestTime = timeMs.toInt()
+                    }
+                    
+                    Log.d(TAG, "HTTP ping to $host:$port - $timeMs ms")
+                } else {
+                    Log.d(TAG, "HTTP ping to $host:$port failed with response code $responseCode")
+                }
+                
+                connection.disconnect()
+            } catch (e: Exception) {
+                Log.d(TAG, "HTTP ping to $host:$port failed", e)
+            }
+            
+            // Small delay between samples
+            Thread.sleep(100)
+        }
+        
+        return bestTime
+    }
+    
+    /**
+     * Check if port is a common HTTP/HTTPS port
+     */
+    private fun isCommonHttpPort(port: Int): Boolean {
+        return port == 80 || port == 443 || port == 8080 || port == 8443
     }
 }
