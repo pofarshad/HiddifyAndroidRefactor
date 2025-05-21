@@ -28,8 +28,9 @@ static bool prepare_xray_environment(JNIEnv *env, const std::string& internal_di
 static bool execute_xray(const std::string& config_path);
 static bool kill_xray_process();
 static std::string get_xray_path(const std::string& internal_dir);
-static int copy_asset_to_file(JNIEnv *env, jobject context, const std::string& asset_name, 
-                              const std::string& output_path);
+// Commenting out unused function declaration
+// static int copy_asset_to_file(JNIEnv *env, jobject context, const std::string& asset_name, 
+//                              const std::string& output_path);
 
 extern "C" {
 
@@ -244,7 +245,9 @@ static std::string get_xray_path(const std::string& internal_dir) {
 
 /**
  * Copy an asset file to internal storage
+ * Currently not used but kept for future implementation
  */
+/* Commented out to avoid unused function warning
 static int copy_asset_to_file(JNIEnv *env, jobject context, const std::string& asset_name, 
                              const std::string& output_path) {
     // In a real implementation, this would:
@@ -255,3 +258,4 @@ static int copy_asset_to_file(JNIEnv *env, jobject context, const std::string& a
     LOGI("Would copy asset %s to %s", asset_name.c_str(), output_path.c_str());
     return 0;
 }
+*/

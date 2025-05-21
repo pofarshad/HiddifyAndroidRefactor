@@ -1,0 +1,93 @@
+root@root:~/projects/HiddifyAndroidRefactor-main# ./gradlew clean assembleRelease
+Starting a Gradle Daemon (subsequent builds will be faster)
+Configuration on demand is an incubating feature.
+
+> Configure project :app
+WARNING: The option setting 'android.defaults.buildfeatures.buildconfig=true' is deprecated.
+The current default is 'false'.
+It will be removed in version 9.0 of the Android Gradle plugin.
+To keep using this feature, add the following to your module-level build.gradle files:
+    android.buildFeatures.buildConfig = true
+or from Android Studio, click: `Refactor` > `Migrate BuildConfig to Gradle Build Files`.
+Observed package id 'platforms;android-Baklava' in inconsistent location '/root/Android/sdk/platforms/android-35' (Expected '/root/Android/sdk/platforms/android-Baklava')
+Warning: Observed package id 'platforms;android-Baklava' in inconsistent location '/root/Android/sdk/platforms/android-35' (Expected '/root/Android/sdk/platforms/android-Baklava')
+Warning: Observed package id 'platforms;android-Baklava' in inconsistent location '/root/Android/sdk/platforms/android-35' (Expected '/root/Android/sdk/platforms/android-Baklava')
+Checking the license for package NDK (Side by side) 27.0.12077973 in /root/Android/sdk/licenses
+License for package NDK (Side by side) 27.0.12077973 accepted.
+Preparing "Install NDK (Side by side) 27.0.12077973 v.27.0.12077973".
+"Install NDK (Side by side) 27.0.12077973 v.27.0.12077973" ready.
+Installing NDK (Side by side) 27.0.12077973 in /root/Android/sdk/ndk/27.0.12077973
+"Install NDK (Side by side) 27.0.12077973 v.27.0.12077973" complete.
+"Install NDK (Side by side) 27.0.12077973 v.27.0.12077973" finished.
+Warning: Observed package id 'platforms;android-Baklava' in inconsistent location '/root/Android/sdk/platforms/android-35' (Expected '/root/Android/sdk/platforms/android-Baklava')
+Checking the license for package Android SDK Build-Tools 34 in /root/Android/sdk/licenses
+License for package Android SDK Build-Tools 34 accepted.
+Preparing "Install Android SDK Build-Tools 34 v.34.0.0".
+"Install Android SDK Build-Tools 34 v.34.0.0" ready.
+Installing Android SDK Build-Tools 34 in /root/Android/sdk/build-tools/34.0.0
+"Install Android SDK Build-Tools 34 v.34.0.0" complete.
+"Install Android SDK Build-Tools 34 v.34.0.0" finished.
+Checking the license for package Android SDK Platform 35 in /root/Android/sdk/licenses
+License for package Android SDK Platform 35 accepted.
+Preparing "Install Android SDK Platform 35 (revision 2)".
+Warning: Package "Android SDK Platform 35" (platforms;android-35) should be installed in 
+"/root/Android/sdk/platforms/android-35" but 
+"Android SDK Platform Baklava, rev 5" (platforms;android-Baklava) is already installed there.Installing in "/root/Android/sdk/platforms/android-35-2" instead.
+"Install Android SDK Platform 35 (revision 2)" ready.
+Installing Android SDK Platform 35 in /root/Android/sdk/platforms/android-35-2
+"Install Android SDK Platform 35 (revision 2)" complete.
+"Install Android SDK Platform 35 (revision 2)" finished.
+Observed package id 'platforms;android-Baklava' in inconsistent location '/root/Android/sdk/platforms/android-35' (Expected '/root/Android/sdk/platforms/android-Baklava')
+Observed package id 'platforms;android-35' in inconsistent location '/root/Android/sdk/platforms/android-35-2' (Expected '/root/Android/sdk/platforms/android-35')
+
+> Task :app:processReleaseMainManifest
+package="com.hiddify.hiddifyng" found in source AndroidManifest.xml: /root/projects/HiddifyAndroidRefactor-main/app/src/main/AndroidManifest.xml.
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Recommendation: remove package="com.hiddify.hiddifyng" from the source AndroidManifest.xml: /root/projects/HiddifyAndroidRefactor-main/app/src/main/AndroidManifest.xml.
+/root/projects/HiddifyAndroidRefactor-main/app/src/main/AndroidManifest.xml:22:9-41 Warning:
+        android:extractNativeLibs should not be specified in this source AndroidManifest.xml file. See https://d.android.com/guide/topics/manifest/application-element#extractNativeLibs for more information.
+The AGP Upgrade Assistant can remove the attribute from the AndroidManifest.xml file and update the build file accordingly. See https://d.android.com/studio/build/agp-upgrade-assistant for more information.
+
+> Task :app:buildCMakeRelWithDebInfo[arm64-v8a] FAILED
+C/C++: ninja: Entering directory `/root/projects/HiddifyAndroidRefactor-main/app/.cxx/RelWithDebInfo/2b6k6f6d/arm64-v8a'
+C/C++: /root/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/root/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/sysroot -Dxray_core_jni_EXPORTS -I/root/projects/HiddifyAndroidRefactor-main/app/src/main/cpp/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -std=c++17 -Wall -Werror -O2 -g -DNDEBUG -fPIC -fvisibility=hidden -ffunction-sections -fdata-sections -MD -MT CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o -MF CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o.d -o CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o -c /root/projects/HiddifyAndroidRefactor-main/app/src/main/cpp/xray-core-jni.cpp
+C/C++: /root/projects/HiddifyAndroidRefactor-main/app/src/main/cpp/xray-core-jni.cpp:248:12: error: unused function 'copy_asset_to_file' [-Werror,-Wunused-function]
+C/C++:   248 | static int copy_asset_to_file(JNIEnv *env, jobject context, const std::string& asset_name, 
+C/C++:       |            ^~~~~~~~~~~~~~~~~~
+C/C++: 1 error generated.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:buildCMakeRelWithDebInfo[arm64-v8a]'.
+> com.android.ide.common.process.ProcessException: ninja: Entering directory `/root/projects/HiddifyAndroidRefactor-main/app/.cxx/RelWithDebInfo/2b6k6f6d/arm64-v8a'
+  [1/2] Building CXX object CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o
+  FAILED: CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o 
+  /root/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/root/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/linux-x86_64/sysroot -Dxray_core_jni_EXPORTS -I/root/projects/HiddifyAndroidRefactor-main/app/src/main/cpp/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -std=c++17 -Wall -Werror -O2 -g -DNDEBUG -fPIC -fvisibility=hidden -ffunction-sections -fdata-sections -MD -MT CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o -MF CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o.d -o CMakeFiles/xray-core-jni.dir/xray-core-jni.cpp.o -c /root/projects/HiddifyAndroidRefactor-main/app/src/main/cpp/xray-core-jni.cpp
+  /root/projects/HiddifyAndroidRefactor-main/app/src/main/cpp/xray-core-jni.cpp:248:12: error: unused function 'copy_asset_to_file' [-Werror,-Wunused-function]
+    248 | static int copy_asset_to_file(JNIEnv *env, jobject context, const std::string& asset_name, 
+        |            ^~~~~~~~~~~~~~~~~~
+  1 error generated.
+  ninja: build stopped: subcommand failed.
+  
+  C++ build system [build] failed while executing:
+      /root/Android/sdk/cmake/3.22.1/bin/ninja \
+        -C \
+        /root/projects/HiddifyAndroidRefactor-main/app/.cxx/RelWithDebInfo/2b6k6f6d/arm64-v8a \
+        xray-core-jni
+    from /root/projects/HiddifyAndroidRefactor-main/app
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 2m 8s
+24 actionable tasks: 22 executed, 2 up-to-date
