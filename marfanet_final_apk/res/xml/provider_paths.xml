@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path name="configs" path="configs/" />
+    <cache-path name="shared" path="shared/"/>
+    <external-path name="external_files" path="." />
+</paths>

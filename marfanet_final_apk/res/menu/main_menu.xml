@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <item
+        android:id="@+id/menu_ping"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="@string/ping_servers"
+        app:showAsAction="ifRoom" />
+    
+    <item
+        android:id="@+id/menu_update"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/update_subscription"
+        app:showAsAction="ifRoom" />
+    
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+    
+    <item
+        android:id="@+id/menu_subscriptions"
+        android:title="@string/subscriptions"
+        app:showAsAction="never" />
+    
+    <item
+        android:id="@+id/menu_check_update"
+        android:title="@string/check_update"
+        app:showAsAction="never" />
+</menu>

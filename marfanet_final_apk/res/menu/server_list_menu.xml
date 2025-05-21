@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <item
+        android:id="@+id/menu_ping_all"
+        android:title="Ping All Servers"
+        android:icon="@android:drawable/ic_menu_rotate"
+        app:showAsAction="ifRoom" />
+    
+    <item
+        android:id="@+id/menu_add_subscription"
+        android:title="Add Subscription"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="never" />
+</menu>
