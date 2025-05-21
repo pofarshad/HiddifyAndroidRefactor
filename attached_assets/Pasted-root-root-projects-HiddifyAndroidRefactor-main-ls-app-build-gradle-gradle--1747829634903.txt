@@ -1,0 +1,41 @@
+root@root:~/projects/HiddifyAndroidRefactor-main# ls
+app              build.gradle        gradle             gradlew            settings.gradle
+attached_assets  generated-icon.png  gradle.properties  marfanet_code.zip
+root@root:~/projects/HiddifyAndroidRefactor-main# ./gradlew clean assembleRelease
+Configuration on demand is an incubating feature.
+
+> Configure project :app
+WARNING: The option setting 'android.defaults.buildfeatures.buildconfig=true' is deprecated.
+The current default is 'false'.
+It will be removed in version 9.0 of the Android Gradle plugin.
+To keep using this feature, add the following to your module-level build.gradle files:
+    android.buildFeatures.buildConfig = true
+or from Android Studio, click: `Refactor` > `Migrate BuildConfig to Gradle Build Files`.
+
+> Task :app:processReleaseResources FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:processReleaseResources'.
+> A failure occurred while executing com.android.build.gradle.internal.res.LinkApplicationAndroidResourcesTask$TaskAction
+   > Android resource linking failed
+     ERROR: /root/projects/HiddifyAndroidRefactor-main/app/src/main/res/mipmap-anydpi/ic_launcher.xml: AAPT: error: <adaptive-icon> elements require a sdk version of at least 26.
+         
+     ERROR: /root/projects/HiddifyAndroidRefactor-main/app/src/main/res/mipmap-anydpi/ic_launcher_round.xml: AAPT: error: <adaptive-icon> elements require a sdk version of at least 26.
+         
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 2s
+25 actionable tasks: 14 executed, 9 from cache, 2 up-to-date
