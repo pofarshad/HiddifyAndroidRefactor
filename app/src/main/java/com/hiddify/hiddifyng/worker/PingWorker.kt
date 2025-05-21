@@ -15,8 +15,10 @@ import kotlinx.coroutines.withContext
  */
 class PingWorker(
     private val context: Context,
-    workerParams: WorkerParameters
-) : CoroutineWorker(context, workerParams) {
+    params: WorkerParameters
+) : CoroutineWorker(context, params) {
+    // Store params for later use
+    private val workerParams = params
     private val TAG = "PingWorker"
     
     override suspend fun doWork(): Result {
