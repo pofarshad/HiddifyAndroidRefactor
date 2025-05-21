@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Gold color palette for MarFaNet theme -->
-    <color name="gold_200">#FFF1CC</color>
-    <color name="gold_500">#FFC107</color>
-    <color name="gold_700">#FFA000</color>
-    <color name="gold_accent">#FFD54F</color>
+    <color name="primary">#1F2937</color>
+    <color name="primary_variant">#111827</color>
+    <color name="secondary">#EAB308</color>
+    <color name="secondary_variant">#CA8A04</color>
     
-    <!-- Black color palette -->
-    <color name="black_300">#424242</color>
-    <color name="black_500">#212121</color>
-    <color name="black_700">#121212</color>
+    <color name="background">#0F172A</color>
+    <color name="background_secondary">#1E293B</color>
+    <color name="background_tertiary">#334155</color>
     
-    <!-- Text colors -->
-    <color name="text_primary">#F5F5F5</color>
-    <color name="text_secondary">#B3B3B3</color>
-    <color name="text_gold">#FFC107</color>
+    <color name="surface">#1E293B</color>
+    <color name="error">#EF4444</color>
     
-    <!-- Background colors -->
-    <color name="background_primary">#121212</color>
-    <color name="background_secondary">#1E1E1E</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_secondary">#000000</color>
+    <color name="on_background">#FFFFFF</color>
+    <color name="on_surface">#FFFFFF</color>
+    <color name="on_error">#FFFFFF</color>
     
-    <!-- System colors -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_tertiary">#64748B</color>
+    
+    <color name="connecting">#EAB308</color>
+    <color name="connected">#22C55E</color>
+    <color name="disconnected">#94A3B8</color>
+    <color name="error_state">#EF4444</color>
+    
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="error">#CF6679</color>
-    
-    <!-- Status colors -->
-    <color name="status_connected">#4CAF50</color>
-    <color name="status_disconnected">#F44336</color>
-    
-    <!-- Connection state colors -->
-    <color name="connected">#4CAF50</color>
-    <color name="disconnected">#F44336</color>
-    
-    <!-- Card / widget visuals -->
-    <color name="card_border">#33FFFFFF</color>
-    <color name="text_disabled">#61FFFFFF</color>
 </resources>

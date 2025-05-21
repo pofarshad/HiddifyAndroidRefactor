@@ -84,7 +84,25 @@ data class Server(
     var hysteriaAuthString: String? = null,
     var hysteriaRecvWindowConn: Int? = null,
     var hysteriaRecvWindow: Int? = null,
-    var hysteriaDisableMtuDiscovery: Boolean? = null
+    var hysteriaDisableMtuDiscovery: Boolean? = null,
+    
+    // REALITY protocol specific settings
+    var publicKey: String? = null,
+    var shortId: String? = null,
+    var spiderX: String? = null,
+    
+    // XHTTP protocol settings
+    var useTls: Boolean? = null,
+    
+    // Service settings for protocols
+    var serviceName: String? = null,
+    var multiMode: Boolean? = null,
+    
+    // Tracking fields
+    var lastPingTime: Long = 0,
+    var isActive: Boolean = false,
+    var downloadMbps: Int? = null,
+    var uploadMbps: Int? = null
 ) {
     /**
      * Generate a human-readable summary of the server
