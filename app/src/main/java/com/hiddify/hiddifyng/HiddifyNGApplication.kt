@@ -122,7 +122,7 @@ class HiddifyNGApplication : Application() {
                 
                 val pingRequest = PeriodicWorkRequestBuilder<PingWorker>(
                     pingFrequency.toLong(), TimeUnit.MINUTES,
-                    (pingFrequency / 2).toLong(), TimeUnit.MINUTES // Flex period
+                    (pingFrequency.toLong() / 2), TimeUnit.MINUTES // Flex period
                 )
                     .setConstraints(constraints)
                     .build()
