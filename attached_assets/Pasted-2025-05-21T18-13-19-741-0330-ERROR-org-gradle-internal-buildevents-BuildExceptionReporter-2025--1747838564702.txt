@@ -1,0 +1,21 @@
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] FAILURE: Build failed with an exception.
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * What went wrong:
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] Execution failed for task ':app:compileReleaseKotlin'.
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter]    > Compilation error. See log for more details
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * Try:
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Run with --stacktrace option to get the stack trace.
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Run with --scan to get full insights.
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Get more help at https://help.gradle.org.
+2025-05-21T18:13:19.741+0330 [WARN] [org.gradle.internal.featurelifecycle.LoggingDeprecatedFeatureHandler] 
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.9/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] 
+2025-05-21T18:13:19.741+0330 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] BUILD FAILED in 4s
+2025-05-21T18:13:19.741+0330 [LIFECYCLE] [org.gradle.internal.buildevents.TaskExecutionStatisticsReporter] 53 actionable tasks: 31 executed, 20 from cache, 2 up-to-date

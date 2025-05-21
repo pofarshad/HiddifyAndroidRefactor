@@ -16,8 +16,10 @@ import kotlinx.coroutines.withContext
  */
 class UpdateWorker(
     private val context: Context,
-    workerParams: WorkerParameters
-) : CoroutineWorker(context, workerParams) {
+    params: WorkerParameters
+) : CoroutineWorker(context, params) {
+    // Store params for later use
+    private val workerParams = params
     private val TAG = "UpdateWorker"
     
     override suspend fun doWork(): Result {
