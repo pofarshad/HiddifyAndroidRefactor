@@ -6,9 +6,8 @@ plugins {
 
 android {
     namespace "com.hiddify.hiddifyng"
-    compileSdk 33
+    compileSdk 35
     
-    // Enable BuildConfig generation
     buildFeatures {
         buildConfig true
     }
@@ -16,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.hiddify.hiddifyng"
         minSdk 21
-        targetSdk 33
+        targetSdk 35
         versionCode 1
         versionName "1.0.0"
 

@@ -18,10 +18,10 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-// Ensure Java 11 compatibility for better compatibility
+// Ensure Java 17 compatibility for AGP 8.7.0
 allprojects {
     tasks.withType(JavaCompile) {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
