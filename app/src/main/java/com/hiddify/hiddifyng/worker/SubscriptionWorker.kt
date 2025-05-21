@@ -14,8 +14,10 @@ import kotlinx.coroutines.withContext
  */
 class SubscriptionWorker(
     private val context: Context,
-    workerParams: WorkerParameters
-) : CoroutineWorker(context, workerParams) {
+    params: WorkerParameters
+) : CoroutineWorker(context, params) {
+    // Store params for later use
+    private val workerParams = params
     private val TAG = "SubscriptionWorker"
     
     override suspend fun doWork(): Result {
@@ -53,7 +55,7 @@ class SubscriptionWorker(
                     Log.i(TAG, "Starting ping test after subscription update")
                     
                     try {
-                        val pingWorker = PingWorker(context, this.workerParams)
+                        val pingWorker = PingWorker(context, workerParams)
                         pingWorker.doWork()
                         Log.i(TAG, "Ping test completed after subscription update")
                     } catch (e: Exception) {
