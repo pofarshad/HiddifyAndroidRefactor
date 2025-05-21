@@ -118,7 +118,8 @@ class XrayManager(private val context: Context) {
             try {
                 val result = stopXray()
                 
-                if (result == 0) {
+                // Handle both boolean and int return types
+                if (result is Boolean && result || result is Int && result == 0) {
                     isRunning = false
                     currentServerId = -1L
                     Log.i(TAG, "Xray stopped successfully")
