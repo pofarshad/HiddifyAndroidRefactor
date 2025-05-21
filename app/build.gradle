@@ -9,7 +9,8 @@ android {
     compileSdk 35
     
     buildFeatures {
-        buildConfig true
+        buildConfig = true
+        viewBinding = true
     }
     
     defaultConfig {
@@ -51,11 +52,7 @@ android {
         jvmTarget = '17'
     }
     
-    buildFeatures {
-        viewBinding true
-    }
-    
-    // Uncomment this to enable native build
+    // Enable native build for Xray core integration
     externalNativeBuild {
         cmake {
             path file('src/main/cpp/CMakeLists.txt')
